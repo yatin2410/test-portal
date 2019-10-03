@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route} from "react-router-dom";
 import { logoutUser } from "../../../actions/authActions";
 import "./css/dashboard.css";
 import Home from "../Home/home";
@@ -54,7 +54,7 @@ class adminDashboard extends Component {
   }
 
   render() {
-    const { user } = this.props.auth;
+    // const { user } = this.props.auth;
     return (
       <Router>
         <div className="wrapper">
