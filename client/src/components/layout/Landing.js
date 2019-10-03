@@ -1,19 +1,27 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import daLogo from '../../images/da-logo.png';
-
+import Navbar from '../layout/Navbar';
 class Landing extends Component {
   render() {
     return (
-      <div style={{ height: "75vh" }} className="container valign-wrapper">
-        <div className="row">
-          <div className="col s12 center-align">
-            <img src={daLogo} alt="daiict logo" height="250em" width="250em"/>
-            <h5>
-              <span style={{fontFamily:"monospace"}}>TEST-PORTAL</span> is <b>DAIICT</b>'s online test assessment tool.
-            </h5>
-            <br />
-            <div className="col s6">
+      <div>
+      <Navbar/>
+      <div className="container">
+        <div className="row justify-content-md-center mt-2">
+          <div className="col-md-auto">
+            <img src={daLogo} alt="daiict logo"/>
+          </div>
+          </div>
+          <div className="row justify-content-md-center mt-4">
+          <div className="col-md-auto">
+          <h4>
+              <span style={{fontFamily:"oxygen"}}>TEST-PORTAL</span> is <b>DAIICT</b>'s online test assessment tool.
+          </h4>
+        </div>
+        </div>
+        <div className="row justify-content-md-center mt-4">
+          <div className="col-3">
               <Link
                 to="/register"
                 style={{
@@ -21,12 +29,12 @@ class Landing extends Component {
                   borderRadius: "3px",
                   letterSpacing: "1.5px"
                 }}
-                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                className="btn btn-lg btn-primary"
               >
                 Register
               </Link>
             </div>
-            <div className="col s6">
+            <div className="col-3">
               <Link
                 to="/login"
                 style={{
@@ -34,14 +42,14 @@ class Landing extends Component {
                   borderRadius: "3px",
                   letterSpacing: "1.5px"
                 }}
-                className="btn btn-large btn-flat waves-effect white black-text"
+                className="btn btn-lg float-right"
               >
                 Log In
               </Link>
             </div>
-          </div>
         </div>
       </div>
+      </div>  
     );
   }
 }

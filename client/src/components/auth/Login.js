@@ -3,16 +3,21 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
-import classnames from "classnames";
+import Navbar from "../layout/Navbar";
+import "./css/register.css";
 
 class Login extends Component {
   constructor() {
     super();
+    this.email = React.createRef();
+    this.password = React.createRef();
     this.state = {
       email: "",
       password: "",
       errors: {}
     };
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.OnBlur.bind(this);
   }
 
   componentDidMount() {
@@ -49,76 +54,91 @@ class Login extends Component {
     this.props.loginUser(userData);
   };
 
+  onFocus(ele) {
+    ele.current.className += " label-active";
+  }
+  OnBlur(ele) {
+    ele.current.className = "label-txt";
+  }
+
   render() {
     const { errors } = this.state;
 
     return (
-      <div className="container">
-        <div style={{ marginTop: "4rem" }} className="row">
-          <div className="col s8 offset-s2">
-            <Link to="/" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i> Back to
-              home
-            </Link>
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+      <div>
+        <Navbar />
+        <div className="container">
+          <div className="row  mt-5 justify-content-md-center">
+            <div className="col-5">
               <h4>
                 <b>Login</b> below
               </h4>
-              <p className="grey-text text-darken-1">
+              <p>
                 Don't have an account? <Link to="/register">Register</Link>
               </p>
             </div>
-            <form noValidate onSubmit={this.onSubmit}>
-              <div className="input-field col s12">
+          </div>
+          <form noValidate onSubmit={this.onSubmit}>
+            <div className="row  mt-4-5 justify-content-md-center">
+              <div className="col-5">
+                <p className="label-txt" ref={this.email}>
+                  Email
+                </p>
+                <p className="error-txt">
+                  {errors.email}
+                  {errors.emailnotfound}
+                </p>
                 <input
+                  type="email"
+                  className="input"
                   onChange={this.onChange}
                   value={this.state.email}
                   error={errors.email}
                   id="email"
-                  type="email"
-                  className={classnames("", {
-                    invalid: errors.email || errors.emailnotfound
-                  })}
+                  onFocus={() => {
+                    this.onFocus(this.email);
+                  }}
+                  onBlur={() => {
+                    this.OnBlur(this.email);
+                  }}
                 />
-                <label htmlFor="email">Email</label>
-                <span className="red-text">
-                  {errors.email}
-                  {errors.emailnotfound}
-                </span>
               </div>
-              <div className="input-field col s12">
+            </div>
+            <div className="row  mt-4-5 justify-content-md-center">
+              <div className="col-5">
+                <p className="label-txt" ref={this.password}>
+                  Password
+                </p>
+                <p className="error-txt">
+                  {errors.password}
+                  {errors.passwordincorrect}
+                </p>
                 <input
+                  type="Password"
+                  className="input"
                   onChange={this.onChange}
                   value={this.state.password}
                   error={errors.password}
                   id="password"
-                  type="password"
-                  className={classnames("", {
-                    invalid: errors.password || errors.passwordincorrect
-                  })}
-                />
-                <label htmlFor="password">Password</label>
-                <span className="red-text">
-                  {errors.password}
-                  {errors.passwordincorrect}
-                </span>
-              </div>
-              <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
+                  onFocus={() => {
+                    this.onFocus(this.password);
                   }}
-                  type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                >
-                  Login
+                  onBlur={() => {
+                    this.OnBlur(this.password);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="row  mt-4-5 justify-content-md-center">
+              <div className="col-md-auto">
+                <button
+                  className="btn btn-primary btn-lg hoverable"
+                  type="submit">
+                  submit
                 </button>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     );

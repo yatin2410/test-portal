@@ -3,19 +3,30 @@ import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
-import classnames from "classnames";
+import './css/register.css';
+import Navbar from '../layout/Navbar';
+import axios from "axios";
 
 class Register extends Component {
   constructor() {
     super();
+    this.Id = React.createRef();
+    this.name = React.createRef();
+    this.email = React.createRef();
+    this.password = React.createRef();
+    this.password2 = React.createRef();
+    this.group = React.createRef();
     this.state = {
       Id: "",
       name: "",
       email: "",
+      group: "",
       password: "",
       password2: "",
-      errors: {}
+      errors: {},
+      groups: []
     };
+    this.onFocus = this.onFocus.bind(this);
   }
 
   componentDidMount() {
@@ -23,10 +34,19 @@ class Register extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
+    axios
+    .get("/api/groups/")
+    .then(res => {
+      this.setState({groups:res.data});
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
+      console.log(nextProps.errors);
       this.setState({
         errors: nextProps.errors
       });
@@ -44,6 +64,7 @@ class Register extends Component {
       Id: this.state.Id,
       name: this.state.name,
       email: this.state.email,
+      group: this.state.group,
       password: this.state.password,
       password2: this.state.password2
     };
@@ -51,114 +72,142 @@ class Register extends Component {
     this.props.registerUser(newUser, this.props.history);
   };
 
+  onFocus(ele){
+    ele.current.className += " label-active";
+  }
+  OnBlur(ele){
+    ele.current.className = "label-txt";
+  }
+
   render() {
     const { errors } = this.state;
 
     return (
+      <div>
+      <Navbar/>
       <div className="container">
-        <div className="row">
-          <div className="col s8 offset-s2">
-            <Link to="/" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i> Back to
-              home
-            </Link>
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+        <div className="row  mt-2 justify-content-md-center">
+	    		<div className="col-5">
               <h4>
                 <b>Register</b> below
               </h4>
-              <p className="grey-text text-darken-1">
+              <p  >
                 Already have an account? <Link to="/login">Log in</Link>
               </p>
-            </div>
-            <form noValidate onSubmit={this.onSubmit}>
-            <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.Id}
-                  error={errors.name}
-                  id="Id"
-                  type="text"
-                  className={classnames("", {
-                    invalid: errors.Id
-                  })}
-                />
-                <label htmlFor="name">Id</label>
-                <span className="red-text">{errors.Id}</span>
-              </div>    
-              <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.name}
-                  error={errors.name}
-                  id="name"
-                  type="text"
-                  className={classnames("", {
-                    invalid: errors.name
-                  })}
-                />
-                <label htmlFor="name">Name</label>
-                <span className="red-text">{errors.name}</span>
-              </div>
-              <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.email}
-                  error={errors.email}
-                  id="email"
-                  type="email"
-                  className={classnames("", {
-                    invalid: errors.email
-                  })}
-                />
-                <label htmlFor="email">Email</label>
-                <span className="red-text">{errors.email}</span>
-              </div>
-              <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
-                  id="password"
-                  type="password"
-                  className={classnames("", {
-                    invalid: errors.password
-                  })}
-                />
-                <label htmlFor="password">Password</label>
-                <span className="red-text">{errors.password}</span>
-              </div>
-              <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password2}
-                  error={errors.password2}
-                  id="password2"
-                  type="password"
-                  className={classnames("", {
-                    invalid: errors.password2
-                  })}
-                />
-                <label htmlFor="password2">Confirm Password</label>
-                <span className="red-text">{errors.password2}</span>
-              </div>
-              <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
-                  }}
-                  type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                >
-                  Sign up
-                </button>
-              </div>
-            </form>
-          </div>
+            </div>	
         </div>
-      </div>
+        <form noValidate onSubmit={this.onSubmit}>
+        <div className="row  mt-2 justify-content-md-center">
+			<div className="col-5">
+				<p className="label-txt" ref={this.Id}>Id</p>
+        <p className="error-txt">{errors.Id}</p>
+			    <input 
+              className="input"
+              onChange={this.onChange}
+              value={this.state.Id}
+              error={errors.name}
+              id="Id"
+              type="text"
+              onFocus={()=>{this.onFocus(this.Id)}}
+              onBlur={()=>{this.OnBlur(this.Id)}}
+          />				
+			</div>
+		</div>
+		<div className="row mt-4-5 justify-content-md-center">
+			<div className="col-5">
+				<p className="label-txt" ref={this.name}>Name</p>
+        <p className="error-txt">{errors.name}</p>
+			    <input 
+            type="text" 
+            className="input"
+            onChange={this.onChange}
+            value={this.state.name}
+            error={errors.name}
+            id="name"
+            onFocus={()=>{this.onFocus(this.name)}}
+            onBlur={()=>{this.OnBlur(this.name)}}
+          />				
+			</div>
+		</div>
+		<div className="row  mt-4-5 justify-content-md-center">
+			<div className="col-5">
+				<p className="label-txt" ref={this.email}>Email</p>
+        <p className="error-txt">{errors.email}</p>
+			    <input 
+            type="email" 
+            className="input"
+            onChange={this.onChange}
+            value={this.state.email}
+            error={errors.email}
+            id="email"
+            onFocus={()=>{this.onFocus(this.email)}}
+            onBlur={()=>{this.OnBlur(this.email)}}
+          />				
+			</div>
+		</div>
+    <div className="row  mt-4-5 justify-content-md-center">
+			<div className="col-5">
+				<p className="label-txt" ref={this.group}>Group</p>
+        <p className="error-txt">{errors.group}</p>
+			    <input 
+            type="text" 
+            className="input"
+            onChange={this.onChange}
+            value={this.state.group}
+            error={errors.group}
+            id="group"
+            onFocus={()=>{this.onFocus(this.group)}}
+            onBlur={()=>{this.OnBlur(this.group)}}
+            list="list"
+          />
+          <datalist id="list">
+            {
+              this.state.groups.map((item)=><option value={item.group}></option>)
+            }
+          </datalist>				
+			</div>
+		</div>
+		<div className="row  mt-4-5 justify-content-md-center">
+			<div className="col-5">
+				<p className="label-txt" ref={this.password}>Password</p>
+        <p className="error-txt">{errors.password}</p>
+			    <input 
+            type="Password" 
+            className="input"
+            onChange={this.onChange}
+            value={this.state.password}
+            error={errors.password}
+            id="password"
+            onFocus={()=>{this.onFocus(this.password)}}
+            onBlur={()=>{this.OnBlur(this.password)}}
+          />				
+			</div>
+		</div>
+		<div className="row  mt-4-5 justify-content-md-center">
+			<div className="col-5">
+				<p className="label-txt" ref={this.password2}>Confirm Password</p>
+        <p className="error-txt">{errors.password2}</p>
+			    <input 
+            type="Password"
+            className="input"
+            onChange={this.onChange}
+            value={this.state.password2}
+            error={errors.password2}
+            id="password2"
+            onFocus={()=>{this.onFocus(this.password2)}}
+            onBlur={()=>{this.OnBlur(this.password2)}}
+          />				
+			</div>
+		</div>
+		<div className="row  mt-4-5 justify-content-md-center">
+			<div className="col-md-auto">
+			  <button className="btn btn-primary btn-lg hoverable" type="submit">submit</button>
+			</div>
+		</div>
+	</form>
+  </div>
+  </div>
+
     );
   }
 }

@@ -14,10 +14,18 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    group: {
+        type: String,
+        required: true
+    },
     password: {
         type: String,
         required: true
     },
+    IsAdmin:{
+        type: Boolean,
+        default: false
+    }
 });
 
 module.exports = User = mongoose.model("users", UserSchema);

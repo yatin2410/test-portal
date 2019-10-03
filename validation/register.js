@@ -8,6 +8,7 @@ module.exports = function validateRegisterInput(data) {
     data.Id = !isEmpty(data.Id) ? data.Id : ""; 
     data.name = !isEmpty(data.name) ? data.name : "";
     data.email = !isEmpty(data.email) ? data.email : "";
+    data.group = !isEmpty(data.group) ? data.group : "";
     data.password = !isEmpty(data.password) ? data.password : "";
     data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
@@ -34,6 +35,10 @@ module.exports = function validateRegisterInput(data) {
         errors.email = "Email is invalid";
     }
 
+    // Email checks
+    if (Validator.isEmpty(data.group)) {
+        errors.group = "Group field is required";
+    }
     // Password checks
     if (Validator.isEmpty(data.password)) {
         errors.password = "Password field is required";
