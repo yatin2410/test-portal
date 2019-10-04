@@ -5,6 +5,7 @@
 }
 
 #sidebar {
+    overflow: hidden;
     min-width: 250px;
     max-width: 250px;
     background: #b3b5a5;

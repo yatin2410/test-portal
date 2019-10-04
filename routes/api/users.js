@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const authAdmin = require("./authAdmin");
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -32,7 +33,7 @@ router.post("/register", (req, res) => {
                 } 
                 else {
                     Group.findOne({ group: req.body.group }).then(grp => {
-                        if (!grp) {
+                        if (!grp || req.body.group==="Admin") {
                             return res.status(400).json({ group: "Group is not valid" });
                         } 
                         else {
@@ -115,6 +116,19 @@ router.post("/login", (req, res) => {
                     .json({ passwordincorrect: "Password incorrect" });
             }
         });
+    });
+});
+
+router.get('/',authAdmin,(req,res)=>{
+    User.find().then(data => {
+        res.status(200).json(data);
+    });
+});
+
+router.delete('/',authAdmin,(req,res)=>{
+    User.deleteOne({Id:req.body.Id},(err)=>{
+        if(err) res.status(400).json({"error":"Id does not exist"});
+        res.status(200).json({"ok":"ok"});
     });
 });
 

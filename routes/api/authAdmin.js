@@ -9,6 +9,9 @@ module.exports = function (req,res,next){
       //if can verify the token, set req.user and pass to next middleware
       const decoded = jwt.verify(token.replace("Bearer ",""), keys.secretOrKey);
       req.user = decoded;
+      if(req.user.IsAdmin!==true){
+          throw "Not Permitted!!";
+      }
       next();
     } catch (ex) {
       //if invalid token
