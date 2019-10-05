@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const authAdmin = require("./authAdmin");
 const Group = require("../../models/Group");
+const User = require("../../models/User");
 
 router.get("/",(req,res)=>{
     Group.find().then(data => {
@@ -23,9 +24,21 @@ router.post("/",authAdmin,(req,res)=>{
             const group = new Group({
                 group : req.body.group
             });
-            group.save().then(data => res.json(data)).catch(err=>console.log(err));
+            group.save().then(data => res.status(200).json(data)).catch(err=>console.log(err));
         }
     });
 });
+
+router.delete("/", authAdmin, (req, res) => {
+    console.log("in delete");
+    User.deleteMany({group: req.body.group},err => {
+        if(err) res.status(400).json({error: "no users in this group"});
+        Group.deleteOne({ group: req.body.group }, err => {
+            if (err) res.status(400).json({ error: "group does not exist" });
+            res.status(200).json({ ok: "ok" });
+          });      
+    })
+});
+  
 
 module.exports = router;

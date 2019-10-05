@@ -3,9 +3,9 @@ import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
+import {fetchGroups} from "../../actions/fetchActions";
 import './css/register.css';
 import Navbar from '../layout/Navbar';
-import axios from "axios";
 
 class Register extends Component {
   constructor() {
@@ -34,21 +34,18 @@ class Register extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
-    axios
-    .get("/api/groups/")
-    .then(res => {
-      this.setState({groups:res.data});
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    this.props.fetchGroups();
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      console.log(nextProps.errors);
       this.setState({
         errors: nextProps.errors
+      });
+    }
+    if(nextProps.data.groups){
+      this.setState({
+        groups : nextProps.data.groups
       });
     }
   }
@@ -214,16 +211,18 @@ class Register extends Component {
 
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
+  fetchGroups: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  data: state.data,
 });
 
 export default connect(
   mapStateToProps,
-  { registerUser }
+  { registerUser, fetchGroups }
 )(withRouter(Register));
