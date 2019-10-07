@@ -38,7 +38,7 @@ function Table(props) {
           <tr>
             <th>
               <Sort sortKey={"GROUP"} onSort={onSort} activeSortKey={sortKey}>
-                Id
+                Group
               </Sort>
             </th>
             <th>DELETE</th>

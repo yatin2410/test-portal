@@ -20,7 +20,7 @@ export const registerUser = (userData, history) => dispatch => {
 // Register User
 export const registerAdmin = (userData, fun) => dispatch => {
   axios
-    .post("/api/users/registeradmin", userData)
+    .post("/api/users/register", userData)
     .then(res => {fun();
       dispatch({
         type: GET_ERRORS,
@@ -32,6 +32,24 @@ export const registerAdmin = (userData, fun) => dispatch => {
         type: GET_ERRORS,
         payload: err.response.data
       })
+    );
+};
+
+export const updateAdmin = (userData, fun) => dispatch => {
+  axios
+    .put("/api/users/register", userData)
+    .then(res => {
+      fun();
+      console.log(res);
+    })
+    .catch(err =>
+      {
+        console.log(err);
+        dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    }
     );
 };
 

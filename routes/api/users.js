@@ -60,7 +60,7 @@ router.post("/register", (req, res) => {
   });
 });
 
-router.post("/registeradmin", (req, res) => {
+router.post("/registeradmin",authAdmin, (req, res) => {
   // Form validation
   let Admin = req.body;
   Admin.password2 = Admin.password;
@@ -102,6 +102,53 @@ router.post("/registeradmin", (req, res) => {
   });
 });
 
+
+router.put("/register", (req, res) => {
+  // Form validation
+  let Admin = req.body;
+  const { errors, isValid } = validateRegisterInput(Admin);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  if(Admin.oldpassword===Admin.password){
+    res.status(400).json({password :"password field should be different then oldpassword."});
+  }
+  User.findOne({ email: Admin.email }).then(user => {
+    if (!user) {
+      return res.status(400).json({ email: "Email does not exists" });
+    } else {
+      console.log(user.Id,Admin.Id);
+        if (user.Id != Admin.Id) {
+          return res.status(400).json({ Id: "Id does not match" });
+        }
+        bcrypt.compare(Admin.oldpassword, user.password).then(isMatch => {
+          if (isMatch) {
+        console.log(Admin.oldpassword,user.password);
+        // Hash password before saving in database
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(Admin.password, salt, (err, hash) => {
+            if (err) throw err;
+            Admin.password = hash;
+            console.log(Admin.password);
+            User.update({ID:Admin.ID},{name:Admin.name,group:Admin.group,password:Admin.password},(err,afft,data)=>{
+              if(err)
+               res.status(400).json({error:"unexpected error"});
+              else  
+                res.status(200).json({ok:"ok"});
+            });
+          });
+        });
+      }
+      else{
+        res.status(404).json({oldpassword:"password not match"});
+      }
+      });
+    }
+  });
+});
+
+
 // @route POST api/users/login
 // @desc Login user and return JWT token
 // @access Public
@@ -129,7 +176,9 @@ router.post("/login", (req, res) => {
         // Create JWT Payload
         const payload = {
           id: user.id,
+          Id: user.Id,
           name: user.name,
+          email: user.email,
           IsAdmin: user.IsAdmin
         };
         // Sign token

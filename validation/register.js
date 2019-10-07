@@ -13,6 +13,7 @@ module.exports = function validateRegisterInput(data) {
     data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
     //Id checks
+    data.Id = data.Id.toString();
     if(Validator.isEmpty(data.Id)){
         errors.Id = "Id field is required";
     }
