@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ADD_GROUPS} from "./types";
+import { ADD_GROUPS, GET_ERRORS} from "./types";
 
 // Register User
 export const registerGroup = (userData, fun) => dispatch => {
@@ -21,3 +21,17 @@ export const registerGroup = (userData, fun) => dispatch => {
     );
 };
 
+export const addQuestion = (userData,history) => dispatch => {
+  axios
+  .post("/api/questions",userData)
+  .then(res => {
+    history.push("/dashboard/qbank");
+  })
+  .catch(err => {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    })}
+    );
+  
+};

@@ -5,15 +5,19 @@ const passport = require("passport");
 
 const users = require("./routes/api/users");
 const groups = require("./routes/api/groups");
+const questions = require("./routes/api/questions");
 const app = express();
+const path = require("path");
 
 // Bodyparser middleware
 app.use(
     bodyParser.urlencoded({
-      extended: false
+      extended: true,
+      limit:'10mb',
     })
   );
-app.use(bodyParser.json());
+app.use(bodyParser.text({ limit: '10mb' }));
+app.use(bodyParser.json({limit:'10mb'}));
 
 // DB Config
 const db = require("./config/keys").mongoURI;
@@ -32,9 +36,14 @@ app.use(passport.initialize());
 // Passport config
 require("./config/passport")(passport);
 
+//render static files
+
+app.use(express.static('public'));
+
 // Routes
 app.use("/api/users", users);
 app.use("/api/groups", groups);
+app.use("/api/questions",questions);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {

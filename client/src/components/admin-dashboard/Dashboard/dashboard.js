@@ -11,6 +11,7 @@ import Qbank from "../Qbank/qbank";
 import Quiz from "../Quiz/quiz";
 import Results from "../Results/results";
 import Settings from "../Settings/settings";
+import AddQuestion from '../addQuestion/addquestion';
 
 import SideBar from './sidebar';
 import NavBar from './navbar';
@@ -78,6 +79,7 @@ class adminDashboard extends Component {
             <Route exact path="/dashboard/qbank" component={Qbank} />
             <Route exact path="/dashboard/myaccount" component={Myaccount} />
             <Route exact path="/dashboard/settings" component={Settings} />
+            <Route exact path='/dashboard/addquestion' component={AddQuestion} />
           </div>
         </div>
       </Router>
