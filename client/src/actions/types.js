@@ -4,3 +4,5 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const GET_USERS = "GET_USERS";
 export const GET_GROUPS = 'GET_GROUPS';
 export const ADD_GROUPS = 'ADD_GROUPS';
+export const GET_QUESTIONS = "GET_QUESTIONS";
+export const GET_QUESTION = "GET_QUESTION";

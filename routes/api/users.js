@@ -131,7 +131,7 @@ router.put("/register", (req, res) => {
             if (err) throw err;
             Admin.password = hash;
             console.log(Admin.password);
-            User.update({ID:Admin.ID},{name:Admin.name,group:Admin.group,password:Admin.password},(err,afft,data)=>{
+            User.update({Id:Admin.Id},{name:Admin.name,group:Admin.group,password:Admin.password},(err,afft,data)=>{
               if(err)
                res.status(400).json({error:"unexpected error"});
               else  
