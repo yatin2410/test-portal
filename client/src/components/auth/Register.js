@@ -146,7 +146,7 @@ class Register extends Component {
 			<div className="col-5">
 				<p className="label-txt" ref={this.group}>Group</p>
         <p className="error-txt">{errors.group}</p>
-			    <input 
+			    <select
             type="text" 
             className="input"
             onChange={this.onChange}
@@ -155,13 +155,11 @@ class Register extends Component {
             id="group"
             onFocus={()=>{this.onFocus(this.group)}}
             onBlur={()=>{this.OnBlur(this.group)}}
-            list="list"
-          />
-          <datalist id="list">
+          >
             {
-              this.state.groups.map((item)=><option value={item.group}></option>)
+              this.state.groups.map((item)=><option value={item.group}>{item.group}</option>)
             }
-          </datalist>				
+          </select>				
 			</div>
 		</div>
 		<div className="row  mt-4-5 justify-content-md-center">

@@ -3,6 +3,7 @@ import {  withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updateAdmin, logoutUser } from "../../../actions/authActions";
+import {fetchGroups} from "../../../actions/fetchActions";
 
 class UpdateUser extends Component {
   constructor(props) {
@@ -22,15 +23,26 @@ class UpdateUser extends Component {
       oldpassword: "",
       password: "",
       password2: "",
-      group: group,
-      errors: {}
+      errors: {},
+      groups: []
+
     };
     this.onFocus = this.onFocus.bind(this);
   }
+
+  componentDidMount(nextProps) {
+    this.props.fetchGroups();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
+      });
+    }
+    if(nextProps.data.groups){
+      this.setState({
+        groups : nextProps.data.groups
       });
     }
   }
@@ -218,7 +230,7 @@ class UpdateUser extends Component {
                   Group
                 </p>
                 <p className="error-txt">{errors.group}</p>
-                <input
+                <select
                   type="text"
                   className="input"
                   onChange={this.onChange}
@@ -231,7 +243,11 @@ class UpdateUser extends Component {
                   onBlur={() => {
                     this.OnBlur(this.group);
                   }}
-                />
+                >
+                  {
+                    this.state.groups.map((item)=><option value={item.group}>{item.group}</option>)
+                  }
+                </select>
               </div>
             </div>
 
@@ -254,16 +270,18 @@ class UpdateUser extends Component {
 UpdateUser.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   updateAdmin: PropTypes.func.isRequired,
+  fetchGroups: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   errors: state.errors,
-  auth: state.auth
+  auth: state.auth,
+  data: state.data,
 });
 
 export default connect(
   mapStateToProps,
-  { updateAdmin, logoutUser }
+  { updateAdmin, logoutUser, fetchGroups }
 )(withRouter(UpdateUser));

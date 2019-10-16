@@ -24,11 +24,12 @@
     
   .input {
     width: 100%;
-    padding: 0.5em;
+    padding: 0.6em;
     background: transparent;
     border: none;
     border-bottom: 0.01em solid grey;
     outline: none;
+    margin-top: 0.5em;
   }
   
   .mt-4-5{
