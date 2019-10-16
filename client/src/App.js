@@ -14,7 +14,7 @@ import PrivateRoute from "./components/private-route/user-privateRoute";
 import PrivateRouteAdmin from "./components/private-route/admin-privateRoute";
 import NoUserPrivateRoute from "./components/private-route/nouser-privateRoute";
 import adminDashboard from "./components/admin-dashboard/Dashboard/dashboard";
-import userDashboard from "./components/user-dashboard/Dashboard";
+import userDashboard from "./components/user-dashboard/UserDashboard/Dashboard";
 
 
 import "./App.css";
