@@ -35,3 +35,21 @@ export const addQuestion = (userData,history) => dispatch => {
     );
   
 };
+
+export const putQuestion = (userData, history) => dispatch => {
+  axios
+    .put("/api/questions/", userData)
+    .then(res => {
+      history.push("/dashboard/qbank");
+      console.log(res);
+    })
+    .catch(err =>
+      {
+        console.log(err);
+        dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    }
+    );
+};
