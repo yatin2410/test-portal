@@ -122,6 +122,10 @@ router.put("/register", (req, res) => {
         if (user.Id != Admin.Id) {
           return res.status(400).json({ Id: "Id does not match" });
         }
+        Group.findOne({ group: req.body.group }).then(grp => {
+          if (!grp && req.body.group !== "Admin") {
+            return res.status(400).json({ group: "Group is not valid" });
+          }
         bcrypt.compare(Admin.oldpassword, user.password).then(isMatch => {
           if (isMatch) {
         console.log(Admin.oldpassword,user.password);
@@ -143,6 +147,7 @@ router.put("/register", (req, res) => {
       else{
         res.status(404).json({oldpassword:"password not match"});
       }
+    });
       });
     }
   });
@@ -179,6 +184,7 @@ router.post("/login", (req, res) => {
           Id: user.Id,
           name: user.name,
           email: user.email,
+          group: user.group,
           IsAdmin: user.IsAdmin
         };
         // Sign token
