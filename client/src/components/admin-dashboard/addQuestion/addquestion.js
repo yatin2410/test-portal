@@ -146,7 +146,7 @@ class AddQuestion extends Component {
           </div>
         </div>
         {
-            arr.map((item)=><OptionEditor errors={errors} key={item} type={this.state.type=="1"?"radio":"checkbox"} value={item} state={this.state} ans={this.state.ans} onAnsChange={this.onAnsChange} onEditorStateChange={this.onEditorStateChange} />)
+            arr.map((item)=><OptionEditor errors={errors} key={item} type={this.state.type==="1"?"radio":"checkbox"} value={item} state={this.state} ans={this.state.ans} onAnsChange={this.onAnsChange} onEditorStateChange={this.onEditorStateChange} />)
         }
         <div className="row justify-content-md-center mt-3" style={{marginBottom:"100px"}}>
           <div className="col-3" >

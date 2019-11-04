@@ -6,3 +6,7 @@ export const GET_GROUPS = 'GET_GROUPS';
 export const ADD_GROUPS = 'ADD_GROUPS';
 export const GET_QUESTIONS = "GET_QUESTIONS";
 export const GET_QUESTION = "GET_QUESTION";
+export const GET_QUIZ_QUESTIONS = "GET_QUIZ_QUESTIONS";
+export const GET_QUIZS = "GET_QUIZS";
+export const GET_SHOW_QUESTIONS = "GET_SHOW_QUESTIONS";
+export const GET_QUIZ = "GET_QUIZ";
