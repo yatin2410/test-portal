@@ -179,7 +179,7 @@ class EditQuestion extends Component {
           <OptionEditor
             errors={errors}
             key={item}
-            type={this.state.type == "1" ? "radio" : "checkbox"}
+            type={this.state.type === "1" ? "radio" : "checkbox"}
             value={item}
             state={this.state}
             ans={this.state.ans}

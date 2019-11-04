@@ -6,6 +6,8 @@ const passport = require("passport");
 const users = require("./routes/api/users");
 const groups = require("./routes/api/groups");
 const questions = require("./routes/api/questions");
+const quizs = require("./routes/api/quizs");
+
 const app = express();
 const path = require("path");
 
@@ -44,6 +46,7 @@ app.use(express.static('public'));
 app.use("/api/users", users);
 app.use("/api/groups", groups);
 app.use("/api/questions",questions);
+app.use("/api/quiz",quizs);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {

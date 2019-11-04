@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {addQuiz} from "../../../actions/putActions";
-import { fetchGroups } from "../../../actions/fetchActions";
+import { editQuiz } from "../../../actions/putActions";
+import { fetchQuiz, fetchGroups } from "../../../actions/fetchActions";
 
 function InputComponent(props) {
   const { reff, name, onChange, state, errors, onFocus, OnBlur, type } = props;
@@ -33,7 +33,7 @@ function InputComponent(props) {
   );
 }
 
-class AddQuiz extends Component {
+class EditQuiz extends Component {
   constructor(props) {
     super(props);
     this.name = React.createRef();
@@ -47,12 +47,16 @@ class AddQuiz extends Component {
       duration: "",
       perToPass: "",
       groups: [],
+      allGroups: [],
+      questions: [],
       errors: {}
     };
     this.groupdata = [];
+    this.editQuestions = this.editQuestions.bind(this);
   }
-  componentDidMount(){
-        this.props.fetchGroups();
+  componentDidMount() {
+    this.props.fetchQuiz(this.props.match.params.id);
+    this.props.fetchGroups();
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -61,8 +65,11 @@ class AddQuiz extends Component {
         errors: nextProps.errors
       });
     }
+    if (nextProps.quiz) {
+      this.setState({ ...nextProps.quiz });
+    }
     if (nextProps.groups) {
-      this.setState({ groups: nextProps.groups.map((item)=>item.group) });
+      this.setState({ allGroups: nextProps.groups.map((item)=>item.group) });
     }
   }
 
@@ -72,35 +79,51 @@ class AddQuiz extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    let submitGroups = this.state.groups.filter((item)=>this.groupdata[item].checked===true);  
-    const {name,startDate,duration,perToPass} = this.state;
+    let submitGroups = this.state.allGroups.filter(
+      item => this.groupdata[item].checked === true
+    );
+    const { name, startDate, duration, perToPass, questions } = this.state;
     const newQuiz = {
-        name,
-        startDate:startDate?(new Date(startDate)).toISOString():(new Date()).toISOString(),
-        duration,
-        perToPass,
-        groups: submitGroups,
-        questions: [],
+        _id: this.props.match.params.id,
+      name,
+      startDate: startDate
+        ? new Date(startDate).toISOString()
+        : new Date().toISOString(),
+      duration,
+      perToPass,
+      groups: submitGroups,
+      questions: questions
     };
     console.log(newQuiz);
-    this.props.addQuiz(newQuiz,this.props.history);
+    this.props.editQuiz(newQuiz, this.props.history);
   };
-
+  checkboxClicked(item){
+    console.log(item);
+    let group = this.state.groups;
+    if(group.indexOf(item)===-1){
+      group.push(item);
+      this.setState({groups:group});
+    }
+    else{
+      group = group.filter((itm)=>itm!==item);
+      this.setState({groups:group});
+    }
+  }
   onFocus(ele) {
-    if(ele.current)
-    ele.current.className += " label-active"
-    else
-    ele.reff.current.className += " label-active";
+    if (ele.current) ele.current.className += " label-active";
+    else ele.reff.current.className += " label-active";
   }
   OnBlur(ele) {
-    if(ele.current)
-    ele.current.className = " label-txt"
-    else
-    ele.reff.current.className = "label-txt";
+    if (ele.current) ele.current.className = " label-txt";
+    else ele.reff.current.className = "label-txt";
   }
-
+  editQuestions() {
+    this.props.history.push(
+      "/dashboard/addquiz/questions/" + this.props.match.params.id
+    );
+  }
   render() {
-    const { errors,groups } = this.state;
+    const { errors, allGroups, groups } = this.state;
     const arr = ["name", "startDate", "duration", "perToPass"];
     const arr1 = [this.name, this.startDate, this.duration, this.perToPass];
     return (
@@ -109,7 +132,7 @@ class AddQuiz extends Component {
           <div className="row  mt-2 justify-content-md-center">
             <div className="col-5">
               <h4>
-                <b>Add Quiz Details: </b>
+                <b>Edit Quiz Details: </b>
               </h4>
             </div>
           </div>
@@ -128,23 +151,43 @@ class AddQuiz extends Component {
             ))}
             <div className="row  mt-4 justify-content-md-center">
               <div className="col-5">
-                <p className="label-txt" ref={this.groups} >
+                <p className="label-txt" ref={this.groups}>
                   Assign to groups:
                 </p>
                 <p className="error-txt">{errors.groups}</p>
-                <div id="groups" className="mt-3" onFocus={()=>this.onFocus(this.groups)} onBlur={()=>this.OnBlur(this.groups)}>
-                {groups.map((item)=>
-                    <label className="ml-3"><input type="checkbox" ref={(ref)=>this.groupdata[item]=ref} id={item}/>{item}</label>
-                )}
-              </div>
+                <div
+                  id="groups"
+                  className="mt-3"
+                  onFocus={() => this.onFocus(this.groups)}
+                  onBlur={() => this.OnBlur(this.groups)}>
+                  {allGroups.map(item => (
+                    <label className="ml-3">
+                      <input
+                        type="checkbox"
+                        ref={ref => (this.groupdata[item] = ref)}
+                        onClick = {()=>this.checkboxClicked(item)}
+                        id={item}
+                        checked={groups.indexOf(item)!==-1}
+                      />
+                      {item}
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="row  mt-4-5 justify-content-md-center">
-              <div className="col-md-auto">
+              <div style={{ float: "right" }}>
+                <button
+                  className="btn btn-primary btn-lg hoverable"
+                  onClick={this.editQuestions}>
+                  Edit Questions
+                </button>
+              </div>
+              <div className="ml-4" style={{ float: "left" }}>
                 <button
                   className="btn btn-primary btn-lg hoverable"
                   type="submit">
-                Submit
+                  Submit
                 </button>
               </div>
             </div>
@@ -155,18 +198,20 @@ class AddQuiz extends Component {
   }
 }
 
-AddQuiz.propTypes = {
-    addQuiz: PropTypes.func.isRequired,
-    fetchGroups: PropTypes.func.isRequired,
-    errors: PropTypes.array.isRequired,
+EditQuiz.propTypes = {
+  fetchQuiz: PropTypes.func.isRequired,
+  fetchGroups: PropTypes.func.isRequired,
+  editQuiz: PropTypes.func.isRequired,
+  errors: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-    groups: state.data.groups,
+  groups: state.data.groups,
+  quiz: state.data.quiz,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  {addQuiz,fetchGroups}
-)(AddQuiz);
+  { editQuiz, fetchQuiz, fetchGroups }
+)(EditQuiz);

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // Create Schema
 const QuizSchema = new Schema({
-    quiz:{
+    name:{
         type: String,
         required: true
     },
@@ -12,20 +12,20 @@ const QuizSchema = new Schema({
     },
     duration:{
         type: Number,
-        required: true
+        required:true
     },
-    percentageToPass:{
+    perToPass:{
         type: Number,
-        required: true
+        required: true,
     },
-    assignToGroups:{
+    groups:{
         type: Array,
-        required: true
+        required: true,
     },
-    addQuestions:{
+    questions:{
         type: Array,
-        required: true
+        required: true,
     }
 });
 
-module.exports = Quiz = mongoose.model("quizzes", QuizSchema);
+module.exports = Quiz = mongoose.model("quizs", QuizSchema);
