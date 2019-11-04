@@ -24,7 +24,6 @@ function Sort(props) {
   );
 }
 
-
 function Table(props) {
   const {
     list,
@@ -34,7 +33,7 @@ function Table(props) {
     isSortReverse,
     refss,
     onAdd,
-    onRemove,
+    onRemove
   } = props;
   let reverseList = isSortReverse
     ? SORTS[sortKey](list).reverse()
@@ -47,7 +46,7 @@ function Table(props) {
       <table className="table table-bordered table-hover">
         <thead>
           <tr>
-            <th>
+            <th className="first">
               <Sort
                 sortKey={"QUESTION"}
                 onSort={onSort}
@@ -55,7 +54,7 @@ function Table(props) {
                 Question
               </Sort>
             </th>
-            <th>
+            <th className="second">
               <Sort
                 sortKey={"CATEGORY"}
                 onSort={onSort}
@@ -63,58 +62,66 @@ function Table(props) {
                 Category
               </Sort>{" "}
             </th>
-            <th>
+            <th className="third">
               <Sort sortKey={"TYPE"} onSort={onSort} activeSortKey={sortKey}>
                 Type
               </Sort>
             </th>
-            <th>
-                Add
-            </th>
+            <th>Add</th>
           </tr>
         </thead>
         {reverseList.map(item => (
           <tbody>
-            <tr
-              style={{ cursor: "pointer" }}
-              key={item._id}>
+            <tr style={{ cursor: "pointer" }} key={item._id}>
               <td
-              onClick={() => props.toggleBtn(item._id)}
-              
+                onClick={() => props.toggleBtn(item._id)}
+                className="cl"
                 style={{ width: "60%" }}
                 dangerouslySetInnerHTML={{ __html: item.question }}></td>
               <td
-              
-              onClick={() => props.toggleBtn(item._id)}
+                onClick={() => props.toggleBtn(item._id)}
+                className="cl"
                 style={{ width: "20%" }}
                 dangerouslySetInnerHTML={{
                   __html: item.category === "1" ? "technical" : "aptitude"
                 }}></td>
               <td
-              onClick={() => props.toggleBtn(item._id)}
-              
+                onClick={() => props.toggleBtn(item._id)}
+                className="cl"
                 style={{ width: "20%" }}
                 dangerouslySetInnerHTML={{
                   __html: item.type === "1" ? "MCSA" : "MCMA"
                 }}></td>
-                <td>
-                    {addedList.indexOf(item._id)===-1?<button onClick={()=>onAdd(item._id)} className="btn"><i className="material-icons">add_box</i></button>:<button onClick={()=>onRemove(item._id)} className="btn"><i className="material-icons">remove</i></button>} 
-                </td>
+              <td>
+                {addedList.indexOf(item._id) === -1 ? (
+                  <button onClick={() => onAdd(item._id)} className="btn">
+                    <i className="material-icons">add_box</i>
+                  </button>
+                ) : (
+                  <button onClick={() => onRemove(item._id)} className="btn">
+                    <i className="material-icons">remove</i>
+                  </button>
+                )}
+              </td>
             </tr>
             <div
               className={"collapse mt-4 mb-4"}
               ref={ref => (refss[item._id] = ref)}>
               <div className="row justify-content-md-center">
-                <div className="col-4">
-                  <div>
+                <div className="col-12">
+                  <div style={{ marginLeft: "3em" }}>
                     <h5>Question: </h5>
-                    <div
-                      className="ml-4"
-                      dangerouslySetInnerHTML={{ __html: item.question }}></div>
+                    <div>
+                      <div
+                        className="ml-4"
+                        dangerouslySetInnerHTML={{
+                          __html: item.question
+                        }}></div>
+                    </div>
                   </div>
                 </div>
-                <div className="col-3">
-                  <div className="mt-2">
+                <div className="col-12">
+                  <div className="mt-2" style={{ marginLeft: "3em" }}>
                     <h5>Options: </h5>
                     <div className="ml-4 row">
                       1.)
@@ -142,12 +149,15 @@ function Table(props) {
                     </div>
                   </div>
                 </div>
-                <div className="col-2">
-                  <div>
-                    <h5>Ans:</h5>
+                <div className="col-12">
+                  <div style={{ marginLeft: "3em" }}>
                     <div
-                      className="ml-2"
-                      dangerouslySetInnerHTML={{ __html: item.ans }}></div>
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          "<span class='ans'> Ans: </span> <span class='ml-1.75'> " +
+                          item.ans +
+                          "</span>"
+                      }}></div>
                   </div>
                 </div>
               </div>
@@ -194,9 +204,9 @@ class SearchTable extends Component {
           <div className="row mx-3">
             <Table
               onAdd={this.props.onAdd}
-              onRemove = {this.props.onRemove}
+              onRemove={this.props.onRemove}
               list={questions}
-              addedList = {this.props.addedQuestions}
+              addedList={this.props.addedQuestions}
               toggleBtn={this.toggleBtn}
               onSort={this.onSort}
               id1={this.id1}

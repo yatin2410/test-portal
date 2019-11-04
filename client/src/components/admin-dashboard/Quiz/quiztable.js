@@ -40,14 +40,14 @@ const SORTS = {
       <table className="table table-bordered table-hover">
         <thead>
           <tr>
-            <th style={{width:"20%"}}><Sort sortKey={"NAME"} onSort={onSort} activeSortKey={sortKey}>Name</Sort> </th>
-            <th style={{width:"20%"}}><Sort sortKey={"STARTDATE"} onSort={onSort} activeSortKey={sortKey}>StartDate</Sort> </th>
-            <th style={{width:"15%"}}><Sort sortKey={"DURATION"} onSort={onSort} activeSortKey={sortKey}>Duration</Sort> </th>
-            <th style={{width:"15%"}}><Sort sortKey={"PERTOPASS"} onSort={onSort} activeSortKey={sortKey}>PerToPass</Sort> </th>
+            <th style={{width:"14%"}}><Sort sortKey={"NAME"} onSort={onSort} activeSortKey={sortKey}>Name</Sort> </th>
+            <th style={{width:"16%"}}><Sort sortKey={"STARTDATE"} onSort={onSort} activeSortKey={sortKey}>StartDate</Sort> </th>
+            <th style={{width:"12%"}}><Sort sortKey={"DURATION"} onSort={onSort} activeSortKey={sortKey}>Duration</Sort> </th>
+            <th style={{width:"13%"}}><Sort sortKey={"PERTOPASS"} onSort={onSort} activeSortKey={sortKey}>PerToPass</Sort> </th>
             <th style={{width:"15%"}}><Sort sortKey={"GROUPS"} onSort={onSort} activeSortKey={sortKey}>Groups</Sort> </th>
-            <th style={{width:"5%"}}>Questions</th>
-            <th style={{width:"5%"}}>Edit</th>
-            <th style={{width:"5%"}}>DELETE</th>
+            <th style={{width:"10%"}}>Questions</th>
+            <th style={{width:"10%"}}>Edit</th>
+            <th style={{width:"10%"}}>DELETE</th>
           </tr>
         </thead>
         <tbody>
