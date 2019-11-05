@@ -38,12 +38,14 @@ class EditQuiz extends Component {
     super(props);
     this.name = React.createRef();
     this.startDate = React.createRef();
+    this.endDate = React.createRef();
     this.duration = React.createRef();
     this.perToPass = React.createRef();
     this.groups = React.createRef();
     this.state = {
       name: "",
       startDate: "",
+      endDate : "",
       duration: "",
       perToPass: "",
       groups: [],
@@ -82,13 +84,16 @@ class EditQuiz extends Component {
     let submitGroups = this.state.allGroups.filter(
       item => this.groupdata[item].checked === true
     );
-    const { name, startDate, duration, perToPass, questions } = this.state;
+    const { name, startDate, duration, perToPass, questions,endDate } = this.state;
     const newQuiz = {
         _id: this.props.match.params.id,
       name,
       startDate: startDate
         ? new Date(startDate).toISOString()
         : new Date().toISOString(),
+      endDate:endDate
+      ? new Date(endDate).toISOString()
+      : new Date().toISOString(),
       duration,
       perToPass,
       groups: submitGroups,
@@ -124,8 +129,8 @@ class EditQuiz extends Component {
   }
   render() {
     const { errors, allGroups, groups } = this.state;
-    const arr = ["name", "startDate", "duration", "perToPass"];
-    const arr1 = [this.name, this.startDate, this.duration, this.perToPass];
+    const arr = ["name", "startDate", "endDate","duration", "perToPass"];
+    const arr1 = [this.name, this.startDate, this.endDate, this.duration, this.perToPass];
     return (
       <div>
         <div className="container">
@@ -140,7 +145,7 @@ class EditQuiz extends Component {
             {arr.map((item, ind) => (
               <InputComponent
                 name={item}
-                type={item === "startDate" ? "datetime-local" : "text"}
+                type={(item === "startDate"|| item==="endDate") ? "datetime-local" : "text"}
                 reff={arr1[ind]}
                 onChange={this.onChange}
                 state={this.state}

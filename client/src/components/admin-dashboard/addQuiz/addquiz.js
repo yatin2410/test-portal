@@ -38,12 +38,14 @@ class AddQuiz extends Component {
     super(props);
     this.name = React.createRef();
     this.startDate = React.createRef();
+    this.endDate = React.createRef();
     this.duration = React.createRef();
     this.perToPass = React.createRef();
     this.groups = React.createRef();
     this.state = {
       name: "",
       startDate: "",
+      endDate: "",
       duration: "",
       perToPass: "",
       groups: [],
@@ -73,10 +75,11 @@ class AddQuiz extends Component {
   onSubmit = e => {
     e.preventDefault();
     let submitGroups = this.state.groups.filter((item)=>this.groupdata[item].checked===true);  
-    const {name,startDate,duration,perToPass} = this.state;
+    const {name,startDate,duration,perToPass,endDate} = this.state;
     const newQuiz = {
         name,
         startDate:startDate?(new Date(startDate)).toISOString():(new Date()).toISOString(),
+        endDate: endDate?(new Date(endDate)).toISOString():(new Date()).toISOString(),
         duration,
         perToPass,
         groups: submitGroups,
@@ -101,8 +104,8 @@ class AddQuiz extends Component {
 
   render() {
     const { errors,groups } = this.state;
-    const arr = ["name", "startDate", "duration", "perToPass"];
-    const arr1 = [this.name, this.startDate, this.duration, this.perToPass];
+    const arr = ["name", "startDate","endDate", "duration", "perToPass"];
+    const arr1 = [this.name, this.startDate,this.endDate, this.duration, this.perToPass];
     return (
       <div>
         <div className="container">
@@ -117,7 +120,7 @@ class AddQuiz extends Component {
             {arr.map((item, ind) => (
               <InputComponent
                 name={item}
-                type={item === "startDate" ? "datetime-local" : "text"}
+                type={(item === "startDate" || item === "endDate") ? "datetime-local" : "text"}
                 reff={arr1[ind]}
                 onChange={this.onChange}
                 state={this.state}
@@ -162,7 +165,7 @@ AddQuiz.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    groups: state.data.groups,
+  groups: state.data.groups,
   errors: state.errors
 });
 

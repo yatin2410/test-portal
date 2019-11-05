@@ -46,7 +46,7 @@ function Table(props) {
       <table className="table table-bordered table-hover">
         <thead>
           <tr>
-            <th className="first">
+            <th className="first1">
               <Sort
                 sortKey={"QUESTION"}
                 onSort={onSort}
@@ -54,7 +54,7 @@ function Table(props) {
                 Question
               </Sort>
             </th>
-            <th className="second">
+            <th className="second1">
               <Sort
                 sortKey={"CATEGORY"}
                 onSort={onSort}
@@ -62,12 +62,12 @@ function Table(props) {
                 Category
               </Sort>{" "}
             </th>
-            <th className="third">
+            <th className="third1">
               <Sort sortKey={"TYPE"} onSort={onSort} activeSortKey={sortKey}>
                 Type
               </Sort>
             </th>
-            <th>Add</th>
+            <th className="forth">Add</th>
           </tr>
         </thead>
         {reverseList.map(item => (
@@ -92,7 +92,7 @@ function Table(props) {
                 dangerouslySetInnerHTML={{
                   __html: item.type === "1" ? "MCSA" : "MCMA"
                 }}></td>
-              <td>
+              <td className="cl">
                 {addedList.indexOf(item._id) === -1 ? (
                   <button onClick={() => onAdd(item._id)} className="btn">
                     <i className="material-icons">add_box</i>

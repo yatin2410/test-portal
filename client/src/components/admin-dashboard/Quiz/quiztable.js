@@ -7,6 +7,7 @@ const SORTS = {
     NONE: list => list,
     NAME: list => sortBy(list, 'name'),
     STARTDATE: list => sortBy(list, 'startDate'),
+    ENDDATE: list => sortBy(list, 'endDate'),
     DURATION: list => sortBy(list, 'duration'),
     PERTOPASS: list => sortBy(list,'perToPass'),
     GROUPS: list => sortBy(list,'groups'),
@@ -41,13 +42,14 @@ const SORTS = {
         <thead>
           <tr>
             <th style={{width:"14%"}}><Sort sortKey={"NAME"} onSort={onSort} activeSortKey={sortKey}>Name</Sort> </th>
-            <th style={{width:"16%"}}><Sort sortKey={"STARTDATE"} onSort={onSort} activeSortKey={sortKey}>StartDate</Sort> </th>
-            <th style={{width:"12%"}}><Sort sortKey={"DURATION"} onSort={onSort} activeSortKey={sortKey}>Duration</Sort> </th>
-            <th style={{width:"13%"}}><Sort sortKey={"PERTOPASS"} onSort={onSort} activeSortKey={sortKey}>PerToPass</Sort> </th>
-            <th style={{width:"15%"}}><Sort sortKey={"GROUPS"} onSort={onSort} activeSortKey={sortKey}>Groups</Sort> </th>
-            <th style={{width:"10%"}}>Questions</th>
-            <th style={{width:"10%"}}>Edit</th>
-            <th style={{width:"10%"}}>DELETE</th>
+            <th style={{width:"15%"}}><Sort sortKey={"STARTDATE"} onSort={onSort} activeSortKey={sortKey}>StartDate</Sort> </th>
+            <th style={{width:"15%"}}><Sort sortKey={"ENDDATE"} onSort={onSort} activeSortKey={sortKey}>endDate</Sort> </th>
+            <th style={{width:"12%"}}><Sort sortKey={"DURATION"} onSort={onSort} activeSortKey={sortKey}><span style={{fontSize:"0.85em"}}>Duration</span></Sort> </th>
+            <th style={{width:"12%"}}><Sort sortKey={"PERTOPASS"} onSort={onSort} activeSortKey={sortKey}><span style={{fontSize:"0.85em"}}>PerToPass</span></Sort> </th>
+            <th style={{width:"12%"}}><Sort sortKey={"GROUPS"} onSort={onSort} activeSortKey={sortKey}>Groups</Sort> </th>
+            <th style={{width:"8%"}}><span style={{fontSize:"0.8em"}}>Questions</span></th>
+            <th style={{width:"7%"}}>Edit</th>
+            <th style={{width:"8%"}}>DELETE</th>
           </tr>
         </thead>
         <tbody>
@@ -57,6 +59,7 @@ const SORTS = {
               <tr key={item._id}>
                 <td >{item.name}</td>
                 <td >{item.startDate}</td>
+                <td >{item.endDate}</td>
                 <td >{item.duration+" min"}</td>
                 <td >{item.perToPass+" %"}</td>
                 <td >{item.groups.map((item)=><span className="row ml-1">{item}</span>)}</td>
