@@ -1,0 +1,349 @@
+.header{
+    height: 48px;
+    position: absolute;
+    background-color:#323754;
+    width: 100%;
+    font-size: 1rem;
+}
+.box-padding-20 {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.float-left {
+    float: left;
+}
+.header .header-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 12px;
+    max-width: 350px;
+    color: #fff;
+    float: left;
+}
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.float-right {
+    float: right;
+}
+
+.header .user-name {
+    color: #fff;
+    font-size: 14px;
+    margin-top: 14px;
+    font-family: 'Open Sans',sans-serif;
+}
+.medium-margin-right {
+    margin-right: 10px;
+}
+
+.header .timer {
+    float: left;
+    font-size: 16px;
+    word-spacing: -2px;
+    color: #fff;
+}
+.private-timer {
+    background-color:rgba(0,0,0,0.5);
+    padding: 8px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0; 
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    width: 140px;
+    font-weight: 700;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.align-center {
+    text-align: center;
+}
+.header .timer .time-widget div {
+    display: inline;
+}
+.less-margin-left {
+    margin-left: 5px;
+}
+.weight-400 {
+    font-weight: 400;
+}
+
+.header .end-test {
+    float: left;
+    margin-top: 10px;
+    font-family: 'Open Sans',sans-serif;
+}
+.btn-red {
+    background: #dd4b39;
+    border: 1px solid #dd4b39;
+    font-family: 'Open Sans'
+}
+.button, .nice-button {
+    padding: 3px 13px;
+    cursor: pointer;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    min-width: 60px;
+    border-radius: 3px;
+    outline: 0;
+    font-family: 'Open Sans',sans-serif;
+}
+
+
+/*Left pane*/
+
+.body {
+    width: 100%;
+    position: absolute;
+    top: 48px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color:#fff;
+}
+
+.view-body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+.left-pane {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 400px;
+    overflow-x: hidden;
+    max-width: 400px;
+    padding-bottom: 20px;
+    background-color: #e7ecef;
+}
+
+.left-pane-header {
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d9dde0;
+}
+.dark {
+    color: #46535e;
+}
+.weight-700 {
+    font-weight: 700;
+}
+
+.regular {
+    font-size: 14px;
+}
+
+.clear {
+    clear: both;
+}
+
+.left-pane-content {
+    margin-left: 10px;
+}
+
+.section-header {
+
+    padding: 30px 0 10px 0;
+    margin-left: 10px;
+
+}
+.section-header {
+
+    color: 
+
+    #999;
+    font-size: 14px;
+
+}
+.dark {
+
+    color: 
+
+    #46535e;
+
+}
+.weight-700 {
+
+    font-weight: 700;
+
+}
+
+.regular {
+
+    font-size: 14px;
+
+}
+
+.question-item.selected {
+
+    background-color: 
+
+    #fff;
+
+}
+.question-item {
+
+    position: relative;
+    cursor: pointer;
+    height: 85px;
+    max-height: 85px;
+    min-height: 85px;
+    width: 360px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom: 1px solid 
+
+    rgba(156,163,168,0.3);
+
+}
+
+.question-item {
+
+    cursor: pointer;
+
+}
+
+.question-container {
+
+    width: 75%;
+    height: 100%;
+    font-size: 14px;
+
+}
+
+.inline-block {
+
+    display: inline-block;
+
+}
+.width-100 {
+
+    width: 100%;
+
+}
+.padding-10 {
+
+    padding: 10px;
+
+}
+.dark {
+
+    color: 
+
+    #46535e;
+
+}
+.weight-600 {
+
+    font-weight: 600;
+
+}
+
+.s-no {
+
+    height: 100%;
+    min-height: 40px;
+    margin-top: 2px;
+
+}
+.padding-left-5 {
+
+    padding-left: 5px;
+
+}
+.padding-top-5 {
+
+    padding-top: 5px;
+
+}
+.padding-right-5 {
+
+    padding-right: 5px;
+
+}
+
+.question-statement {
+
+    height: 46px;
+    overflow-y: hidden;
+    line-height: 1.7;
+    overflow-x: hidden;
+
+}
+.padding-top-5 {
+
+    padding-top: 5px;
+
+}
+
+.marks-container {
+
+    height: 100%;
+
+}
+.float-right {
+
+    float: right;
+
+}
+.inline-block {
+
+    display: inline-block;
+
+}
+
+.bottom-border-radius {
+
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+}
+.top-border-radius {
+
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+
+}
+.green-box {
+
+    float: left;
+    margin-top: 15px;
+    margin-right: 15px;
+    padding: 3px 5px;
+    background-color: 
+
+    rgba(115,179,105,0.35);
+    font-size: 11px;
+    min-width: 27px;
+
+}
+.weight-700 {
+
+    font-weight: 700;
+
+}
+.darker {
+
+    color: 
+
+    #252c33;
+
+}

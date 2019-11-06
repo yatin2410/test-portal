@@ -55,26 +55,27 @@ class userDashboard extends Component {
     // const { user } = this.props.auth;
     return (
       <Router>
-        <div className="wrapper">
-          <SideBar
+        <div>
+        {/* <div className="wrapper"> */}
+          {/* <SideBar
             sidebar={this.sidebar}
             onLogoutClick={this.onLogoutClick}
             changeUserLocation={this.changeUserLocation}
             userLocation={this.state.userLocation}
-          />
-          <div id="content">
-            <NavBar
+          /> */}
+          {/* <div id="content"> */}
+            {/* <NavBar
               changeUserLocation={this.changeUserLocation}
               toggelSidebar={this.toggelSidebar}
               onLogoutClick={this.onLogoutClick}
-            />
+            /> */}
             <Route exact path="/dashboard" component={Home} />
             <Route exact path="/dashboard/home" component={Home} />
             <Route exact path="/dashboard/results" component={Results} />
             <Route exact path="/dashboard/quiz" component={Quiz} />
             <Route exact path="/dashboard/myaccount" component={Myaccount} />
 
-          </div>
+          {/* </div> */}
         </div>
       </Router>
     );
