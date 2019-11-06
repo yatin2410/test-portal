@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authAdmin = require("./authAdmin");
+const userAdmin = require("./auth");
 const Quiz = require("../../models/Quiz");
 const validateQuizInput = require("../../validation/quiz");
 const moongose = require("mongoose");
@@ -119,5 +120,16 @@ router.get("/showquestions/:id", authAdmin, (req, res) => {
         });
     });
 });
+
+
+router.get("/user/:group", userAdmin, (req, res) => {
+  const group = req.params.group;
+  console.log(group);
+  Quiz.find({groups:group}).then(data => {
+    console.log(data);
+    res.status(200).json(data);
+  });
+});
+
 
 module.exports = router;

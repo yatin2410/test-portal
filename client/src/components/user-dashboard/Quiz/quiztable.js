@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { sortBy } from 'lodash';
 import classNames from 'classnames';
-import quiz from "./quiz";
 
 const SORTS = {
     NONE: list => list,
@@ -10,7 +9,6 @@ const SORTS = {
     ENDDATE: list => sortBy(list, 'endDate'),
     DURATION: list => sortBy(list, 'duration'),
     PERTOPASS: list => sortBy(list,'perToPass'),
-    GROUPS: list => sortBy(list,'groups'),
   };
   
   
@@ -30,7 +28,7 @@ const SORTS = {
   }
   
   function Table(props){
-    const {list,sortKey,onSort,onDismiss,isSortReverse, onOpenQuestions, onEdit
+    const {list,sortKey,onSort,isSortReverse, isCurrent, onStart
     } = props;
     let reverseList = isSortReverse ? SORTS[sortKey](list).reverse() : SORTS[sortKey](list);
     return(
@@ -41,15 +39,12 @@ const SORTS = {
       <table className="table table-bordered table-hover">
         <thead>
           <tr>
-            <th style={{width:"14%"}}><Sort sortKey={"NAME"} onSort={onSort} activeSortKey={sortKey}>Name</Sort> </th>
-            <th style={{width:"15%"}}><Sort sortKey={"STARTDATE"} onSort={onSort} activeSortKey={sortKey}>StartDate</Sort> </th>
-            <th style={{width:"15%"}}><Sort sortKey={"ENDDATE"} onSort={onSort} activeSortKey={sortKey}>endDate</Sort> </th>
-            <th style={{width:"12%"}}><Sort sortKey={"DURATION"} onSort={onSort} activeSortKey={sortKey}><span style={{fontSize:"0.85em"}}>Duration</span></Sort> </th>
-            <th style={{width:"12%"}}><Sort sortKey={"PERTOPASS"} onSort={onSort} activeSortKey={sortKey}><span style={{fontSize:"0.85em"}}>PerToPass</span></Sort> </th>
-            <th style={{width:"12%"}}><Sort sortKey={"GROUPS"} onSort={onSort} activeSortKey={sortKey}>Groups</Sort> </th>
-            <th style={{width:"8%"}}><span style={{fontSize:"0.8em"}}>Questions</span></th>
-            <th style={{width:"7%"}}>Edit</th>
-            <th style={{width:"8%"}}>DELETE</th>
+            <th style={{width:"20%"}}><Sort sortKey={"NAME"} onSort={onSort} activeSortKey={sortKey}>Name</Sort> </th>
+            <th style={{width:"20%"}}><Sort sortKey={"STARTDATE"} onSort={onSort} activeSortKey={sortKey}>StartDate</Sort> </th>
+            <th style={{width:"20%"}}><Sort sortKey={"ENDDATE"} onSort={onSort} activeSortKey={sortKey}>endDate</Sort> </th>
+            <th style={{width:"15%"}}><Sort sortKey={"DURATION"} onSort={onSort} activeSortKey={sortKey}><span style={{fontSize:"0.85em"}}>Duration</span></Sort> </th>
+            <th style={{width:"15%"}}><Sort sortKey={"PERTOPASS"} onSort={onSort} activeSortKey={sortKey}><span style={{fontSize:"0.85em"}}>PerToPass</span></Sort> </th>
+            <th>Start</th>
           </tr>
         </thead>
         <tbody>
@@ -62,14 +57,7 @@ const SORTS = {
                 <td >{item.endDate}</td>
                 <td >{item.duration+" min"}</td>
                 <td >{item.perToPass+" %"}</td>
-                <td >{item.groups.map((item)=><span className="row ml-1">{item}</span>)}</td>
-                <td ><button className="btn" onClick={()=>onOpenQuestions(item._id)}><i className="material-icons">open_in_new</i></button></td>
-                <td ><button className="btn"><i className="material-icons" onClick={()=>onEdit(item._id)}>edit</i></button></td>
-                <td >
-                  <button  className="btn btn-danger" onClick = {()=>onDismiss(item._id)}>
-                    <i className="material-icons">delete</i>
-                  </button>
-                </td>
+                <td ><button className="btn" disabled={!isCurrent} onClick={onStart}><i className="material-icons">play_arrow</i></button> </td>
               </tr>
           )
         }
@@ -105,12 +93,11 @@ class SearchTable extends Component {
             <div className="row mx-3">
               <Table
                 list={quizs}
-                onDismiss={this.props.onDismiss}
                 onSort={this.onSort}
                 sortKey={sortKey}
-                onOpenQuestions = {this.props.onOpenQuestions}
                 isSortReverse={isSortReverse}
-                onEdit = {this.props.onEdit}
+                onStart = {this.props.onStart}
+                isCurrent = {this.props.isCurrent}
               />
             </div>
           ) : (

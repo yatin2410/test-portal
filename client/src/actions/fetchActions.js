@@ -124,3 +124,19 @@ export const fetchQuiz  = (id) => dispatch => {
       console.log(err);
   });
 };
+
+
+export const fetchUserQuizs  = (group) => dispatch => {
+  axios
+  .get("/api/quiz/user/"+group)
+  .then(res => {
+      dispatch({
+        type: GET_QUIZS,
+        payload: res.data  
+      });
+  })
+  .catch(err => {
+      console.log("error in fetching users");
+      console.log(err);
+  });
+};
