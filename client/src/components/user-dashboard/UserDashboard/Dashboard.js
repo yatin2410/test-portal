@@ -8,7 +8,6 @@ import Home from "../Home/home";
 import Myaccount from "../Myaccount/myaccount";
 import Quiz from "../Quiz/quiz";
 import Results from "../Results/results";
-
 import SideBar from './sidebar';
 import NavBar from './navbar';
 
@@ -54,7 +53,6 @@ class userDashboard extends Component {
   render() {
     // const { user } = this.props.auth;
     return (
-      <Router>
         <div className="wrapper">
           <SideBar
             sidebar={this.sidebar}
@@ -73,10 +71,8 @@ class userDashboard extends Component {
             <Route exact path="/dashboard/results" component={Results} />
             <Route exact path="/dashboard/quiz" component={Quiz} />
             <Route exact path="/dashboard/myaccount" component={Myaccount} />
-
           </div>
         </div>
-      </Router>
     );
   }
 }

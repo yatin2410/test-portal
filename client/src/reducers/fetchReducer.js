@@ -1,4 +1,4 @@
-import { GET_USERS, GET_GROUPS, GET_QUESTIONS, GET_QUESTION,GET_QUIZ_QUESTIONS, GET_QUIZS, GET_SHOW_QUESTIONS,GET_QUIZ} from "../actions/types";
+import { GET_USERS, GET_GROUPS, GET_QUESTIONS, GET_QUESTION,GET_QUIZ_QUESTIONS, GET_QUIZS, GET_SHOW_QUESTIONS,GET_QUIZ, GET_QUIZ_FULL} from "../actions/types";
 
 const initialState = {
   users: [],
@@ -9,6 +9,7 @@ const initialState = {
   quizs: [],
   showQuestions: [],
   quiz:{},
+  quizFull: {}
 };
 
 export default function(state = initialState, action) {
@@ -52,6 +53,11 @@ export default function(state = initialState, action) {
         return{
           ...state,
           quiz: action.payload
+        }
+      case GET_QUIZ_FULL:
+        return{
+          ...state,
+          quizFull : action.payload
         }
     default:
       return state;

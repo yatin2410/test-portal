@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GET_USERS,GET_GROUPS,GET_QUESTIONS, GET_QUESTION, GET_QUIZ_QUESTIONS,GET_QUIZS, GET_SHOW_QUESTIONS,GET_QUIZ} from "./types";
+import {GET_USERS,GET_GROUPS,GET_QUESTIONS, GET_QUESTION, GET_QUIZ_QUESTIONS,GET_QUIZS, GET_SHOW_QUESTIONS,GET_QUIZ,GET_QUIZ_FULL} from "./types";
 
 export const fetchUsers  = () => dispatch => {
     axios
@@ -137,6 +137,21 @@ export const fetchUserQuizs  = (group) => dispatch => {
   })
   .catch(err => {
       console.log("error in fetching users");
+      console.log(err);
+  });
+};
+
+export const fetchUserQuizFull  = (id) => dispatch => {
+  axios
+  .get("/api/quiz/user/quiz/"+id)
+  .then(res => {
+      dispatch({
+        type: GET_QUIZ_FULL,
+        payload: res.data
+      });
+  })
+  .catch(err => {
+      console.log("error in fetching qustions");
       console.log(err);
   });
 };

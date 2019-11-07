@@ -59,6 +59,11 @@
     transition: all 0.8s;
 }
 
+.nav-color{
+    background-color: lightgray;
+    border-radius: 30px;
+}
+
 @media (max-width: 768px) {
     #sidebar {
         margin-left: -250px;
@@ -70,4 +75,3 @@
         display: none;
     }
 }
-

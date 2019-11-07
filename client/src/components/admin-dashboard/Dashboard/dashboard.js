@@ -62,7 +62,6 @@ class adminDashboard extends Component {
   render() {
     // const { user } = this.props.auth;
     return (
-      <Router>
         <div className="wrapper">
           <SideBar
             sidebar={this.sidebar}
@@ -92,7 +91,6 @@ class adminDashboard extends Component {
             <Route exact path='/dashboard/editquiz/:id' component={EditQuiz} />
           </div>
         </div>
-      </Router>
     );
   }
 }

@@ -10,3 +10,4 @@ export const GET_QUIZ_QUESTIONS = "GET_QUIZ_QUESTIONS";
 export const GET_QUIZS = "GET_QUIZS";
 export const GET_SHOW_QUESTIONS = "GET_SHOW_QUESTIONS";
 export const GET_QUIZ = "GET_QUIZ";
+export const GET_QUIZ_FULL = "GET_QUIZ_FULL";

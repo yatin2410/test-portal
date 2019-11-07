@@ -28,8 +28,8 @@ class Quiz extends Component {
         this.setState({upcomingQuizs:quizs});
     }
   }
-  onStart(){
-      alert("start");
+  onStart(id){
+    this.props.history.push("/takequiz/"+id);
   }
   render() {
     return (

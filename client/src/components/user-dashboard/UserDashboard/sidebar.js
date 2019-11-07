@@ -1,6 +1,9 @@
-import React from 'react'
+import React,{Component} from 'react'
 import classNames from "classnames";
 import {  Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 
 function SideBarButton(props) {
     return (
@@ -20,12 +23,22 @@ function SideBarButton(props) {
     );
   }
   
-  export default  function SideBar(props) {
+
+class Sidebar extends Component {
+  constructor(props){
+    super(props);
+  }
+  render() {
+    let props = this.props;
     return (
-      <nav id="sidebar" ref={props.sidebar}>
-        <div className="container mt-4">
+      <nav id="sidebar"  ref={props.sidebar}>
+        <div className="container mt-4" >
           <span style={{ fontFamily: "oxygen", fontSize: "2em" }}>
             TEST-PORTAL
+          </span>
+          <hr/>
+          <span style={{fontSize:"1.25em"}} className="ml-5">
+            ID: {this.props.auth.user.Id}
           </span>
         </div>
         <hr />
@@ -66,4 +79,17 @@ function SideBarButton(props) {
       </nav>
     );
   }
-  
+}
+
+Sidebar.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  {  }
+)(Sidebar);

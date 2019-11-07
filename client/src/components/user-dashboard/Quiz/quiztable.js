@@ -57,7 +57,7 @@ const SORTS = {
                 <td >{item.endDate}</td>
                 <td >{item.duration+" min"}</td>
                 <td >{item.perToPass+" %"}</td>
-                <td ><button className="btn" disabled={!isCurrent} onClick={onStart}><i className="material-icons">play_arrow</i></button> </td>
+                <td ><button className="btn" disabled={!isCurrent} onClick={()=>onStart(item._id)}><i className="material-icons">play_arrow</i></button> </td>
               </tr>
           )
         }

@@ -131,5 +131,29 @@ router.get("/user/:group", userAdmin, (req, res) => {
   });
 });
 
+router.get("/user/quiz/:id",userAdmin,(req,res) => {
+  if(req.params.id==undefined){
+    res.status(404).json({error:"quiz not found"});
+  }
+  Quiz.find({_id:req.params.id}).then((data)=>{
+    if(!data) res.status(404).json({error:"quiz not found"});
+      let quiz = data[0];
+      let questionids = quiz.questions;
+      questionids = questionids.map((item)=>moongose.Types.ObjectId(item));
+      console.log(questionids);
+      Question.find({
+        '_id':{ $in: questionids}
+      },
+      (err,dta)=>{
+        if(err) res.status(400).json({error:"no questions"});
+        dta.forEach((item) => item.ans = []);
+        let quizFull = {
+          questionsFull:dta,
+          ...quiz.toObject(),
+        };
+        res.status(200).json({quiz:quizFull});
+      });
+  });
+});
 
 module.exports = router;

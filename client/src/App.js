@@ -15,7 +15,7 @@ import PrivateRouteAdmin from "./components/private-route/admin-privateRoute";
 import NoUserPrivateRoute from "./components/private-route/nouser-privateRoute";
 import adminDashboard from "./components/admin-dashboard/Dashboard/dashboard";
 import userDashboard from "./components/user-dashboard/UserDashboard/Dashboard";
-
+import TakeQuiz from './components/take-quiz/TakeQuiz/takequiz';
 
 import "./App.css";
 
@@ -56,7 +56,12 @@ class App extends Component {
             <Switch>
               <NoUserPrivateRoute path="/dashboard" component={Landing} />
             </Switch>
-           
+           <Switch>
+             <PrivateRoute path='/takequiz/:id' component={TakeQuiz} />
+           </Switch>
+           <Switch>
+             <NoUserPrivateRoute path='/takequiz/:id' component={Landing} />
+           </Switch>
           </div>
         </Router>
       </Provider>
