@@ -9,6 +9,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "react": "^16.6.3",
+    "react-compound-timer": "^1.1.15",
     "react-dom": "^16.6.3",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
