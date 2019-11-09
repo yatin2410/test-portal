@@ -17,9 +17,16 @@ import EditQuestion from '../editQuestion/editquestion';
 import AddQuestionsQuiz from '../addQuestionsQuiz/addquestionquiz';
 import ShowQuizQuestions from "../Quiz/showquizquestions";
 import EditQuiz from "../Quiz/editquiz";
-
 import SideBar from './sidebar';
 import NavBar from './navbar';
+import Help from '../Help/help';
+import {Help1} from '../Help/help';
+import {Help2} from '../Help/help';
+import {Help3} from '../Help/help';
+import {Help4} from '../Help/help';
+import {Help5} from '../Help/help';
+import {Help6} from '../Help/help';
+import {Help7} from '../Help/help';
 
 class adminDashboard extends Component {
   constructor(props) {
@@ -89,6 +96,15 @@ class adminDashboard extends Component {
             <Route exact path='/dashboard/addquiz/questions/:id' component={AddQuestionsQuiz} />
             <Route exact path='/dashboard/showquestions/:id' component={ShowQuizQuestions} />
             <Route exact path='/dashboard/editquiz/:id' component={EditQuiz} />
+            <Route exact path="/dashboard/help" component={Help} />
+            <Route exact path="/dashboard/help1" component={Help1} />
+            <Route exact path="/dashboard/help2" component={Help2} />
+            <Route exact path="/dashboard/help3" component={Help3} />
+            <Route exact path="/dashboard/help4" component={Help4} />
+            <Route exact path="/dashboard/help5" component={Help5} />
+            <Route exact path="/dashboard/help6" component={Help6} />
+            <Route exact path="/dashboard/help7" component={Help7} />
+
           </div>
         </div>
     );

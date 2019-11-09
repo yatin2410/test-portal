@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { sortBy } from 'lodash';
 import classNames from 'classnames';
+import Moment from 'react-moment';
 import quiz from "./quiz";
 
 const SORTS = {
@@ -13,6 +14,19 @@ const SORTS = {
     GROUPS: list => sortBy(list,'groups'),
   };
   
+  class Search extends Component{
+    render(){
+      const {searchTerm,onSearchChange,children} = this.props;
+      return(
+        <div className="input-group input-group-lg">
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="inputGroup-sizing-lg">{children}</span>
+          </div>
+          <input  type="text" value = {searchTerm} ref={el => this.input=el} onChange = {onSearchChange} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"/>       
+        </div>
+      );
+    }
+  }
   
   function Sort(props){
     const {sortKey,onSort,children,activeSortKey} = props;
@@ -30,9 +44,10 @@ const SORTS = {
   }
   
   function Table(props){
-    const {list,sortKey,onSort,onDismiss,isSortReverse, onOpenQuestions, onEdit
+    const {list,sortKey,onSort,onDismiss,isSortReverse, onOpenQuestions, onEdit, searchTerm
     } = props;
     let reverseList = isSortReverse ? SORTS[sortKey](list).reverse() : SORTS[sortKey](list);
+    reverseList =  reverseList.filter((item)=>item.name.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1 || item.startDate.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1 || item.endDate.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1 || item.duration === Number(searchTerm) || item.perToPass === Number(searchTerm) || item.groups.indexOf(searchTerm) !== -1);
     return(
       <div className="container">
         <h5>
@@ -42,10 +57,10 @@ const SORTS = {
         <thead>
           <tr>
             <th style={{width:"14%"}}><Sort sortKey={"NAME"} onSort={onSort} activeSortKey={sortKey}>Name</Sort> </th>
-            <th style={{width:"15%"}}><Sort sortKey={"STARTDATE"} onSort={onSort} activeSortKey={sortKey}>StartDate</Sort> </th>
-            <th style={{width:"15%"}}><Sort sortKey={"ENDDATE"} onSort={onSort} activeSortKey={sortKey}>endDate</Sort> </th>
+            <th style={{width:"15%"}}><Sort sortKey={"STARTDATE"} onSort={onSort} activeSortKey={sortKey}>Start Date</Sort> </th>
+            <th style={{width:"15%"}}><Sort sortKey={"ENDDATE"} onSort={onSort} activeSortKey={sortKey}>End Date</Sort> </th>
             <th style={{width:"12%"}}><Sort sortKey={"DURATION"} onSort={onSort} activeSortKey={sortKey}><span style={{fontSize:"0.85em"}}>Duration</span></Sort> </th>
-            <th style={{width:"12%"}}><Sort sortKey={"PERTOPASS"} onSort={onSort} activeSortKey={sortKey}><span style={{fontSize:"0.85em"}}>PerToPass</span></Sort> </th>
+            <th style={{width:"12%"}}><Sort sortKey={"PERTOPASS"} onSort={onSort} activeSortKey={sortKey}><span style={{fontSize:"0.85em"}}>Percentage</span></Sort> </th>
             <th style={{width:"12%"}}><Sort sortKey={"GROUPS"} onSort={onSort} activeSortKey={sortKey}>Groups</Sort> </th>
             <th style={{width:"8%"}}><span style={{fontSize:"0.8em"}}>Questions</span></th>
             <th style={{width:"7%"}}>Edit</th>
@@ -58,8 +73,8 @@ const SORTS = {
             (item)=>
               <tr key={item._id}>
                 <td >{item.name}</td>
-                <td >{item.startDate}</td>
-                <td >{item.endDate}</td>
+                <td ><Moment format="YYYY-MM-DD HH:mm" local>{item.startDate.toLocaleString()}</Moment></td>
+                <td ><Moment format="YYYY-MM-DD HH:mm" local>{item.endDate.toLocaleString()}</Moment></td>
                 <td >{item.duration+" min"}</td>
                 <td >{item.perToPass+" %"}</td>
                 <td >{item.groups.map((item)=><span className="row ml-1">{item}</span>)}</td>
@@ -85,9 +100,11 @@ class SearchTable extends Component {
       this.state = {
         quizs: props.quizs,
         sortKey: "NONE",
+        searchTerm: "",
         isSortReverse: false
       };
       this.onSort = this.onSort.bind(this);
+      this.onSearchChange = this.onSearchChange.bind(this);    
     }
     componentWillReceiveProps(nextProps){
       this.setState({quizs:nextProps.quizs});
@@ -96,16 +113,29 @@ class SearchTable extends Component {
       const isSortReverse = this.state.sortKey === sortKey && this.state.isSortReverse===false;
       this.setState({sortKey, isSortReverse});
     }
+    onSearchChange(event){
+      this.setState({searchTerm:event.target.value});
+    }
 
     render() {
-      const { quizs, sortKey, isSortReverse } = this.state;
+      const { quizs, searchTerm, sortKey, isSortReverse } = this.state;
     return (
         <div className="container">
+          <div className="row my-4 justify-content-md-center">
+            <div className="col col-lg-5">
+              <Search
+                searchTerm={searchTerm}
+                onSearchChange={this.onSearchChange}>
+                search
+              </Search>
+            </div>
+          </div>
           {quizs ? (
             <div className="row mx-3">
               <Table
                 list={quizs}
                 onDismiss={this.props.onDismiss}
+                searchTerm={searchTerm}
                 onSort={this.onSort}
                 sortKey={sortKey}
                 onOpenQuestions = {this.props.onOpenQuestions}

@@ -3,15 +3,16 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {addQuiz} from "../../../actions/putActions";
 import { fetchGroups } from "../../../actions/fetchActions";
+import DateTimePicker from 'react-datetime-picker';
 
 function InputComponent(props) {
-  const { reff, name, onChange, state, errors, onFocus, OnBlur, type } = props;
+  const { reff, name, onChange, state, errors, onFocus, OnBlur, type, labelName} = props;
 
   return (
     <div className="row  mt-4 justify-content-md-center">
       <div className="col-5">
         <p className="label-txt" ref={reff}>
-          {name}
+          {labelName}
         </p>
         <p className="error-txt">{errors[name]}</p>
         <input
@@ -72,14 +73,17 @@ class AddQuiz extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
+  onChange1 = startDate => this.setState({ startDate })
+  onChange2 = endDate => this.setState({ endDate })
+
   onSubmit = e => {
     e.preventDefault();
     let submitGroups = this.state.groups.filter((item)=>this.groupdata[item].checked===true);  
     const {name,startDate,duration,perToPass,endDate} = this.state;
     const newQuiz = {
         name,
-        startDate:startDate?(new Date(startDate)).toISOString():(new Date()).toISOString(),
-        endDate: endDate?(new Date(endDate)).toISOString():(new Date()).toISOString(),
+        startDate:startDate?(new Date(startDate)):(new Date()),
+        endDate: endDate?(new Date(endDate)):(new Date()),
         duration,
         perToPass,
         groups: submitGroups,
@@ -104,8 +108,9 @@ class AddQuiz extends Component {
 
   render() {
     const { errors,groups } = this.state;
-    const arr = ["name", "startDate","endDate", "duration", "perToPass"];
-    const arr1 = [this.name, this.startDate,this.endDate, this.duration, this.perToPass];
+    const arr = ["name", "duration", "perToPass"];
+    const arr1 = [this.name, this.duration, this.perToPass];
+    const arr2 = ["Name", "Duration", "Percentage To Pass"];
     return (
       <div>
         <div className="container">
@@ -120,10 +125,11 @@ class AddQuiz extends Component {
             {arr.map((item, ind) => (
               <InputComponent
                 name={item}
-                type={(item === "startDate" || item === "endDate") ? "datetime-local" : "text"}
+                type={"text"}
                 reff={arr1[ind]}
                 onChange={this.onChange}
                 state={this.state}
+                labelName={arr2[ind]}
                 errors={errors}
                 onFocus={this.onFocus}
                 OnBlur={this.OnBlur}
@@ -131,13 +137,31 @@ class AddQuiz extends Component {
             ))}
             <div className="row  mt-4 justify-content-md-center">
               <div className="col-5">
+              <p className="label-txt" ref={this.startDate} >
+                  Start Date
+                  </p>
+                <div className = "mt-4"><DateTimePicker value={this.state.startDate} onChange = {this.onChange1} onFocus={()=>this.onFocus(this.startDate)} onBlur={()=>this.OnBlur(this.startDate)}/></div>
+              </div>
+            </div>
+
+            <div className="row  mt-4 justify-content-md-center">
+              <div className="col-5">
+              <p className="label-txt" ref={this.endDate} >
+                  End Date
+                  </p>
+                <div className = "mt-4"><DateTimePicker value={this.state.endDate} onChange = {this.onChange2} onFocus={()=>this.onFocus(this.endDate)} onBlur={()=>this.OnBlur(this.endDate)}/></div>
+              </div>
+            </div>
+            
+            <div className="row  mt-4 justify-content-md-center">
+              <div className="col-5">
                 <p className="label-txt" ref={this.groups} >
-                  Assign to groups:
+                  Assign to Groups:
                 </p>
                 <p className="error-txt">{errors.groups}</p>
                 <div id="groups" className="mt-3" onFocus={()=>this.onFocus(this.groups)} onBlur={()=>this.OnBlur(this.groups)}>
                 {groups.map((item)=>
-                    <label className="ml-3"><input type="checkbox" ref={(ref)=>this.groupdata[item]=ref} id={item}/>{item}</label>
+                    <label className="ml-3"><input type="checkbox" ref={(ref)=>this.groupdata[item]=ref} id={item}/> {item}</label>
                 )}
               </div>
               </div>

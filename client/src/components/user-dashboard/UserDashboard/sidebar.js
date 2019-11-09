@@ -67,6 +67,12 @@ class Sidebar extends Component {
             changeUserLocation={props.changeUserLocation}>
             My Account
           </SideBarButton>
+          <SideBarButton
+            link="help"
+            userLocation = {props.userLocation}
+            changeUserLocation={props.changeUserLocation}>
+            Help
+          </SideBarButton>
           <Link to="/dashboard/logout" style={{ textDecoration: "None" }}>
             <button
               type="button"

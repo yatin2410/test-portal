@@ -38,8 +38,8 @@ function Table(props) {
       <table className="table table-bordered table-hover">
         <thead>
           <tr>
-            <th 
-                className="first">
+            <th
+              className="first">
               <Sort
                 sortKey={"QUESTION"}
                 onSort={onSort}
@@ -47,8 +47,8 @@ function Table(props) {
                 Question
               </Sort>
             </th>
-            <th 
-                className="second">
+            <th
+              className="second">
               <Sort
                 sortKey={"CATEGORY"}
                 onSort={onSort}
@@ -56,8 +56,8 @@ function Table(props) {
                 Category
               </Sort>{" "}
             </th>
-            <th 
-                className="third">
+            <th
+              className="third">
               <Sort sortKey={"TYPE"} onSort={onSort} activeSortKey={sortKey}>
                 Type
               </Sort>
@@ -66,7 +66,7 @@ function Table(props) {
         </thead>
         {reverseList.map(item => (
           <tbody>
-            <tr style={{cursor:"pointer"}} onClick={() => props.toggleBtn(item._id)} key={item._id}>
+            <tr style={{ cursor: "pointer" }} onClick={() => props.toggleBtn(item._id)} key={item._id}>
               <td className="cl"
                 dangerouslySetInnerHTML={{ __html: "<div class='cl'>" + item.question + "</div>" }}></td>
               <td className="cl"
@@ -83,17 +83,17 @@ function Table(props) {
               ref={ref => (refss[item._id] = ref)}>
               <div className="row justify-content-md-center">
                 <div className="col-12">
-                  <div style={{ marginLeft: "3em"}}>
+                  <div style={{ marginLeft: "3em" }}>
                     <h5>Question: </h5>
                     <div>
                       <div
                         className="ml-4"
                         dangerouslySetInnerHTML={{ __html: item.question }}></div>
-                      </div>
                     </div>
+                  </div>
                 </div>
                 <div className="col-12">
-                  <div className="mt-2" style={{ marginLeft: "3em"}}>
+                  <div className="mt-2" style={{ marginLeft: "3em" }}>
                     <h5>Options: </h5>
                     <div className="ml-4 row">
                       1.)
@@ -122,12 +122,12 @@ function Table(props) {
                   </div>
                 </div>
                 <div className="col-12">
-                  <div style={{ marginLeft: "3em"}}>
-                    <div dangerouslySetInnerHTML={{ __html: "<span class='ans'> Ans: </span> <span class='ml-1.75'> "  + item.ans +"</span>" }}></div>
+                  <div style={{ marginLeft: "3em" }}>
+                    <div dangerouslySetInnerHTML={{ __html: "<span class='ans'> Ans: </span> <span class='ml-1.75'> " + item.ans + "</span>" }}></div>
                   </div>
                   <div>
-                    <button className="btn mt-4 btn-warning sp" onClick={()=>onEdit(item._id)}>Edit</button>
-                    <button className="btn mt-4 ml-3 btn-danger" onClick={()=>onDelete(item._id)}>Delete</button>
+                    <button className="btn mt-4 btn-warning sp" onClick={() => onEdit(item._id)}>Edit</button>
+                    <button className="btn mt-4 ml-3 btn-danger" onClick={() => onDelete(item._id)}>Delete</button>
                   </div>
                 </div>
               </div>
@@ -145,7 +145,8 @@ class SearchTable extends Component {
     this.state = {
       questions: props.questions,
       sortKey: "NONE",
-      isSortReverse: false
+      isSortReverse: false,
+      current: -1,
     };
     this.refss = [];
     this.onSort = this.onSort.bind(this);
@@ -164,6 +165,10 @@ class SearchTable extends Component {
   toggleBtn(id) {
     console.log(id);
     console.log(this.refss[id]);
+    if (this.state.current !== -1) {
+      window.$(this.refss[this.state.current]).collapse("hide");
+    }
+    this.setState({ current: id });
     window.$(this.refss[id]).collapse("toggle");
   }
   render() {
@@ -173,20 +178,22 @@ class SearchTable extends Component {
         {questions ? (
           <div className="row mx-3">
             <Table
-              onEdit = {this.props.onEdit}
-              onDelete = {this.props.onDelete}
+              onEdit={this.props.onEdit}
+              onDelete={this.props.onDelete}
               list={questions}
               toggleBtn={this.toggleBtn}
               onSort={this.onSort}
               id1={this.id1}
               refss={this.refss}
               sortKey={sortKey}
+              current={this.props.current}
+              onClick={this.props.onClick}
               isSortReverse={isSortReverse}
             />
           </div>
         ) : (
-          <h1>No Questions Found.</h1>
-        )}
+            <h1>No Questions Found.</h1>
+          )}
       </div>
     );
   }
