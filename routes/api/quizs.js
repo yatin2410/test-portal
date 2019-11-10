@@ -6,7 +6,8 @@ const Quiz = require("../../models/Quiz");
 const validateQuizInput = require("../../validation/quiz");
 const moongose = require("mongoose");
 const Question = require("../../models/Question");
-
+const isEmpty = require("is-empty");
+const Validator = require("validator");
 router.post("/", authAdmin, (req, res) => {
   const { errors, isValid } = validateQuizInput(req.body);
   if (!isValid) {
@@ -153,6 +154,91 @@ router.get("/user/quiz/:id",userAdmin,(req,res) => {
         };
         res.status(200).json({quiz:quizFull});
       });
+  });
+});
+
+function validateRandomQuiz(obj,easyQ,mediumQ,hardQ){
+  let errors = {};
+  if(isEmpty(obj.easy)){
+    errors.easy = "It must be a number";
+  }
+  if(isEmpty(obj.medium)){
+    errors.medium = "It must be a number";
+  }
+  if(isEmpty(obj.hard)){
+    errors.hard = "It must be a number";
+  }
+  if(!Validator.isNumeric(obj.easy)){
+    errors.easy = "It must be a number";
+  }
+  if(!Validator.isNumeric(obj.medium)){
+    errors.medium = "It must be a number";
+  }
+  if(!Validator.isNumeric(obj.hard)){
+    errors.hard = "It must be a number";
+  }
+  if( Number(obj.easy) > easyQ.length ){
+    errors.easy = "Select a number between 0 and " + easyQ.length;
+  }
+  if( Number(obj.medium) > mediumQ.length ){
+    errors.medium = "Select a number between 0 and " + mediumQ.length;
+  }
+  if( Number(obj.hard) > hardQ.length ){
+    errors.hard = "Select a number between 0 and " + hardQ.length;
+  }
+  return errors;
+}
+
+router.post("/random/:id", authAdmin, (req, res) => {
+  if(!req.params.id) res.status(400).json({error:"bad request"});
+  let easyQ, mediumQ, hardQ;
+  Question.find({difficulty:"1"}).then(data=>{
+    easyQ = data;
+    Question.find({difficulty:"2"}).then(dta=>{
+    mediumQ = dta;
+      Question.find({difficulty:"3"}).then(da=>{
+        hardQ = da;
+        let errors = validateRandomQuiz(req.body,easyQ,mediumQ,hardQ);
+        console.log(errors+"in ");
+        if(!isEmpty(errors)){
+          res.status(404).json(errors);
+        }
+        let questionids = [];
+        let cnt= 0;
+        while(cnt !== Number(req.body.easy)){
+          let  r = Math.floor(Math.random() * easyQ.length);
+          if(questionids.includes(easyQ[r]._id)!==-1) {
+            questionids.push(easyQ[r]._id);
+            cnt++;
+          }
+        }
+        cnt= 0;
+        while(cnt !== Number(req.body.medium)){
+          let  r = Math.floor(Math.random() * mediumQ.length);
+          if(questionids.includes(mediumQ[r]._id)!==-1) {
+            questionids.push(mediumQ[r]._id);
+            cnt++;
+          }
+        }
+        cnt= 0;
+        while(cnt !== Number(req.body.hard)){
+          let  r = Math.floor(Math.random() * hardQ.length);
+          if(questionids.includes(hardQ[r]._id)!==-1) {
+            questionids.push(hardQ[r]._id);
+            cnt++;
+          }
+        }
+        Quiz.update(
+          {_id:req.params.id},
+          {
+            questions: questionids
+          },
+          (err,afft,data)=>{
+            if(err) req.status(400).json({error:"bad request"});
+            res.status(200).json({ok:"ok"});
+          });
+      });
+    });
   });
 });
 

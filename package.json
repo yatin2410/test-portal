@@ -31,6 +31,8 @@
     "react-datetime-picker": "^2.7.1",
     "react-dropdown": "^1.6.4",
     "react-moment": "^0.9.6",
+    "react-popupbox": "^2.0.8",
+    "reactjs-popup": "^1.5.0",
     "validator": "^11.1.0"
   },
   "devDependencies": {

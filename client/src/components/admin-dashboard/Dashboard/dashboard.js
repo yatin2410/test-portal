@@ -16,6 +16,7 @@ import AddQuiz from '../addQuiz/addquiz';
 import EditQuestion from '../editQuestion/editquestion';
 import AddQuestionsQuiz from '../addQuestionsQuiz/addquestionquiz';
 import ShowQuizQuestions from "../Quiz/showquizquestions";
+import AddQuestionsRandom from "../addQuestionsRandomly/addQuestionsRandomly";
 import EditQuiz from "../Quiz/editquiz";
 import SideBar from './sidebar';
 import NavBar from './navbar';
@@ -94,6 +95,7 @@ class adminDashboard extends Component {
             <Route exact path='/dashboard/addquiz' component={AddQuiz} />
             <Route exact path='/dashboard/editquestion/:id' component={EditQuestion} />
             <Route exact path='/dashboard/addquiz/questions/:id' component={AddQuestionsQuiz} />
+            <Route exact path='/dashboard/addquiz/random/:id' component={AddQuestionsRandom} />
             <Route exact path='/dashboard/showquestions/:id' component={ShowQuizQuestions} />
             <Route exact path='/dashboard/editquiz/:id' component={EditQuiz} />
             <Route exact path="/dashboard/help" component={Help} />

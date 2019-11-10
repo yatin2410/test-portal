@@ -92,11 +92,11 @@ class EditQuiz extends Component {
         _id: this.props.match.params.id,
       name,
       startDate: startDate
-        ? new Date(startDate).toISOString()
-        : new Date().toISOString(),
+        ? new Date(startDate)
+        : (""),
       endDate:endDate
-      ? new Date(endDate).toISOString()
-      : new Date().toISOString(),
+      ? new Date(endDate)
+      : (""),
       duration,
       perToPass,
       groups: submitGroups,

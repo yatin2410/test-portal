@@ -12,6 +12,7 @@ module.exports = function validateQuestionInput(data) {
     data.o2 = !isEmpty(data.o2) ? data.o2 : "";
     data.o3 = !isEmpty(data.o3) ? data.o3 : "";
     data.o4 = !isEmpty(data.o4) ? data.o4 : "";
+    data.difficulty = !isEmpty(data.difficulty) ? data.difficulty : "";
   
     if(Validator.isEmpty(data.type)){
         errors.type = "Type field is required";
@@ -33,6 +34,9 @@ module.exports = function validateQuestionInput(data) {
     }
     if(Validator.isEmpty(data.o4)){
         errors.o4 = "Option-4 field is required";
+    }
+    if(Validator.isEmpty(data.difficulty)){
+        errors.o4 = "Difficulty field is required";
     }
     console.log(data.ans.length);
     if(data.ans.length===0){

@@ -10,15 +10,17 @@ table tr { height:1em;  }
     margin-left: 5em;
 }
 .first{
-    width: 78%
+    width: 67%
 }
 .second{
     width: 12%
 }
 .third{
-    width: 10%;
+    width: 9%;
 }
-
+.fourth{
+    width: 12%;
+}
 .first1{
     width: 70%
 }
@@ -30,4 +32,13 @@ table tr { height:1em;  }
 }
 .forth{
     width:8%;
+}
+.color1{
+    color: green;
+}
+.color2{
+    color: orange;
+}
+.color3{
+    color: red;
 }

@@ -45,6 +45,7 @@ class EditQuestion extends Component {
       o2: "<p> Option-2 </P>",
       o3: "<p> Option-3 </P>",
       o4: "<p> Option-4 </P>",
+      difficulty: "1",
       ao1: false,
       ao2: false,
       ao3: false,
@@ -95,7 +96,8 @@ class EditQuestion extends Component {
       o2: this.state.o2,
       o3: this.state.o3,
       o4: this.state.o4,
-      ans: this.getans(this.state)
+      ans: this.getans(this.state),
+      difficulty: this.state.difficulty,
     };
     this.props.putQuestion(data, this.props.history);
   }
@@ -111,6 +113,12 @@ class EditQuestion extends Component {
     let val = event.target.value;
     this.setState({
       category: val
+    });
+  }
+  difficultyChange(event) {
+    let val = event.target.value;
+    this.setState({
+      difficulty: val
     });
   }
   onEditorStateChange(editorState, which) {
@@ -187,6 +195,20 @@ class EditQuestion extends Component {
             onEditorStateChange={this.onEditorStateChange}
           />
         ))}
+        <div className="row justify-content-md-center mt-3">
+          <div className="col-6">
+            <label forhtml="difficulty">Difficulty Level:</label>
+            <select
+              className="custom-select"
+              id="difficulty"
+              value={this.state.difficulty}
+              onChange={e => this.difficultyChange(e)}>
+              <option value="1">Easy</option>
+              <option value="2">Medium</option>
+              <option value="3">Hard</option>
+            </select>
+          </div>
+        </div>
         <div
           className="row justify-content-md-center mt-3"
           style={{ marginBottom: "100px" }}>
