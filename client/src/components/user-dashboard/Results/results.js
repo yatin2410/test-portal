@@ -53,7 +53,7 @@ class Results extends Component {
       <div>
         <div className="container">
           <div className="mt-5">
-            <h4 className="row justify-content-md-center">Ongoing Quizs</h4>
+            <h4 className="row justify-content-md-center">Ongoing Quizzes</h4>
             <SearchTable
               quizs={this.state.onGoingQuizs}
               onView={this.onView}
@@ -61,7 +61,7 @@ class Results extends Component {
             />
           </div>
           <div className="mt-5">
-            <h4 className="row justify-content-md-center">Past Quizs</h4>
+            <h4 className="row justify-content-md-center">Past Quizzes</h4>
             <SearchTable
               quizs={this.state.pastQuizs}
               onView={this.onView}

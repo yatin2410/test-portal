@@ -64,7 +64,7 @@ const SORTS = {
             <th style={{width:"12%"}}><Sort sortKey={"GROUPS"} onSort={onSort} activeSortKey={sortKey}>Groups</Sort> </th>
             <th style={{width:"8%"}}><span style={{fontSize:"0.8em"}}>Questions</span></th>
             <th style={{width:"7%"}}>Edit</th>
-            <th style={{width:"8%"}}>DELETE</th>
+            <th style={{width:"8%"}}>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -73,8 +73,8 @@ const SORTS = {
             (item)=>
               <tr key={item._id}>
                 <td >{item.name}</td>
-                <td ><Moment format="YYYY-MM-DD HH:mm" local>{item.startDate.toLocaleString()}</Moment></td>
-                <td ><Moment format="YYYY-MM-DD HH:mm" local>{item.endDate.toLocaleString()}</Moment></td>
+                <td ><Moment format="DD-MM-YYYY HH:mm" local>{item.startDate.toLocaleString()}</Moment></td>
+                <td ><Moment format="DD-MM-YYYY HH:mm" local>{item.endDate.toLocaleString()}</Moment></td>
                 <td >{item.duration+" min"}</td>
                 <td >{item.perToPass+" %"}</td>
                 <td >{item.groups.map((item)=><span className="row ml-1">{item}</span>)}</td>
