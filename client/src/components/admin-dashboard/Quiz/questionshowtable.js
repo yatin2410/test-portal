@@ -44,7 +44,7 @@ function Table(props) {
       <h5>
         Total : <span className="text-info">{reverseList.length}</span>
       </h5>
-      <table className="table table-bordered table-hover">
+      <table className="table table-bordered table-hover table-striped">
         <thead>
           <tr>
             <th className="first">
