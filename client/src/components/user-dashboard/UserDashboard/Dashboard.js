@@ -10,6 +10,12 @@ import Quiz from "../Quiz/quiz";
 import Results from "../Results/results";
 import SideBar from './sidebar';
 import NavBar from './navbar';
+import Help from '../Help/help';
+import {Help1} from '../Help/help';
+import {Help2} from '../Help/help';
+import {Help3} from '../Help/help';
+import {Help4} from '../Help/help';
+import {Help5} from '../Help/help';
 
 class userDashboard extends Component {
   constructor(props) {
@@ -71,6 +77,12 @@ class userDashboard extends Component {
             <Route exact path="/dashboard/results" component={Results} />
             <Route exact path="/dashboard/quiz" component={Quiz} />
             <Route exact path="/dashboard/myaccount" component={Myaccount} />
+            <Route exact path="/dashboard/help" component={Help} />
+            <Route exact path="/dashboard/help1" component={Help1} />
+            <Route exact path="/dashboard/help2" component={Help2} />
+            <Route exact path="/dashboard/help3" component={Help3} />
+            <Route exact path="/dashboard/help4" component={Help4} />
+            <Route exact path="/dashboard/help5" component={Help5} />
           </div>
         </div>
     );

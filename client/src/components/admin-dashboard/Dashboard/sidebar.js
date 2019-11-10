@@ -72,6 +72,12 @@ function SideBarButton(props) {
             changeUserLocation={props.changeUserLocation}>
             Settings
           </SideBarButton>
+          <SideBarButton
+            link="help"
+            userLocation = {props.userLocation}
+            changeUserLocation={props.changeUserLocation}>
+            Help
+          </SideBarButton>
           <Link to="/dashboard/logout" style={{ textDecoration: "None" }}>
             <button
               type="button"

@@ -53,13 +53,13 @@ class Quiz extends Component {
       <div className="container">
           <div className="mt-5">
             <h4 className="row justify-content-md-center">
-                Current Quizs
+                Current Quizzes
             </h4>
             <SearchTable quizs={this.state.currentQuizs} onStart = {this.onStart} isCurrent={true} takenQuizs={this.state.takenQuizs}/>
           </div>
           <div className="mt-5">
             <h4 className="row justify-content-md-center">
-                Upcoming Quizs
+                Upcoming Quizzes
             </h4>            
             <SearchTable quizs={this.state.upcomingQuizs} onStart = {this.onStart} isCurrent={false}/>              
           </div>
