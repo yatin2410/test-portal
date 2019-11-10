@@ -199,23 +199,26 @@ router.post("/random/:id", authAdmin, (req, res) => {
       Question.find({difficulty:"3"}).then(da=>{
         hardQ = da;
         let errors = validateRandomQuiz(req.body,easyQ,mediumQ,hardQ);
-        console.log(errors+"in ");
+        console.log(errors,isEmpty(errors));
         if(!isEmpty(errors)){
           res.status(404).json(errors);
         }
+        else{
         let questionids = [];
         let cnt= 0;
+        console.log(questionids);
         while(cnt !== Number(req.body.easy)){
           let  r = Math.floor(Math.random() * easyQ.length);
-          if(questionids.includes(easyQ[r]._id)!==-1) {
+          if(questionids.indexOf(easyQ[r]._id)===-1) {
             questionids.push(easyQ[r]._id);
             cnt++;
           }
         }
+        console.log(questionids);
         cnt= 0;
         while(cnt !== Number(req.body.medium)){
           let  r = Math.floor(Math.random() * mediumQ.length);
-          if(questionids.includes(mediumQ[r]._id)!==-1) {
+          if(questionids.indexOf(mediumQ[r]._id)===-1) {
             questionids.push(mediumQ[r]._id);
             cnt++;
           }
@@ -223,20 +226,23 @@ router.post("/random/:id", authAdmin, (req, res) => {
         cnt= 0;
         while(cnt !== Number(req.body.hard)){
           let  r = Math.floor(Math.random() * hardQ.length);
-          if(questionids.includes(hardQ[r]._id)!==-1) {
+          if(questionids.indexOf(hardQ[r]._id)===-1) {
             questionids.push(hardQ[r]._id);
             cnt++;
           }
         }
+        console.log(questionids);
         Quiz.update(
           {_id:req.params.id},
           {
             questions: questionids
           },
           (err,afft,data)=>{
-            if(err) req.status(400).json({error:"bad request"});
+            console.log(err);
+            if(err) res.status(400).json({error:"bad request"});
             res.status(200).json({ok:"ok"});
           });
+        }
       });
     });
   });
