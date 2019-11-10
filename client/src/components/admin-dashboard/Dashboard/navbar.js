@@ -1,21 +1,20 @@
 import React from 'react';
 import {  Link } from "react-router-dom";
 
-
 export default function NavBar(props) {
     return (
-      <nav className="navbar navbar-expand-lg navbar-secondary bg-light">
+      <nav className="navbar navbar-expand-lg nav-color">
         <div className="container-fluid">
-          <div className="col-3">
+          <div className="mr-5">
             <button
               type="button"
               id="sidebarCollapse"
-              className="btn btn-primary "
+              className="btn"
               onClick={props.toggelSidebar}>
               <i className="material-icons">menu</i>
             </button>
           </div>
-          <div className="col-4">
+          <div className="ml-5">
             <span
               style={{
                 fontSize: "2em",
