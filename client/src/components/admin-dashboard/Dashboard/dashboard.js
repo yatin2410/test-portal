@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route} from "react-router-dom";
 import { logoutUser } from "../../../actions/authActions";
-import "./css/dashboard.css";
 import Home from "../Home/home";
 import Users from "../Users/users";
 import Myaccount from "../Myaccount/myaccount";

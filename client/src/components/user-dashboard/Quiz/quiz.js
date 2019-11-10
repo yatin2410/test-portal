@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SearchTable from "./quiztable";
 import { connect } from "react-redux";
-import { fetchUserQuizs } from "../../../actions/fetchActions";
+import { fetchUserQuizs,fetchUser } from "../../../actions/fetchActions";
 import PropTypes from "prop-types";
 
 class Quiz extends Component {
@@ -10,11 +10,19 @@ class Quiz extends Component {
     this.state = {
       currentQuizs: [],
       upcomingQuizs: [],
+      takenQuizs: [],
     };
     this.onStart = this.onStart.bind(this);
   }
   componentDidMount() {
     const { user } = this.props.auth;
+    let arr = [];
+    console.log(user);
+    for(let item in user.quizs){
+      arr.push(item);
+    }
+    this.setState({takenQuizs:arr});
+    this.props.fetchUser(user.id);
     this.props.fetchUserQuizs(user.group);
   }
   componentWillReceiveProps(nextProps) {
@@ -27,6 +35,15 @@ class Quiz extends Component {
         quizs = nextProps.quizs.filter(((item)=>(new Date(item.startDate)).getTime()>(new Date()).getTime() && (new Date(item.endDate).getTime()>(new Date()).getTime())));
         this.setState({upcomingQuizs:quizs});
     }
+    if(nextProps.user.quizs){
+      console.log(nextProps.user.quizs);
+      let arr = [];
+      for(let i=0;i<nextProps.user.quizs.length;i++){
+        arr.push(...Object.keys(nextProps.user.quizs[i]));
+      }
+      console.log(arr);
+      this.setState({takenQuizs:arr});
+    }
   }
   onStart(id){
     this.props.history.push("/takequiz/"+id);
@@ -38,7 +55,7 @@ class Quiz extends Component {
             <h4 className="row justify-content-md-center">
                 Current Quizzes
             </h4>
-            <SearchTable quizs={this.state.currentQuizs} onStart = {this.onStart} isCurrent={true}/>
+            <SearchTable quizs={this.state.currentQuizs} onStart = {this.onStart} isCurrent={true} takenQuizs={this.state.takenQuizs}/>
           </div>
           <div className="mt-5">
             <h4 className="row justify-content-md-center">
@@ -52,15 +69,17 @@ class Quiz extends Component {
 }
 
 Quiz.propTypes = {
-  fetchUserQuizs: PropTypes.func.isRequired
+  fetchUserQuizs: PropTypes.func.isRequired,
+  fetchUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  quizs: state.data.quizs
+  quizs: state.data.quizs,
+  user: state.data.user,
 });
 
 export default connect(
   mapStateToProps,
-  { fetchUserQuizs }
+  { fetchUserQuizs,fetchUser }
 )(Quiz);

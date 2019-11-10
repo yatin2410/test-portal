@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Question from "./Question";
+import Question2 from "./Question2";
 import "./css/takequiz.css";
 import { fetchUserQuizFull } from "../../../actions/fetchActions";
+import { submitQuiz } from "../../../actions/putActions";
 import classNames from "classnames";
 import Timer from "react-compound-timer";
+
 
 function sideQuestion(props) {
   return (
@@ -76,6 +79,7 @@ class TakeQuiz extends Component {
     this.onPrev = this.onPrev.bind(this);
     this.onClearResponse = this.onClearResponse.bind(this);
     this.onAnsChange = this.onAnsChange.bind(this);
+    this.onAnsChange2 = this.onAnsChange2.bind(this);
   }
   componentDidMount() {
     this.props.fetchUserQuizFull(this.props.match.params.id);
@@ -84,14 +88,24 @@ class TakeQuiz extends Component {
     if (nextProps.quiz) {
       let arr = [];
       for (let i = 0; i < parseInt(nextProps.quiz.quiz.questionsFull.length); i++) {
-        arr.push(-1);
+        arr.push([]);
       }
+      console.log(nextProps.quiz);
       this.setState({ anss: arr });
       this.setState({ quiz: nextProps.quiz.quiz });
     }
   }
   onSubmit() {
-    alert("submitted");
+    let submitAns = {
+      userId: this.props.auth.user.id,
+      qid:this.props.match.params.id,
+      anss:{}
+    };
+    this.state.quiz.questionsFull.forEach((element,index) => {
+      {submitAns.anss[element._id] = {ans:this.state.anss[index]}}
+    });
+    console.log(submitAns);
+    this.props.submitQuiz(submitAns,this.props.history);
   }
   onChange(index) {
     this.setState({ activeIndex: index });
@@ -110,17 +124,29 @@ class TakeQuiz extends Component {
   }
   onClearResponse() {
     let arr = [...this.state.anss];
-    arr[this.state.activeIndex] = -1;
+    arr[this.state.activeIndex] = [];
     this.setState({ anss: arr });
   }
   onAnsChange(index, ans) {
+    console.log(index,ans);
     let arr = [...this.state.anss];
-    arr[index] = ans;
+    arr[index] = [ans];
     this.setState({ anss: arr });
+  }
+  onAnsChange2(index,ans){
+    let arr = [...this.state.anss];
+    if(arr[index].indexOf(ans)===-1){
+      arr[index].push(ans);
+    }
+    else{
+      arr[index] = arr[index].filter((item)=>item!==ans);
+    }
+    this.setState({anss: arr});
   }
   render() {
     const { user } = this.props.auth;
     const { name, questionsFull, duration } = this.state.quiz;
+    console.log(this.state.quiz.questionsFull);
     return (
       <div>
         <div className="header">
@@ -157,7 +183,7 @@ class TakeQuiz extends Component {
             </div>
             <div className="right-pane">
               <div className="container">
-                <Question Index={this.state.activeIndex} onAnsChange={this.onAnsChange} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} ans={this.state.anss[this.state.activeIndex]} />
+               {(this.state.quiz.questionsFull===undefined || this.state.quiz.questionsFull[this.state.activeIndex].type==="1")?<Question Index={this.state.activeIndex} onAnsChange={this.onAnsChange} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} ans={this.state.anss[this.state.activeIndex]}/>:<Question2 Index={this.state.activeIndex} onAnsChange={this.onAnsChange2} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} ans={this.state.anss[this.state.activeIndex]}/>}
               </div>
               <div className="bottom-line ml-5 mb-4">
                 <button className="btn btn-outline-primary btn-round btn-lg" onClick={this.onPrev}>
@@ -184,6 +210,7 @@ class TakeQuiz extends Component {
 TakeQuiz.propTypes = {
   auth: PropTypes.object.isRequired,
   fetchUserQuizFull: PropTypes.func.isRequired,
+  submitQuiz: PropTypes.func.isRequired,
   quiz: PropTypes.object.isRequired
 };
 
@@ -194,5 +221,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchUserQuizFull }
+  { fetchUserQuizFull,submitQuiz }
 )(TakeQuiz);

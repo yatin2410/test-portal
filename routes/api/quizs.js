@@ -8,6 +8,7 @@ const moongose = require("mongoose");
 const Question = require("../../models/Question");
 const isEmpty = require("is-empty");
 const Validator = require("validator");
+const User = require("../../models/User");
 router.post("/", authAdmin, (req, res) => {
   const { errors, isValid } = validateQuizInput(req.body);
   if (!isValid) {
@@ -31,16 +32,16 @@ router.put("/", authAdmin, (req, res) => {
     const newQuiz = new Quiz({
       ...req.body
     });
-    Quiz.find({_id:req.body._id}).then(data => {
-      if(!data) res.status(400).json({error:"some errors"});
+    Quiz.find({ _id: req.body._id }).then(data => {
+      if (!data) res.status(400).json({ error: "some errors" });
       Quiz.update(
-        {_id:req.body._id},
+        { _id: req.body._id },
         {
           ...req.body
         },
-        (err,afft,data)=>{
-          if(err) res.status(400).json({error:"some error"});
-          res.status(200).json({ok:"ok"});
+        (err, afft, data) => {
+          if (err) res.status(400).json({ error: "some error" });
+          res.status(200).json({ ok: "ok" });
         }
       );
     });
@@ -91,7 +92,6 @@ router.get("/:id", authAdmin, (req, res) => {
   });
 });
 
-
 router.delete("/", authAdmin, (req, res) => {
   console.log("in delete");
   Quiz.deleteMany({ _id: req.body._id }, err => {
@@ -104,56 +104,119 @@ router.delete("/", authAdmin, (req, res) => {
 });
 
 router.get("/showquestions/:id", authAdmin, (req, res) => {
-    if(req.params.id==undefined){
-      res.status(404).json({error:"quiz not found"});
-    }
-    Quiz.find({_id:req.params.id}).then((data)=>{
-      if(!data) res.status(404).json({error:"quiz not found"});
-        let questionids = data[0].questions;
-        questionids = questionids.map((item)=>moongose.Types.ObjectId(item));
-        console.log(questionids);
-        Question.find({
-          '_id':{ $in: questionids}
-        },
-        (err,data)=>{
-          if(err) res.status(400).json({error:"no questions"});
-          res.status(200).json({data});
-        });
-    });
+  if (req.params.id == undefined) {
+    res.status(404).json({ error: "quiz not found" });
+  }
+  Quiz.find({ _id: req.params.id }).then(data => {
+    if (!data) res.status(404).json({ error: "quiz not found" });
+    let questionids = data[0].questions;
+    questionids = questionids.map(item => moongose.Types.ObjectId(item));
+    Question.find(
+      {
+        _id: { $in: questionids }
+      },
+      (err, data) => {
+        if (err) res.status(400).json({ error: "no questions" });
+        res.status(200).json({ data });
+      }
+    );
+  });
 });
-
 
 router.get("/user/:group", userAdmin, (req, res) => {
   const group = req.params.group;
-  console.log(group);
-  Quiz.find({groups:group}).then(data => {
-    console.log(data);
+  Quiz.find({ groups: group }).then(data => {
     res.status(200).json(data);
   });
 });
 
-router.get("/user/quiz/:id",userAdmin,(req,res) => {
-  if(req.params.id==undefined){
-    res.status(404).json({error:"quiz not found"});
+router.get("/user/quiz/:id", userAdmin, (req, res) => {
+  if (req.params.id == undefined) {
+    res.status(404).json({ error: "quiz not found" });
   }
-  Quiz.find({_id:req.params.id}).then((data)=>{
-    if(!data) res.status(404).json({error:"quiz not found"});
-      let quiz = data[0];
-      let questionids = quiz.questions;
-      questionids = questionids.map((item)=>moongose.Types.ObjectId(item));
-      console.log(questionids);
-      Question.find({
-        '_id':{ $in: questionids}
+  Quiz.find({ _id: req.params.id }).then(data => {
+    if (!data) res.status(404).json({ error: "quiz not found" });
+    let quiz = data[0];
+    let questionids = quiz.questions;
+    questionids = questionids.map(item => moongose.Types.ObjectId(item));
+    Question.find(
+      {
+        _id: { $in: questionids }
       },
-      (err,dta)=>{
-        if(err) res.status(400).json({error:"no questions"});
-        dta.forEach((item) => item.ans = []);
+      (err, dta) => {
+        if (err) res.status(400).json({ error: "no questions" });
+        dta.forEach(item => (item.ans = []));
         let quizFull = {
-          questionsFull:dta,
-          ...quiz.toObject(),
+          questionsFull: dta,
+          ...quiz.toObject()
         };
-        res.status(200).json({quiz:quizFull});
-      });
+        res.status(200).json({ quiz: quizFull });
+      }
+    );
+  });
+});
+
+router.get("/user/result/:qid/:uid", userAdmin, (req, res) => {
+  if (req.params.qid == undefined || req.params.uid==undefined) {
+    res.status(404).json({ error: "quiz not found" });
+  }
+  Quiz.find({ _id: req.params.qid }).then(data => {
+    if (!data) res.status(404).json({ error: "quiz not found" });
+    let quiz = data[0];
+    let questionids = quiz.questions;
+    questionids = questionids.map(item => moongose.Types.ObjectId(item));
+    Question.find(
+      {
+        _id: { $in: questionids }
+      },
+      (err, dta) => {
+        if (err) res.status(400).json({ error: "no questions" });
+        User.find({_id:req.params.uid}).then(userData => {
+          if(!userData) res.status(404).json({error:"user not found"});
+          let userQuiz;
+          userData[0].quizs.forEach(itm => {
+            if (Object.keys(itm)[0] === req.params.qid) {
+              userQuiz = itm[req.params.qid];
+            }
+          });
+          let dtaf = JSON.parse(JSON.stringify(dta));
+          dtaf.forEach(im => (im.userAns = userQuiz[im._id].ans));
+          // console.log(dtaf);
+        let quizFull = {
+          questionsFull: dtaf,
+          ...quiz.toObject()
+        };
+        res.status(200).json({ quiz: quizFull });
+      }
+    );
+  });
+
+  });
+});
+
+
+router.post("/submit", userAdmin, (req, res) => {
+  if (!req.body.userId || !req.body.qid || req.body.anss === null)
+    res.status(400).json({ error: "bad request" });
+  Quiz.find({ _id: req.body.qid }).then(data => {
+    if (!data) res.status(400).json({ error: "bad request" });
+    let quiz = data[0];
+    let questionids = quiz.questions;
+    questionids = questionids.map(item => moongose.Types.ObjectId(item));
+    let submitAns = req.body.anss;
+    Question.find(
+      {
+        _id: { $in: questionids }
+      },
+      (err, dta) => {
+        if (err) res.status(400).json({ error: "no questions" });
+        dta.forEach(item => {submitAns[item._id].realAns = item.ans});
+        User.update({_id:req.body.userId},{$push:{quizs:{[req.body.qid]:submitAns}}},(err,afft,data)=>{
+          if(err) res.status(400).error({error:"bad request"});
+          res.status(200).json({ ok:"ok" });
+        });
+      }
+    );
   });
 });
 

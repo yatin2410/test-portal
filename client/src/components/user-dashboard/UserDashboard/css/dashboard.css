@@ -8,8 +8,8 @@
     overflow: hidden;
     min-width: 250px;
     max-width: 250px;
-    background: #b3b5a5;
-    transition: all 0.8s;
+    background: #E6E6FA;
+    transition: all 0.3s;
 }
 
 #sidebar.active {
@@ -17,24 +17,24 @@
 }
 
 .menu-regular{
-	background-color: #b3b5a5;
+	background-color: #E6E6FA;
 	font-size: 1.25em;
-	font-family: oxygen;
+	font-family: serif;
 	color: black;
 	text-align: center;
 	border: none;
 }
 
 .menu-regular:hover{
-	background-color:  #cbdbec;
+	background-color:  #E6E6FA;
 }
 
 .menu-regular:focus{
-    background-color:   #4a61bd; 
+    background-color:   #9370DB; 
 }
 
 .menu-active{
-	background-color: #4a61bd;
+	background-color: #9370DB;
 }
 
 
@@ -54,16 +54,23 @@
 
 #content {
     width: 100%;
-    padding: 20px;
     min-height: 100vh;
-    transition: all 0.8s;
+    transition: all 0.3s;
 }
 
 .nav-color{
-    background-color: lightgray;
-    border-radius: 30px;
+    background-color: #BA55D3;
+    box-shadow: 0 0 8px 0 gray;
 }
 
+ .btn:focus{
+    box-shadow:none !important;
+}
+
+.nav-link{
+    color: black;
+}
+  
 @media (max-width: 768px) {
     #sidebar {
         margin-left: -250px;

@@ -10,7 +10,7 @@ export default function NavBar(props) {
             <button
               type="button"
               id="sidebarCollapse"
-              className="btn btn-primary "
+              className="btn"
               onClick={props.toggelSidebar}>
               <i className="material-icons">menu</i>
             </button>
