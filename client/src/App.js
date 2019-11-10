@@ -16,7 +16,7 @@ import NoUserPrivateRoute from "./components/private-route/nouser-privateRoute";
 import adminDashboard from "./components/admin-dashboard/Dashboard/dashboard";
 import userDashboard from "./components/user-dashboard/UserDashboard/Dashboard";
 import TakeQuiz from './components/take-quiz/TakeQuiz/takequiz';
-
+import ViewQuiz from './components/view-quiz/TakeQuiz/viewquiz';
 import "./App.css";
 
 // Check for token to keep user logged in
@@ -61,6 +61,12 @@ class App extends Component {
            </Switch>
            <Switch>
              <NoUserPrivateRoute path='/takequiz/:id' component={Landing} />
+           </Switch>
+           <Switch>
+             <PrivateRoute path='/viewquiz/:id' component={ViewQuiz} />
+           </Switch>
+           <Switch>
+             <NoUserPrivateRoute path='/viewquiz/:id' component={Landing} />
            </Switch>
           </div>
         </Router>

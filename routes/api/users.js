@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const authAdmin = require("./authAdmin");
-
+const userAdmin = require("./auth");
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
@@ -12,6 +12,7 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 const Group = require("../../models/Group");
+const Quiz = require("../../models/Quiz");
 // @route POST api/users/register
 // @desc Register user
 // @access Public
@@ -185,7 +186,8 @@ router.post("/login", (req, res) => {
           name: user.name,
           email: user.email,
           group: user.group,
-          IsAdmin: user.IsAdmin
+          IsAdmin: user.IsAdmin,
+          quizs: user.quizs
         };
         // Sign token
         jwt.sign(
@@ -223,5 +225,34 @@ router.delete("/", authAdmin, (req, res) => {
     res.status(200).json({ ok: "ok" });
   });
 });
+
+router.get("/:id",userAdmin,(req,res)=>{
+  console.log(req.params);
+  if(!req.params.id) res.status(400).json({error:"bad request"});
+  User.findOne({ _id: req.params.id }).then(user => {
+    if(!user) res.status(400).json({error:"bad request"});
+    res.status(200).json(user);
+  });
+});
+
+router.get("/results/:id",userAdmin,(req,res)=>{
+  if(!req.params.id) res.status(400).json({error:"bad request"});
+  User.findOne({ _id: req.params.id }).then(user => {
+    if(!user) res.status(400).json({error:"bad request"});
+    let arr = [];
+    for(let i=0;i<user.quizs.length;i++){
+      arr.push(...Object.keys(user.quizs[i]));
+    }
+    Quiz.find(
+      {
+        _id: { $in: arr }
+      },
+      (err, data) => {
+        if(err) res.status(400).json({error:"bad request"});;
+        res.status(200).json({quizDatail:data,quizs:user.quizs});
+      });
+  });
+});
+
 
 module.exports = router;

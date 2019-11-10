@@ -1,4 +1,16 @@
-import { GET_USERS, GET_GROUPS, GET_QUESTIONS, GET_QUESTION,GET_QUIZ_QUESTIONS, GET_QUIZS, GET_SHOW_QUESTIONS,GET_QUIZ, GET_QUIZ_FULL} from "../actions/types";
+import {
+  GET_USERS,
+  GET_GROUPS,
+  GET_QUESTIONS,
+  GET_QUESTION,
+  GET_QUIZ_QUESTIONS,
+  GET_QUIZS,
+  GET_SHOW_QUESTIONS,
+  GET_QUIZ,
+  GET_QUIZ_FULL,
+  GET_USER,
+  GET_RESULTS
+} from "../actions/types";
 
 const initialState = {
   users: [],
@@ -8,8 +20,10 @@ const initialState = {
   addedQuestions: [],
   quizs: [],
   showQuestions: [],
-  quiz:{},
-  quizFull: {}
+  quiz: {},
+  quizFull: {},
+  user: {},
+  results: null,
 };
 
 export default function(state = initialState, action) {
@@ -37,28 +51,38 @@ export default function(state = initialState, action) {
     case GET_QUIZ_QUESTIONS:
       return {
         ...state,
-        addedQuestions : action.payload
+        addedQuestions: action.payload
       };
-    case  GET_QUIZS:
+    case GET_QUIZS:
       return {
         ...state,
         quizs: action.payload
-      }
+      };
     case GET_SHOW_QUESTIONS:
       return {
         ...state,
         showQuestions: action.payload
-      }
-      case GET_QUIZ:
-        return{
+      };
+    case GET_QUIZ:
+      return {
+        ...state,
+        quiz: action.payload
+      };
+    case GET_QUIZ_FULL:
+      return {
+        ...state,
+        quizFull: action.payload
+      };
+    case GET_USER:
+      return {
+        ...state,
+        user: action.payload
+      };
+      case GET_RESULTS:
+        return {
           ...state,
-          quiz: action.payload
-        }
-      case GET_QUIZ_FULL:
-        return{
-          ...state,
-          quizFull : action.payload
-        }
+          results: action.payload
+        };
     default:
       return state;
   }

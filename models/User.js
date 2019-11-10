@@ -24,7 +24,12 @@ const UserSchema = new Schema({
     },
     IsAdmin:{
         type: Boolean,
-        default: false
+        default: false,
+    },
+    quizs:{
+        type:Object,
+        required: true,
+        default: []
     }
 });
 

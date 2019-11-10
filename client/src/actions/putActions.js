@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ADD_GROUPS, GET_ERRORS } from "./types";
+import { ADD_GROUPS, GET_ERRORS , PUT_SUBMIT_ERROR} from "./types";
 
 // Register User
 export const registerGroup = (userData, fun) => dispatch => {
@@ -95,3 +95,19 @@ export const editQuiz = (userData, history) => dispatch => {
       });
     });
 };
+
+export const submitQuiz = (data, history) => dispatch => {
+  axios
+    .post("/api/quiz/submit", data)
+    .then(res => {
+      history.push("/dashboard/results");
+    })
+    .catch(err => {
+      console.log(err.response);
+      dispatch({
+        type: PUT_SUBMIT_ERROR,
+        payload: err.response.data
+      });
+    });
+};
+

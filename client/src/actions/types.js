@@ -11,3 +11,6 @@ export const GET_QUIZS = "GET_QUIZS";
 export const GET_SHOW_QUESTIONS = "GET_SHOW_QUESTIONS";
 export const GET_QUIZ = "GET_QUIZ";
 export const GET_QUIZ_FULL = "GET_QUIZ_FULL";
+export const PUT_SUBMIT_ERROR  = "PUT_SUBMIT_ERROR";
+export const GET_USER = "GET_USER";
+export const GET_RESULTS  = "GET_RESULTS";

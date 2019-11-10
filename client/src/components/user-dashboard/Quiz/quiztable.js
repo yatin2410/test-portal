@@ -28,7 +28,7 @@ const SORTS = {
   }
   
   function Table(props){
-    const {list,sortKey,onSort,isSortReverse, isCurrent, onStart
+    const {list,sortKey,onSort,isSortReverse, isCurrent, onStart,takenQuizs
     } = props;
     let reverseList = isSortReverse ? SORTS[sortKey](list).reverse() : SORTS[sortKey](list);
     return(
@@ -57,7 +57,7 @@ const SORTS = {
                 <td >{item.endDate}</td>
                 <td >{item.duration+" min"}</td>
                 <td >{item.perToPass+" %"}</td>
-                <td ><button className="btn" disabled={!isCurrent} onClick={()=>onStart(item._id)}><i className="material-icons">play_arrow</i></button> </td>
+                <td ><button className="btn" disabled={!isCurrent || takenQuizs.indexOf(item._id)!==-1} onClick={()=>onStart(item._id)}><i className="material-icons">play_arrow</i></button> </td>
               </tr>
           )
         }
@@ -73,12 +73,18 @@ class SearchTable extends Component {
       this.state = {
         quizs: props.quizs,
         sortKey: "NONE",
-        isSortReverse: false
+        isSortReverse: false,
+        takenQuizs: [],
       };
       this.onSort = this.onSort.bind(this);
     }
     componentWillReceiveProps(nextProps){
-      this.setState({quizs:nextProps.quizs});
+      if(nextProps.quizs){
+        this.setState({quizs:nextProps.quizs});
+      }
+      if(nextProps.takenQuizs){
+        this.setState({takenQuizs:nextProps.takenQuizs});
+      }
     }
     onSort(sortKey){
       const isSortReverse = this.state.sortKey === sortKey && this.state.isSortReverse===false;
@@ -86,12 +92,13 @@ class SearchTable extends Component {
     }
 
     render() {
-      const { quizs, sortKey, isSortReverse } = this.state;
+      const { quizs, takenQuizs,sortKey, isSortReverse } = this.state;
     return (
         <div className="container">
           {quizs ? (
             <div className="row mx-3">
               <Table
+                takenQuizs = {takenQuizs}
                 list={quizs}
                 onSort={this.onSort}
                 sortKey={sortKey}
