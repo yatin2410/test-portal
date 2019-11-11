@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { sortBy } from 'lodash';
 import classNames from 'classnames';
-import './css/users.css';
 
 const SORTS = {
     NONE: list => list,

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { sortBy } from "lodash";
 import classNames from "classnames";
-import "./css/qbank.css";
-
 const SORTS = {
   NONE: list => list,
   TYPE: list => sortBy(list, "type"),

@@ -81,29 +81,30 @@ class adminDashboard extends Component {
               toggelSidebar={this.toggelSidebar}
               onLogoutClick={this.onLogoutClick}
             />
-            <Route exact path="/dashboard" component={Home} />
-            <Route exact path="/dashboard/home" component={Home} />
-            <Route exact path="/dashboard/results" component={Results} />
-            <Route exact path="/dashboard/users" component={Users} />
-            <Route exact path="/dashboard/quiz" component={Quiz} />
-            <Route exact path="/dashboard/qbank" component={Qbank} />
-            <Route exact path="/dashboard/myaccount" component={Myaccount} />
-            <Route exact path="/dashboard/settings" component={Settings} />
-            <Route exact path='/dashboard/addquestion' component={AddQuestion} />
-            <Route exact path='/dashboard/addquiz' component={AddQuiz} />
-            <Route exact path='/dashboard/editquestion/:id' component={EditQuestion} />
-            <Route exact path='/dashboard/addquiz/questions/:id' component={AddQuestionsQuiz} />
-            <Route exact path='/dashboard/showquestions/:id' component={ShowQuizQuestions} />
-            <Route exact path='/dashboard/editquiz/:id' component={EditQuiz} />
-            <Route exact path="/dashboard/help" component={Help} />
-            <Route exact path="/dashboard/help1" component={Help1} />
-            <Route exact path="/dashboard/help2" component={Help2} />
-            <Route exact path="/dashboard/help3" component={Help3} />
-            <Route exact path="/dashboard/help4" component={Help4} />
-            <Route exact path="/dashboard/help5" component={Help5} />
-            <Route exact path="/dashboard/help6" component={Help6} />
-            <Route exact path="/dashboard/help7" component={Help7} />
-
+            <div className="main-container">
+              <Route exact path="/dashboard" component={Home} />
+              <Route exact path="/dashboard/home" component={Home} />
+              <Route exact path="/dashboard/results" component={Results} />
+              <Route exact path="/dashboard/users" component={Users} />
+              <Route exact path="/dashboard/quiz" component={Quiz} />
+              <Route exact path="/dashboard/qbank" component={Qbank} />
+              <Route exact path="/dashboard/myaccount" component={Myaccount} />
+              <Route exact path="/dashboard/settings" component={Settings} />
+              <Route exact path='/dashboard/addquestion' component={AddQuestion} />
+              <Route exact path='/dashboard/addquiz' component={AddQuiz} />
+              <Route exact path='/dashboard/editquestion/:id' component={EditQuestion} />
+              <Route exact path='/dashboard/addquiz/questions/:id' component={AddQuestionsQuiz} />
+              <Route exact path='/dashboard/showquestions/:id' component={ShowQuizQuestions} />
+              <Route exact path='/dashboard/editquiz/:id' component={EditQuiz} />
+              <Route exact path="/dashboard/help" component={Help} />
+              <Route exact path="/dashboard/help1" component={Help1} />
+              <Route exact path="/dashboard/help2" component={Help2} />
+              <Route exact path="/dashboard/help3" component={Help3} />
+              <Route exact path="/dashboard/help4" component={Help4} />
+              <Route exact path="/dashboard/help5" component={Help5} />
+              <Route exact path="/dashboard/help6" component={Help6} />
+              <Route exact path="/dashboard/help7" component={Help7} />
+            </div>
           </div>
         </div>
     );

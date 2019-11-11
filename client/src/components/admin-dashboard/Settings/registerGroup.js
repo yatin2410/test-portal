@@ -3,7 +3,6 @@ import {  withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerGroup } from "../../../actions/putActions";
-import "./css/registeradmin.css";
 
 class RegisterGroup extends Component {
   constructor(props) {

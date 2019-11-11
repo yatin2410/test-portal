@@ -3,7 +3,6 @@ import {  withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerAdmin } from "../../../actions/authActions";
-import "./css/registeradmin.css";
 
 class RegisterAdmin extends Component {
   constructor(props) {
