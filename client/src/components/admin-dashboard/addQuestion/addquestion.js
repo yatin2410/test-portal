@@ -145,7 +145,7 @@ class AddQuestion extends Component {
           <div className="col-5">
           <Editor
               name = "question"
-              id="questoin"
+              id="question"
               data = {this.state.question}
               which="question"
               onEditorStateChange={this.onEditorStateChange}

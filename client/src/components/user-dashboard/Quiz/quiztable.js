@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { sortBy } from 'lodash';
 import classNames from 'classnames';
 import Moment from 'react-moment';
+import Loading from '../../layout/Loading';
 
 const SORTS = {
     NONE: list => list,

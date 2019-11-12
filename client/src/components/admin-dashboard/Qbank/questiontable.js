@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { sortBy } from "lodash";
 import classNames from "classnames";
 import "./css/qbank.css";
+import Loading from "../../layout/Loading";
 
 const SORTS = {
   NONE: list => list,
@@ -39,6 +40,10 @@ function Table(props) {
   let reverseList = isSortReverse
     ? SORTS[sortKey](list).reverse()
     : SORTS[sortKey](list);
+  if( reverseList.length === 0 )
+  {
+    return <Loading/>;
+  }
   return (
     <div className="container">
       <h5>

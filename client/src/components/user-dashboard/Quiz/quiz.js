@@ -3,6 +3,7 @@ import SearchTable from "./quiztable";
 import { connect } from "react-redux";
 import { fetchUserQuizs,fetchUser } from "../../../actions/fetchActions";
 import PropTypes from "prop-types";
+import Loading from '../../layout/Loading';
 
 class Quiz extends Component {
   constructor(props) {
@@ -55,13 +56,13 @@ class Quiz extends Component {
             <h4 className="row justify-content-md-center">
                 Current Quizzes
             </h4>
-            <SearchTable quizs={this.state.currentQuizs} onStart = {this.onStart} isCurrent={true} takenQuizs={this.state.takenQuizs}/>
+            {this.state.currentQuizs.length === 0 ? <Loading className="mt-3"/> : <SearchTable quizs={this.state.currentQuizs} onStart = {this.onStart} isCurrent={true} takenQuizs={this.state.takenQuizs}/>}
           </div>
           <div className="mt-5">
             <h4 className="row justify-content-md-center">
                 Upcoming Quizzes
             </h4>            
-            <SearchTable quizs={this.state.upcomingQuizs} onStart = {this.onStart} isCurrent={false}/>              
+            {this.state.currentQuizs.length === 0 ? <Loading/> : <SearchTable quizs={this.state.upcomingQuizs} onStart = {this.onStart} isCurrent={false}/>}              
           </div>
       </div>
     );

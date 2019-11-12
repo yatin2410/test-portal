@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import Landing from "./components/layout/Landing";
+import Loading from "./components/layout/Loading";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import ForgotPassword from "./components/auth/ForgotPassword";
