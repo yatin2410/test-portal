@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Question from "./Question";
 import Question2 from "./Question2";
-import "./css/takequiz.css";
 import { fetchUserQuizFull } from "../../../actions/fetchActions";
 import { submitQuiz } from "../../../actions/putActions";
 import classNames from "classnames";
@@ -12,13 +11,13 @@ import Timer from "react-compound-timer";
 
 function sideQuestion(props) {
   return (
-    <div class={"question-item mt-3 " + classNames({ 'selected': props.qid === props.aid })} onClick={() => props.onChange(props.index)}>
-      <div class="inline-block float-left">
-        <div class="dark float-left padding-10 width-100">
-          <div class="padding-top-5 padding-left-5 float-left padding-right-5">
+    <div className={"question-item " + classNames({ 'selected': props.qid === props.aid })} onClick={() => props.onChange(props.index)}>
+      <div className="inline-block float-left">
+        <div className="dark float-left padding-10 width-100">
+          <div className="padding-top-5 padding-left-5 float-left padding-right-5">
             {props.index + 1}.{" "}
           </div>
-          <div class="question-statement padding-top-5" dangerouslySetInnerHTML={{ __html: props.question }}>
+          <div className="question-statement padding-top-5" dangerouslySetInnerHTML={{ __html: props.question }}>
           </div>
         </div>
       </div>
@@ -150,16 +149,14 @@ class TakeQuiz extends Component {
     return (
       <div>
         <div className="header">
-          <div className="float-left box-padding-20">
-            <div className="header-name ellipsis"> {name} </div>
-          </div>
+          <div className="header-name ellipsis"> {name} </div>
           <div className="float-right box-padding-20">
             <div className="user-name float-left mr-3">ID: {user.Id}</div>
             <div className="timer private-timer">
               <Timmer Time={duration} onSubmit = {this.onSubmit}/>
             </div>
             <button
-              className="end-test btn btn-danger"
+              className="end-test btn"
               style={{ color: "white" }}
               onClick={this.onSubmit}>
               End Test
@@ -167,39 +164,41 @@ class TakeQuiz extends Component {
           </div>
         </div>
         <div className="body">
-          <div class="view-body">
-            <div class="left-pane">
-              <div class="left-pane-header dark">
-                <div class="float-right">
+          <div className="view-body">
+            <div className="left-pane">
+              <div className="left-pane-header dark">
+                <div className="float-right">
                   Total Questions: {questionsFull ? questionsFull.length : 0}
                 </div>
-                <div class="clear"></div>
+                <div className="clear"></div>
               </div>
-              <div class="left-pane-content">
-                <div class="mt-3">
+              <div className="left-pane-content">
+                <div className="mt-3">
                   {questionsFull ? questionsFull.map((item, index) => sideQuestion({ index, onChange: this.onChange, question: item.question, qid: item._id, aid: this.state.quiz.questionsFull[this.state.activeIndex]._id })) : <br></br>}
                 </div>
               </div>
             </div>
-            <div className="right-pane">
-              <div className="container">
-               {(this.state.quiz.questionsFull===undefined || this.state.quiz.questionsFull[this.state.activeIndex].type==="1")?<Question Index={this.state.activeIndex} onAnsChange={this.onAnsChange} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} ans={this.state.anss[this.state.activeIndex]}/>:<Question2 Index={this.state.activeIndex} onAnsChange={this.onAnsChange2} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} ans={this.state.anss[this.state.activeIndex]}/>}
+            <div className="rig ht-container">
+              <div className="right-pane">
+                <div className="container">
+                {(this.state.quiz.questionsFull===undefined || this.state.quiz.questionsFull[this.state.activeIndex].type==="1")?<Question Index={this.state.activeIndex} onAnsChange={this.onAnsChange} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} ans={this.state.anss[this.state.activeIndex]}/>:<Question2 Index={this.state.activeIndex} onAnsChange={this.onAnsChange2} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} ans={this.state.anss[this.state.activeIndex]}/>}
+                </div>
               </div>
-              <div className="bottom-line ml-5 mb-4">
-                <button className="btn btn-outline-primary btn-round btn-lg" onClick={this.onPrev}>
-                  Prev
-                </button>
-                <button className="btn btn-primary btn-lg btn-round ml-3" onClick={this.onNext}>
-                  Next
-                </button>
-                <button className="btn btn-outline-secondary btn-round btn-lg ml-5" onClick={this.onClearResponse}>
-                  Clear Response
-                </button>
-                <button className="btn btn-outline-danger btn-lg btn-round btn-right" onClick={this.onSubmit}>
-                  Submit Quiz
-                </button>
+              <div className="bottom-line">
+                  <button className="btn btn-round btn-lg" onClick={this.onPrev}>
+                    Prev
+                  </button>
+                  <button className="btn btn-lg btn-round ml-3" onClick={this.onNext}>
+                    Next
+                  </button>
+                  <button className="btn btn-round btn-lg ml-5" onClick={this.onClearResponse}>
+                    Clear Response
+                  </button>
+                  <button className="btn-submit btn-lg btn-round btn-right" onClick={this.onSubmit}>
+                    Submit Quiz
+                  </button>
+                </div>
               </div>
-            </div>
           </div>
         </div>
       </div>

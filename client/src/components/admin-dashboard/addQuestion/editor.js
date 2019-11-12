@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./css/addquestion.css";
 import CKEditor from "ckeditor4-react";
 
 class Editor extends Component {

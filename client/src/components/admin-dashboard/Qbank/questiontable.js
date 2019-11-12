@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { sortBy } from "lodash";
 import classNames from "classnames";
-import "./css/qbank.css";
 import Loading from "../../layout/Loading";
 
 const SORTS = {

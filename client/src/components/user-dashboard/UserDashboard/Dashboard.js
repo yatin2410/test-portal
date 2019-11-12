@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route} from "react-router-dom";
 import { logoutUser } from "../../../actions/authActions";
-import "./css/dashboard.css";
 import Home from "../Home/home";
 import Myaccount from "../Myaccount/myaccount";
 import Quiz from "../Quiz/quiz";
@@ -72,17 +71,19 @@ class userDashboard extends Component {
               toggelSidebar={this.toggelSidebar}
               onLogoutClick={this.onLogoutClick}
             />
-            <Route exact path="/dashboard" component={Home} />
-            <Route exact path="/dashboard/home" component={Home} />
-            <Route exact path="/dashboard/results" component={Results} />
-            <Route exact path="/dashboard/quiz" component={Quiz} />
-            <Route exact path="/dashboard/myaccount" component={Myaccount} />
-            <Route exact path="/dashboard/help" component={Help} />
-            <Route exact path="/dashboard/help1" component={Help1} />
-            <Route exact path="/dashboard/help2" component={Help2} />
-            <Route exact path="/dashboard/help3" component={Help3} />
-            <Route exact path="/dashboard/help4" component={Help4} />
-            <Route exact path="/dashboard/help5" component={Help5} />
+            <div className="main-container">
+              <Route exact path="/dashboard" component={Home} />
+              <Route exact path="/dashboard/home" component={Home} />
+              <Route exact path="/dashboard/results" component={Results} />
+              <Route exact path="/dashboard/quiz" component={Quiz} />
+              <Route exact path="/dashboard/myaccount" component={Myaccount} />
+              <Route exact path="/dashboard/help" component={Help} />
+              <Route exact path="/dashboard/help1" component={Help1} />
+              <Route exact path="/dashboard/help2" component={Help2} />
+              <Route exact path="/dashboard/help3" component={Help3} />
+              <Route exact path="/dashboard/help4" component={Help4} />
+              <Route exact path="/dashboard/help5" component={Help5} />
+            </div>
           </div>
         </div>
     );

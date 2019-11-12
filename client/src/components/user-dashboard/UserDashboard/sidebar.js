@@ -32,12 +32,9 @@ class Sidebar extends Component {
     let props = this.props;
     return (
       <nav id="sidebar"  ref={props.sidebar}>
-        <div className="container mt-4" >
-          <span style={{ fontFamily: "oxygen", fontSize: "2em" }}>
-            TEST-PORTAL
-          </span>
-          <hr/>
-          <span style={{fontSize:"1.25em"}} className="ml-5">
+        <div style={{marginTop:"26px"}} className="container" >
+          
+          <span style={{fontSize:"1.25em", marginTop:"50px"}} className="ml-5 ">
             ID: {this.props.auth.user.Id}
           </span>
         </div>

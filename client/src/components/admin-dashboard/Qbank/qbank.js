@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./css/qbank.css";
 import SearchTable from "./questiontable.js";
 import {fetchQuestions} from "../../../actions/fetchActions";
 import PropTypes from "prop-types";

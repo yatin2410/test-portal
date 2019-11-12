@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Question from "./Question";
 import Question2 from "./Question2";
-import "./css/viewquiz.css";
 import { fetchUserQuizResult } from "../../../actions/fetchActions";
 import classNames from "classnames";
 
 
 function sideQuestion(props) {
   return (
-    <div class={"question-item mt-3 " + classNames({ 'selected': props.qid === props.aid })} onClick={() => props.onChange(props.index)}>
+    <div class={"question-item " + classNames({ 'selected': props.qid === props.aid })} onClick={() => props.onChange(props.index)}>
       <div class="inline-block float-left">
         <div class="dark float-left padding-10 width-100">
           <div class="padding-top-5 padding-left-5 float-left padding-right-5">
@@ -88,11 +87,13 @@ class ViewQuiz extends Component {
                 </div>
               </div>
             </div>
-            <div className="right-pane">
-              <div className="container">
-               {(this.state.quiz.questionsFull===undefined || this.state.quiz.questionsFull[this.state.activeIndex].type==="1")?<Question Index={this.state.activeIndex} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} />:<Question2 Index={this.state.activeIndex} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} />}
+            <div>
+              <div className="right-pane">
+                <div className="container">
+                {(this.state.quiz.questionsFull===undefined || this.state.quiz.questionsFull[this.state.activeIndex].type==="1")?<Question Index={this.state.activeIndex} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} />:<Question2 Index={this.state.activeIndex} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} />}
+                </div>
               </div>
-              <div className="bottom-line ml-5 mb-4">
+              <div className="bottom-line">
                 <button className="btn btn-outline-primary btn-round btn-lg" onClick={this.onPrev}>
                   Prev
                 </button>

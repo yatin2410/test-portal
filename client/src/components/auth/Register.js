@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
 import {fetchGroups} from "../../actions/fetchActions";
-import './css/register.css';
 import Navbar from '../layout/Navbar';
 
 class Register extends Component {
