@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {addQuiz} from "../../../actions/putActions";
+import {addRandom} from "../../../actions/putActions";
 import { fetchGroups } from "../../../actions/fetchActions";
 import DateTimePicker from 'react-datetime-picker';
 
@@ -82,8 +83,8 @@ class AddQuiz extends Component {
     const {name,startDate,duration,perToPass,endDate} = this.state;
     const newQuiz = {
         name,
-        startDate:startDate?(new Date(startDate)):(new Date()),
-        endDate: endDate?(new Date(endDate)):(new Date()),
+        startDate:startDate?(new Date(startDate)):(""),
+        endDate: endDate?(new Date(endDate)):(""),
         duration,
         perToPass,
         groups: submitGroups,
@@ -91,6 +92,23 @@ class AddQuiz extends Component {
     };
     console.log(newQuiz);
     this.props.addQuiz(newQuiz,this.props.history);
+  };
+
+  onSubmit1 = e => {
+    e.preventDefault();
+    let submitGroups = this.state.groups.filter((item)=>this.groupdata[item].checked===true);  
+    const {name,startDate,duration,perToPass,endDate} = this.state;
+    const newQuiz = {
+        name,
+        startDate:startDate?(new Date(startDate)):(""),
+        endDate: endDate?(new Date(endDate)):(""),
+        duration,
+        perToPass,
+        groups: submitGroups,
+        questions: [],
+    };
+    console.log(newQuiz);
+    this.props.addRandom(newQuiz,this.props.history);
   };
 
   onFocus(ele) {
@@ -121,7 +139,7 @@ class AddQuiz extends Component {
               </h4>
             </div>
           </div>
-          <form noValidate onSubmit={this.onSubmit}>
+          <form noValidate >
             {arr.map((item, ind) => (
               <InputComponent
                 name={item}
@@ -140,6 +158,7 @@ class AddQuiz extends Component {
               <p className="label-txt" ref={this.startDate} >
                   Start Date
                   </p>
+                  <p className="error-txt">{errors.startDate}</p>
                 <div className = "mt-4"><DateTimePicker value={this.state.startDate} onChange = {this.onChange1} onFocus={()=>this.onFocus(this.startDate)} onBlur={()=>this.OnBlur(this.startDate)}/></div>
               </div>
             </div>
@@ -149,6 +168,7 @@ class AddQuiz extends Component {
               <p className="label-txt" ref={this.endDate} >
                   End Date
                   </p>
+                  <p className="error-txt">{errors.endDate}</p>
                 <div className = "mt-4"><DateTimePicker value={this.state.endDate} onChange = {this.onChange2} onFocus={()=>this.onFocus(this.endDate)} onBlur={()=>this.OnBlur(this.endDate)}/></div>
               </div>
             </div>
@@ -166,12 +186,23 @@ class AddQuiz extends Component {
               </div>
               </div>
             </div>
+            <div className="row  mt-4 justify-content-md-center">
+              <div className="col-5">
+              <p className="label-txt" ref={this.addQuestions} >
+                  Add Questions:
+                  </p>
+              </div>
+            </div>
             <div className="row  mt-4-5 justify-content-md-center">
               <div className="col-md-auto">
+              <button
+                  className="btn btn-primary btn-lg hoverable mr-3" onClick={this.onSubmit1}>
+                  Randomly
+                </button>
                 <button
-                  className="btn btn-primary btn-lg hoverable"
+                  className="btn btn-primary btn-lg hoverable ml-3" onClick={this.onSubmit}
                   type="submit">
-                Submit
+                  Manually
                 </button>
               </div>
             </div>
@@ -184,6 +215,7 @@ class AddQuiz extends Component {
 
 AddQuiz.propTypes = {
     addQuiz: PropTypes.func.isRequired,
+    addRandom: PropTypes.func.isRequired,
     fetchGroups: PropTypes.func.isRequired,
     errors: PropTypes.array.isRequired,
 };
@@ -195,5 +227,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {addQuiz,fetchGroups}
+  {addQuiz,fetchGroups,addRandom}
 )(AddQuiz);

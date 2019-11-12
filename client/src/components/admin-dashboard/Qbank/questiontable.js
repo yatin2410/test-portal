@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { sortBy } from "lodash";
 import classNames from "classnames";
+import Loading from "../../layout/Loading";
+
 const SORTS = {
   NONE: list => list,
   TYPE: list => sortBy(list, "type"),
   CATEGORY: list => sortBy(list, "category"),
-  QUESTION: list => sortBy(list, "question")
+  QUESTION: list => sortBy(list, "question"),
+  DIFFICULTY: list => sortBy(list, "difficulty")
 };
 
 function Sort(props) {
@@ -22,12 +25,24 @@ function Sort(props) {
     </div>
   );
 }
+ function func(difficulty) {
+    if (difficulty === "1" )
+      return "<span class=color1>Easy</span>";
+    if ( difficulty === "2" )
+      return "<span class=color2>Medium</span>";
+    if ( difficulty === "3" )
+      return "<span class=color3>Hard</span>";
+ }
 
 function Table(props) {
   const { list, sortKey, onSort, isSortReverse, refss, onDelete, onEdit } = props;
   let reverseList = isSortReverse
     ? SORTS[sortKey](list).reverse()
     : SORTS[sortKey](list);
+  if( reverseList.length === 0 )
+  {
+    return <Loading/>;
+  }
   return (
     <div className="container">
       <h5>
@@ -60,6 +75,12 @@ function Table(props) {
                 Type
               </Sort>
             </th>
+            <th
+              className="fourth">
+              <Sort sortKey={"DIFFICULTY"} onSort={onSort} activeSortKey={sortKey}>
+                Difficulty
+              </Sort>
+            </th>
           </tr>
         </thead>
         {reverseList.map(item => (
@@ -74,6 +95,10 @@ function Table(props) {
               <td className="cl"
                 dangerouslySetInnerHTML={{
                   __html: item.type === "1" ? "MCSA" : "MCMA"
+                }}></td>
+              <td className="cl"
+                dangerouslySetInnerHTML={{
+                  __html: func(item.difficulty)
                 }}></td>
             </tr>
             <div

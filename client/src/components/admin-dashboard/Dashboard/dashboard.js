@@ -15,6 +15,7 @@ import AddQuiz from '../addQuiz/addquiz';
 import EditQuestion from '../editQuestion/editquestion';
 import AddQuestionsQuiz from '../addQuestionsQuiz/addquestionquiz';
 import ShowQuizQuestions from "../Quiz/showquizquestions";
+import AddQuestionsRandom from "../addQuestionsRandomly/addQuestionsRandomly";
 import EditQuiz from "../Quiz/editquiz";
 import SideBar from './sidebar';
 import NavBar from './navbar';

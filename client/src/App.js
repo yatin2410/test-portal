@@ -8,8 +8,11 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import Landing from "./components/layout/Landing";
+import Loading from "./components/layout/Loading";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import ForgotPassword from "./components/auth/ForgotPassword";
+import ChangePassword from "./components/auth/ChangePassword";
 import PrivateRoute from "./components/private-route/user-privateRoute";
 import PrivateRouteAdmin from "./components/private-route/admin-privateRoute";
 import NoUserPrivateRoute from "./components/private-route/nouser-privateRoute";
@@ -47,6 +50,8 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/forgotPassword" component={ForgotPassword} />
+            <Route exact path="/changePassword/:id" component={ChangePassword} />
             <Switch>
               <PrivateRouteAdmin path="/dashboard" component={adminDashboard} />
             </Switch>

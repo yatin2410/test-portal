@@ -66,6 +66,36 @@ export const addQuiz = (userData, history) => dispatch => {
     });
 };
 
+export const addRandom = (userData, history) => dispatch => {
+  axios
+    .post("/api/quiz/", userData)
+    .then(res => {
+      history.push("/dashboard/addquiz/random/" + res.data.quiz._id);
+    })
+    .catch(err => {
+      console.log(err.response);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+export const addQRandomly = (userData, history) => dispatch => {
+  axios
+    .post("/api/quiz/random/"+userData._id, userData)
+    .then(res => {
+      history.push("/dashboard/quiz/");
+    })
+    .catch(err => {
+      console.log(err.response);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    });
+};
+
 export const addQuizQuestions = (userData, history) => dispatch => {
   axios
     .put("/api/quiz/questions", userData)
