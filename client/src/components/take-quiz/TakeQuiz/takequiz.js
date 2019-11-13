@@ -7,18 +7,23 @@ import { fetchUserQuizFull } from "../../../actions/fetchActions";
 import { submitQuiz } from "../../../actions/putActions";
 import classNames from "classnames";
 import Timer from "react-compound-timer";
-
+import Loading from "../../layout/Loading";
 
 function sideQuestion(props) {
   return (
-    <div className={"question-item " + classNames({ 'selected': props.qid === props.aid })} onClick={() => props.onChange(props.index)}>
+    <div
+      className={
+        "question-item " + classNames({ selected: props.qid === props.aid })
+      }
+      onClick={() => props.onChange(props.index)}>
       <div className="inline-block float-left">
         <div className="dark float-left padding-10 width-100">
           <div className="padding-top-5 padding-left-5 float-left padding-right-5">
             {props.index + 1}.{" "}
           </div>
-          <div className="question-statement padding-top-5" dangerouslySetInnerHTML={{ __html: props.question }}>
-          </div>
+          <div
+            className="question-statement padding-top-5"
+            dangerouslySetInnerHTML={{ __html: props.question }}></div>
         </div>
       </div>
     </div>
@@ -29,40 +34,40 @@ class Timmer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time : null
+      time: props.Time
     };
   }
-  componentWillReceiveProps(nextProps){
-    if(nextProps.Time){
-      this.setState({time:nextProps.Time});
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.Time) {
+      this.setState({ time: nextProps.Time });
     }
   }
   render() {
     return (
-      <div className="time-widget align-center">{this.state.time?
-        <Timer 
-          initialTime={this.state.time*60*1000}
-          direction="backward"
-          checkpoints={[
-            {
-              time:1000*60*5,
-              callback:()=>alert("only five minutes remained"),
-            },
-            {
-              time:0,
-              callback:()=>this.props.onSubmit()
-            }
-          ]}
-        >
-          Timer - <Timer.Minutes />:<Timer.Seconds/>
-        </Timer>
-        :
-        <div>Timer - 0:0</div>}
+      <div className="time-widget align-center">
+        {this.state.time ? (
+          <Timer
+            initialTime={this.state.time * 60 * 1000}
+            direction="backward"
+            checkpoints={[
+              {
+                time: 1000 * 60 * 5,
+                callback: () => alert("only five minutes remained")
+              },
+              {
+                time: 0,
+                callback: () => this.props.onSubmit()
+              }
+            ]}>
+            Timer - <Timer.Minutes />:<Timer.Seconds />
+          </Timer>
+        ) : (
+          <div>Timer - 0:0</div>
+        )}
       </div>
-    )
+    );
   }
 }
-
 
 class TakeQuiz extends Component {
   constructor(props) {
@@ -71,6 +76,7 @@ class TakeQuiz extends Component {
       quiz: {},
       activeIndex: 0,
       anss: [],
+      isLoading: true
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -84,34 +90,44 @@ class TakeQuiz extends Component {
     this.props.fetchUserQuizFull(this.props.match.params.id);
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.quiz) {
+    if (nextProps.quiz && nextProps.quiz.quiz) {
       let arr = [];
-      for (let i = 0; i < parseInt(nextProps.quiz.quiz.questionsFull.length); i++) {
+      for (
+        let i = 0;
+        i < parseInt(nextProps.quiz.quiz.questionsFull.length);
+        i++
+      ) {
         arr.push([]);
       }
       console.log(nextProps.quiz);
       this.setState({ anss: arr });
       this.setState({ quiz: nextProps.quiz.quiz });
+      this.setState({ isLoading: false });
     }
   }
   onSubmit() {
     let submitAns = {
       userId: this.props.auth.user.id,
-      qid:this.props.match.params.id,
-      anss:{}
+      qid: this.props.match.params.id,
+      anss: {}
     };
-    this.state.quiz.questionsFull.forEach((element,index) => {
-      {submitAns.anss[element._id] = {ans:this.state.anss[index]}}
+    this.state.quiz.questionsFull.forEach((element, index) => {
+      {
+        submitAns.anss[element._id] = { ans: this.state.anss[index] };
+      }
     });
     console.log(submitAns);
-    this.props.submitQuiz(submitAns,this.props.history);
+    this.props.submitQuiz(submitAns, this.props.history);
   }
   onChange(index) {
     this.setState({ activeIndex: index });
   }
   onNext() {
     let index = this.state.activeIndex;
-    if (this.state.quiz.questionsFull && index + 1 !== this.state.quiz.questionsFull.length) {
+    if (
+      this.state.quiz.questionsFull &&
+      index + 1 !== this.state.quiz.questionsFull.length
+    ) {
       this.setState({ activeIndex: index + 1 });
     }
   }
@@ -127,80 +143,140 @@ class TakeQuiz extends Component {
     this.setState({ anss: arr });
   }
   onAnsChange(index, ans) {
-    console.log(index,ans);
+    console.log(index, ans);
     let arr = [...this.state.anss];
     arr[index] = [ans];
     this.setState({ anss: arr });
   }
-  onAnsChange2(index,ans){
+  onAnsChange2(index, ans) {
     let arr = [...this.state.anss];
-    if(arr[index].indexOf(ans)===-1){
+    if (arr[index].indexOf(ans) === -1) {
       arr[index].push(ans);
+    } else {
+      arr[index] = arr[index].filter(item => item !== ans);
     }
-    else{
-      arr[index] = arr[index].filter((item)=>item!==ans);
-    }
-    this.setState({anss: arr});
+    this.setState({ anss: arr });
   }
   render() {
     const { user } = this.props.auth;
     const { name, questionsFull, duration } = this.state.quiz;
+    console.log(this.state.isLoading);
+    console.log(duration);
     console.log(this.state.quiz.questionsFull);
     return (
       <div>
-        <div className="header">
-          <div className="header-name ellipsis"> {name} </div>
-          <div className="float-right box-padding-20">
-            <div className="user-name float-left mr-3">ID: {user.Id}</div>
-            <div className="timer private-timer">
-              <Timmer Time={duration} onSubmit = {this.onSubmit}/>
-            </div>
-            <button
-              className="end-test btn"
-              style={{ color: "white" }}
-              onClick={this.onSubmit}>
-              End Test
-            </button>
+        {this.state.isLoading ? (
+          <div style={{marginLeft:"13%"}}>
+          <Loading />
           </div>
-        </div>
-        <div className="body">
-          <div className="view-body">
-            <div className="left-pane">
-              <div className="left-pane-header dark">
-                <div className="float-right">
-                  Total Questions: {questionsFull ? questionsFull.length : 0}
+        ) : (
+          <div>
+            <div className="header">
+              <div className="header-name ellipsis"> {name} </div>
+              <div className="float-right box-padding-20">
+                <div className="user-name float-left mr-3">ID: {user.Id}</div>
+                <div className="timer private-timer">
+                  <Timmer Time={duration} onSubmit={this.onSubmit} />
                 </div>
-                <div className="clear"></div>
-              </div>
-              <div className="left-pane-content">
-                <div className="mt-3">
-                  {questionsFull ? questionsFull.map((item, index) => sideQuestion({ index, onChange: this.onChange, question: item.question, qid: item._id, aid: this.state.quiz.questionsFull[this.state.activeIndex]._id })) : <br></br>}
-                </div>
+                <button
+                  className="end-test btn"
+                  style={{ color: "white" }}
+                  onClick={this.onSubmit}>
+                  End Test
+                </button>
               </div>
             </div>
-            <div className="rig ht-container">
-              <div className="right-pane">
-                <div className="container">
-                {(this.state.quiz.questionsFull===undefined || this.state.quiz.questionsFull[this.state.activeIndex].type==="1")?<Question Index={this.state.activeIndex} onAnsChange={this.onAnsChange} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} ans={this.state.anss[this.state.activeIndex]}/>:<Question2 Index={this.state.activeIndex} onAnsChange={this.onAnsChange2} activequestion={this.state.quiz.questionsFull ? this.state.quiz.questionsFull[this.state.activeIndex] : {}} ans={this.state.anss[this.state.activeIndex]}/>}
+            <div className="body">
+              <div className="view-body">
+                <div className="left-pane">
+                  <div className="left-pane-header dark">
+                    <div className="float-right">
+                      Total Questions:{" "}
+                      {questionsFull ? questionsFull.length : 0}
+                    </div>
+                    <div className="clear"></div>
+                  </div>
+                  <div className="left-pane-content">
+                    <div className="mt-3">
+                      {questionsFull ? (
+                        questionsFull.map((item, index) =>
+                          sideQuestion({
+                            index,
+                            onChange: this.onChange,
+                            question: item.question,
+                            qid: item._id,
+                            aid: this.state.quiz.questionsFull[
+                              this.state.activeIndex
+                            ]._id
+                          })
+                        )
+                      ) : (
+                        <br></br>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="rig ht-container">
+                  <div className="right-pane">
+                    <div className="container">
+                      {this.state.quiz.questionsFull === undefined ||
+                      this.state.quiz.questionsFull[this.state.activeIndex]
+                        .type === "1" ? (
+                        <Question
+                          Index={this.state.activeIndex}
+                          onAnsChange={this.onAnsChange}
+                          activequestion={
+                            this.state.quiz.questionsFull
+                              ? this.state.quiz.questionsFull[
+                                  this.state.activeIndex
+                                ]
+                              : {}
+                          }
+                          ans={this.state.anss[this.state.activeIndex]}
+                        />
+                      ) : (
+                        <Question2
+                          Index={this.state.activeIndex}
+                          onAnsChange={this.onAnsChange2}
+                          activequestion={
+                            this.state.quiz.questionsFull
+                              ? this.state.quiz.questionsFull[
+                                  this.state.activeIndex
+                                ]
+                              : {}
+                          }
+                          ans={this.state.anss[this.state.activeIndex]}
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div className="bottom-line">
+                    <button
+                      className="btn btn-round btn-lg"
+                      onClick={this.onPrev}>
+                      Prev
+                    </button>
+                    <button
+                      className="btn btn-lg btn-round ml-3"
+                      onClick={this.onNext}>
+                      Next
+                    </button>
+                    <button
+                      className="btn btn-round btn-lg ml-5"
+                      onClick={this.onClearResponse}>
+                      Clear Response
+                    </button>
+                    <button
+                      className="btn-submit btn-lg btn-round btn-right"
+                      onClick={this.onSubmit}>
+                      Submit Quiz
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="bottom-line">
-                  <button className="btn btn-round btn-lg" onClick={this.onPrev}>
-                    Prev
-                  </button>
-                  <button className="btn btn-lg btn-round ml-3" onClick={this.onNext}>
-                    Next
-                  </button>
-                  <button className="btn btn-round btn-lg ml-5" onClick={this.onClearResponse}>
-                    Clear Response
-                  </button>
-                  <button className="btn-submit btn-lg btn-round btn-right" onClick={this.onSubmit}>
-                    Submit Quiz
-                  </button>
-                </div>
-              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }
@@ -218,7 +294,6 @@ const mapStateToProps = state => ({
   quiz: state.data.quizFull
 });
 
-export default connect(
-  mapStateToProps,
-  { fetchUserQuizFull,submitQuiz }
-)(TakeQuiz);
+export default connect(mapStateToProps, { fetchUserQuizFull, submitQuiz })(
+  TakeQuiz
+);

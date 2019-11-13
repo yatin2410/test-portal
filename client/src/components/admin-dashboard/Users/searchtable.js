@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { sortBy } from 'lodash';
 import classNames from 'classnames';
-import Loading from "../../layout/Loading";
 
 const SORTS = {
     NONE: list => list,
@@ -44,10 +43,6 @@ const SORTS = {
     const {list,sortKey,onSort,onDismiss,isSortReverse, searchTerm} = props;
     let reverseList = isSortReverse ? SORTS[sortKey](list).reverse() : SORTS[sortKey](list);
     reverseList =  reverseList.filter((item)=>item.email.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1 || item.name.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1 || item.group.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1);
-    if( reverseList.length === 0 )
-    {
-      return <Loading/>;
-    }
     return(
       <div className="container">
         <h5>

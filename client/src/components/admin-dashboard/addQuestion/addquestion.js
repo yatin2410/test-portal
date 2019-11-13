@@ -31,11 +31,11 @@ class AddQuestion extends Component {
     this.state = {
       type: "1",
       category: "1",
-      question: "<p> Add question </P>",
-      o1: "<p> Option-1 </P>",
-      o2: "<p> Option-2 </P>",
-      o3: "<p> Option-3 </P>",
-      o4: "<p> Option-4 </P>",
+      question: "",
+      o1: "",
+      o2: "",
+      o3: "",
+      o4: "",
       difficulty: "1",
       ao1: false,ao2: false,ao3:false,ao4:false,
       errors: {}

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { sortBy } from 'lodash';
 import classNames from 'classnames';
 import Moment from 'react-moment';
-import Loading from '../../layout/Loading';
 
 const SORTS = {
     NONE: list => list,
@@ -32,6 +31,7 @@ const SORTS = {
   function Table(props){
     const {list,sortKey,onSort,isSortReverse, isCurrent, onStart,takenQuizs
     } = props;
+    console.log(list,isCurrent);
     let reverseList = isSortReverse ? SORTS[sortKey](list).reverse() : SORTS[sortKey](list);
     return(
       <div className="container">
@@ -59,7 +59,7 @@ const SORTS = {
                 <td ><Moment format="DD-MM-YYYY HH:mm" local>{item.endDate.toLocaleString()}</Moment></td>
                 <td >{item.duration+" min"}</td>
                 <td >{item.perToPass+" %"}</td>
-                <td ><button className="btn" disabled={!isCurrent || takenQuizs.indexOf(item._id)!==-1} onClick={()=>onStart(item._id)}><i className="material-icons">play_arrow</i></button> </td>
+                <td ><button className="btn" disabled={isCurrent || takenQuizs.indexOf(item._id)!==-1} onClick={()=>onStart(item._id)}><i className="material-icons">play_arrow</i></button> </td>
               </tr>
           )
         }
@@ -76,7 +76,7 @@ class SearchTable extends Component {
         quizs: props.quizs,
         sortKey: "NONE",
         isSortReverse: false,
-        takenQuizs: [],
+        takenQuizs: props.takenQuizs,
       };
       this.onSort = this.onSort.bind(this);
     }

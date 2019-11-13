@@ -3,27 +3,31 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { fetchShowQuestions} from "../../../actions/fetchActions";
 import SearchTable from "./questionshowtable";
+import Loading from "../../layout/Loading";
 
 class ShowQuizQuestions extends Component {
     constructor(props){
         super(props);
         this.state = {
             showQuestions: [],
+            isLoading: true,
         };
     }
     componentDidMount(){
         this.props.fetchShowQuestions(this.props.match.params.id);
     }
     componentWillReceiveProps(nextProps){
-        if(nextProps.showQuestions){
-            console.log(nextProps.showQuestions.data);
+        if(nextProps.showQuestions && nextProps.showQuestions.data){
             this.setState({showQuestions: nextProps.showQuestions.data});
+            this.setState({isLoading: false});
         }
     }
     render() {
     return(
         <div className="mt-5">
+            {this.state.isLoading === false ?
             <SearchTable questions={this.state.showQuestions}/>
+            :<Loading/>}
         </div>
     );
   }

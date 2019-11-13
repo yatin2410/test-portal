@@ -25,11 +25,11 @@ class Loading extends React.Component {
   }
   render() {
     return (
-      <div className='sweet-loading'>
+      <div className='sweet-loading mt-5'>
         <FadeLoader
           css={override}
           sizeUnit={"px"}
-          size={10}
+          size={25}
           color={'#BA55D3'}
           loading={this.state.loading}
         />

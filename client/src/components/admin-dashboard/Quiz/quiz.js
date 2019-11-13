@@ -2,74 +2,86 @@ import React, { Component } from "react";
 import SearchTable from "./quiztable";
 import { connect } from "react-redux";
 import { fetchQuizs } from "../../../actions/fetchActions";
-import axios from 'axios';
+import axios from "axios";
 import PropTypes from "prop-types";
+import Loading from "../../layout/Loading";
 
 class Quiz extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state ={
-      quizs : []
+    this.state = {
+      quizs: [],
+      isLoading: true
     };
     this.onDismiss = this.onDismiss.bind(this);
     this.onOpenQuestions = this.onOpenQuestions.bind(this);
     this.onEdit = this.onEdit.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
     this.props.fetchQuizs();
   }
-  componentWillReceiveProps(nextProps){
-    if(nextProps.quizs){
-      this.setState({quizs:nextProps.quizs});
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.quizs) {
+      this.setState({ quizs: nextProps.quizs });
+      this.setState({isLoading: false});
     }
   }
-  onDismiss(id){
+  onDismiss(id) {
     axios
-    .delete("/api/quiz/", { data: { _id: id } })
-    .then(res => {
-      this.props.fetchQuizs();
-    })
-    .catch(err => {
-      console.log(err);
-    });    
+      .delete("/api/quiz/", { data: { _id: id } })
+      .then(res => {
+        this.props.fetchQuizs();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
-  onOpenQuestions(id){
-    this.props.history.push("/dashboard/showquestions/"+id);
+  onOpenQuestions(id) {
+    this.props.history.push("/dashboard/showquestions/" + id);
   }
-  onEdit(id){
-    this.props.history.push("/dashboard/editquiz/"+id);
+  onEdit(id) {
+    this.props.history.push("/dashboard/editquiz/" + id);
   }
   render() {
     return (
       <div>
-        <div className="container mt-5">
-          <div className="row justify-content-md-center">
-            <div className="col-2">
-              <button
-                className="btn btn-primary"
-                onClick={() =>
-                  this.props.history.push("/dashboard/addquiz")
-                }>
-                Add Quiz
-              </button>
+        {this.state.isLoading === false ? (
+          <div>
+            <div className="container mt-5">
+              <div className="row justify-content-md-center">
+                <div className="col-2">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() =>
+                      this.props.history.push("/dashboard/addquiz")
+                    }
+                  >
+                    Add Quiz
+                  </button>
+                </div>
+              </div>
             </div>
+            <SearchTable
+              quizs={this.state.quizs}
+              onDismiss={this.onDismiss}
+              onOpenQuestions={this.onOpenQuestions}
+              onEdit={this.onEdit}
+            />
           </div>
-        </div>
-        <SearchTable quizs = {this.state.quizs} onDismiss={this.onDismiss} onOpenQuestions ={this.onOpenQuestions} onEdit = {this.onEdit}/>
+        ) : (
+          <Loading />
+        )}
       </div>
     );
   }
 }
 
 Quiz.propTypes = {
-  fetchQuizs :PropTypes.func.isRequired
+  fetchQuizs: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   quizs: state.data.quizs
 });
 
-export default connect(
-  mapStateToProps,
-  { fetchQuizs }
-)(Quiz);
+export default connect(mapStateToProps, { fetchQuizs })(Quiz);

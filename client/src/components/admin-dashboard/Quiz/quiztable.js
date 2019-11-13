@@ -3,8 +3,6 @@ import { sortBy } from 'lodash';
 import classNames from 'classnames';
 import Moment from 'react-moment';
 import quiz from "./quiz";
-import Loading from '../../layout/Loading';
-
 
 const SORTS = {
     NONE: list => list,
@@ -50,10 +48,6 @@ const SORTS = {
     } = props;
     let reverseList = isSortReverse ? SORTS[sortKey](list).reverse() : SORTS[sortKey](list);
     reverseList =  reverseList.filter((item)=>item.name.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1 || item.startDate.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1 || item.endDate.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1 || item.duration === Number(searchTerm) || item.perToPass === Number(searchTerm) || item.groups.indexOf(searchTerm) !== -1);
-    if( reverseList.length === 0 )
-    {
-       return <Loading/>;
-    }
     return(
       <div className="container">
         <h5>

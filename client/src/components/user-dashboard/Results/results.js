@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchUserResults } from "../../../actions/fetchActions";
 import SearchTable from "./resulttable";
+import Loading from '../../layout/Loading';
 
 class Results extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class Results extends Component {
     this.state = {
       results: {},
       onGoingQuizs: [],
-      pastQuizs: []
+      pastQuizs: [],
+      isLoading: true,
     };
     this.onView = this.onView.bind(this);
   }
@@ -43,6 +45,7 @@ class Results extends Component {
       });
       this.setState({ onGoingQuizs: arr1 });
       this.setState({ pastQuizs: arr2 });
+      this.setState({isLoading:false});
     }
   }
   onView(id) {
@@ -51,7 +54,9 @@ class Results extends Component {
   render() {
     return (
       <div>
-        <div className="container">
+        {
+          this.state.isLoading ? <Loading /> :
+          <div className="container">
           <div className="mt-5">
             <h4 className="row justify-content-md-center">Ongoing Quizzes</h4>
             <SearchTable
@@ -69,6 +74,7 @@ class Results extends Component {
             />
           </div>
         </div>
+        }
       </div>
     );
   }

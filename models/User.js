@@ -29,7 +29,7 @@ const UserSchema = new Schema({
     quizs:{
         type:Object,
         required: true,
-        default: []
+        default: {}
     }
 });
 
