@@ -157,7 +157,7 @@ class TakeQuiz extends Component {
             </div>
             <button
               className="end-test btn"
-              style={{ color: "white" }}
+              // style={{ color: "rgb(78, 78, 57)" }}
               onClick={this.onSubmit}>
               End Test
             </button>
@@ -185,16 +185,16 @@ class TakeQuiz extends Component {
                 </div>
               </div>
               <div className="bottom-line">
-                  <button className="btn btn-round btn-lg" onClick={this.onPrev}>
+                  <button className="btn btn-round btn-lg " onClick={this.onPrev}>
                     Prev
                   </button>
-                  <button className="btn btn-lg btn-round ml-3" onClick={this.onNext}>
+                  <button className="btn btn-lg btn-round ml-3 modi-btn" onClick={this.onNext}>
                     Next
                   </button>
-                  <button className="btn btn-round btn-lg ml-5" onClick={this.onClearResponse}>
+                  <button className="btn btn-round btn-lg ml-5 " onClick={this.onClearResponse}>
                     Clear Response
                   </button>
-                  <button className="btn-submit btn-lg btn-round btn-right" onClick={this.onSubmit}>
+                  <button className="btn btn-lg btn-round btn-right modi-btn" onClick={this.onSubmit}>
                     Submit Quiz
                   </button>
                 </div>

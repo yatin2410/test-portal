@@ -88,7 +88,7 @@ class Register extends Component {
                 <b>Register</b> below
               </h4>
               <p  >
-                Already have an account? <Link to="/login">Log in</Link>
+                Already have an account? <Link to="/login" className="arrowFont">Log in</Link>
               </p>
             </div>	
         </div>
@@ -195,7 +195,7 @@ class Register extends Component {
 		</div>
 		<div className="row  mt-4-5 justify-content-md-center">
 			<div className="col-md-auto">
-			  <button className="btn btn-primary btn-lg hoverable" type="submit">submit</button>
+			  <button className="btn modi-btn btn-lg hoverable" type="submit">submit</button>
 			</div>
 		</div>
 	</form>

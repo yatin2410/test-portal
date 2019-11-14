@@ -34,11 +34,10 @@ class Sidebar extends Component {
       <nav id="sidebar"  ref={props.sidebar}>
         <div style={{marginTop:"26px"}} className="container" >
           
-          <span style={{fontSize:"1.25em", marginTop:"50px"}} className="ml-5 ">
+          <span style={{fontSize:"20px", marginTop:"50px", color:"white"}} className="ml-5 ">
             ID: {this.props.auth.user.Id}
           </span>
         </div>
-        <hr />
         <div className="list-group">
           <SideBarButton
             link="home"

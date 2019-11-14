@@ -80,7 +80,7 @@ class UpdateUser extends Component {
 
     return (
       <div>
-        <div className="container">
+        <div className="container" style={{margin:"30px"}}>
           <div className="row  mt-2 justify-content-md-center">
             <div className="col-5">
               <h4>
@@ -254,7 +254,7 @@ class UpdateUser extends Component {
             <div className="row  mt-4-5 justify-content-md-center">
               <div className="col-md-auto">
                 <button
-                  className="btn btn-primary btn-lg hoverable"
+                  className="btn modi-btn btn-lg btn-round hoverable"
                   type="submit">
                   Submit
                 </button>
