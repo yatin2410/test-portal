@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchUsers } from "../../../actions/fetchActions";
+import {putFlashMsg} from "../../../actions/putActions";
 import axios from 'axios';
 import SearchTable from './searchtable';
 
@@ -23,6 +24,7 @@ class Users extends Component {
     axios.delete('/api/users/',{data:{"Id":id}})
     .then(res => {
       this.props.fetchUsers();
+      this.props.putFlashMsg({msg:"User deleted successfully!",type:"alert-danger"});
     })
     .catch(err => {
       console.log(err);
@@ -40,6 +42,7 @@ class Users extends Component {
 
 Users.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
+  putFlashMsg: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   users: PropTypes.array.isRequired
 };
@@ -51,5 +54,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchUsers }
+  { fetchUsers,putFlashMsg }
 )(Users);

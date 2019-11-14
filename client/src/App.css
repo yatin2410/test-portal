@@ -5,3 +5,15 @@
     background-color: white;
   }
   
+  .flash{
+    display: inherit;
+    position: fixed;
+    bottom: 2%;
+    right: 2%;
+    width: 20%;
+  }
+
+  .flash-done{
+    display: none;
+  }
+

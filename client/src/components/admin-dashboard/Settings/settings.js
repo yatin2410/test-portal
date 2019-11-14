@@ -7,6 +7,8 @@ import SearchTable from "./tablesettings";
 import RegisterAdmin from "./registerAdmin";
 import GroupTable from "./groupTable";
 import RegisterGroup from "./registerGroup";
+import { putFlashMsg } from "../../../actions/putActions";
+
 class Settings extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +52,7 @@ class Settings extends Component {
       .delete("/api/groups/", { data: { group: group } })
       .then(res => {
         this.props.fetchGroups();
+        this.props.putFlashMsg({msg:"Group deleted successfully!",type:"alert-danger"});
       })
       .catch(err => {
         console.log(err);
@@ -60,6 +63,7 @@ class Settings extends Component {
       .delete("/api/users/", { data: { Id: id } })
       .then(res => {
         this.props.fetchUsers();
+        this.props.putFlashMsg({msg:"Admin deleted successfully!",type:"alert-danger"});
       })
       .catch(err => {
         console.log(err);
@@ -93,6 +97,7 @@ class Settings extends Component {
 Settings.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
   fetchGroups: PropTypes.func.isRequired,
+  putFlashMsg: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   users: PropTypes.array.isRequired
 };
@@ -105,5 +110,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchUsers,fetchGroups }
+  { fetchUsers,fetchGroups,putFlashMsg }
 )(Settings);

@@ -19,6 +19,7 @@ import AddQuestionsRandom from "../addQuestionsRandomly/addQuestionsRandomly";
 import EditQuiz from "../Quiz/editquiz";
 import SideBar from './sidebar';
 import NavBar from './navbar';
+import SuccessAlert from '../../layout/Flash';
 import Help from '../Help/help';
 import {Help1} from '../Help/help';
 import {Help2} from '../Help/help';
@@ -82,6 +83,7 @@ class adminDashboard extends Component {
               toggelSidebar={this.toggelSidebar}
               onLogoutClick={this.onLogoutClick}
             />
+            <SuccessAlert />
             <Route exact path="/dashboard" component={Home} />
             <Route exact path="/dashboard/home" component={Home} />
             <Route exact path="/dashboard/results" component={Results} />

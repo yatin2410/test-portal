@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SearchTable from "./quiztable";
 import { connect } from "react-redux";
 import { fetchQuizs } from "../../../actions/fetchActions";
+import {putFlashMsg} from "../../../actions/putActions";
 import axios from 'axios';
 import PropTypes from "prop-types";
 
@@ -9,7 +10,7 @@ class Quiz extends Component {
   constructor(props){
     super(props);
     this.state ={
-      quizs : []
+      quizs : [],
     };
     this.onDismiss = this.onDismiss.bind(this);
     this.onOpenQuestions = this.onOpenQuestions.bind(this);
@@ -28,6 +29,7 @@ class Quiz extends Component {
     .delete("/api/quiz/", { data: { _id: id } })
     .then(res => {
       this.props.fetchQuizs();
+      this.props.putFlashMsg({msg:"Quiz deleted successfully!",type:"alert-danger"});
     })
     .catch(err => {
       console.log(err);
@@ -62,14 +64,15 @@ class Quiz extends Component {
 }
 
 Quiz.propTypes = {
-  fetchQuizs :PropTypes.func.isRequired
+  fetchQuizs :PropTypes.func.isRequired,
+  putFlashMsg: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  quizs: state.data.quizs
+  quizs: state.data.quizs,
 });
 
 export default connect(
   mapStateToProps,
-  { fetchQuizs }
+  { fetchQuizs,putFlashMsg }
 )(Quiz);
