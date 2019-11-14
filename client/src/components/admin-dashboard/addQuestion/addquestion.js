@@ -172,7 +172,7 @@ class AddQuestion extends Component {
         </div>
         <div className="row justify-content-md-center mt-3" style={{marginBottom:"100px"}}>
           <div className="col-3" >
-          <button onClick={this.submitQuestion} className="btn btn-primary">submit</button>
+          <button onClick={this.submitQuestion} className="btn btn-primary">Add question</button>
           <p className="error-txt">{errors.ans}</p>
           </div>
           {/* <div className="col-3" style={{float:"left"}}>
