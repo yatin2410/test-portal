@@ -166,7 +166,7 @@ class EditQuiz extends Component {
                   Start Date
                   </p>
                   <p className="error-txt">{errors.startDate}</p>
-                <div className = "mt-4"><DateTimePicker value={this.state.startDate} onChange = {this.onChange1} onFocus={()=>this.onFocus(this.startDate)} onBlur={()=>this.OnBlur(this.startDate)}/></div>
+            <div className = "mt-4">{this.state.startDate?<DateTimePicker value={new Date(this.state.startDate)} onChange = {this.onChange1} onFocus={()=>this.onFocus(this.startDate)} onBlur={()=>this.OnBlur(this.startDate)}/>:null}</div>
               </div>
             </div>
 
@@ -176,7 +176,7 @@ class EditQuiz extends Component {
                   End Date
                   </p>
                   <p className="error-txt">{errors.endDate}</p>
-                <div className = "mt-4"><DateTimePicker value={this.state.endDate} onChange = {this.onChange2} onFocus={()=>this.onFocus(this.endDate)} onBlur={()=>this.OnBlur(this.endDate)}/></div>
+            <div className = "mt-4">{this.state.endDate?<DateTimePicker value={new Date(this.state.endDate)} onChange = {this.onChange2} onFocus={()=>this.onFocus(this.endDate)} onBlur={()=>this.OnBlur(this.endDate)}/>:null}</div>
               </div>
             </div>
 
