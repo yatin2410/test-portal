@@ -29,7 +29,7 @@ class Landing extends Component {
                   borderRadius: "3px",
                   letterSpacing: "1.5px"
                 }}
-                className="btn btn-lg btn-primary"
+                className="btn btn-lg modi-btn"
               >
                 Register
               </Link>
@@ -40,7 +40,7 @@ class Landing extends Component {
                 style={{
                   width: "140px",
                   borderRadius: "3px",
-                  letterSpacing: "1.5px"
+                  letterSpacing: "1.5px" 
                 }}
                 className="btn btn-lg float-right"
               >

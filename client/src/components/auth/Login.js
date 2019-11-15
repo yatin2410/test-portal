@@ -73,7 +73,7 @@ class Login extends Component {
                 <b>Login</b> below
               </h4>
               <p>
-                Don't have an account? <Link to="/register">Register</Link>
+                Don't have an account? <Link to="/register" className="arrowFont">Register</Link>
               </p>
             </div>
           </div>
@@ -131,7 +131,7 @@ class Login extends Component {
             <div className="row  mt-4-5 justify-content-md-center">
               <div className="col-md-auto">
                 <button
-                  className="btn btn-primary btn-lg hoverable"
+                  className="btn modi-btn btn-lg hoverable"
                   type="submit">
                   Login
                 </button>

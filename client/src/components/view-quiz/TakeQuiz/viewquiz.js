@@ -151,18 +151,14 @@ class ViewQuiz extends Component {
                         />
                       )}
                     </div>
-                  </div>
-                  <div className="bottom-line">
-                    <button
-                      className="btn btn-outline-primary btn-round btn-lg"
-                      onClick={this.onPrev}>
-                      Prev
-                    </button>
-                    <button
-                      className="btn btn-primary btn-lg btn-round ml-3"
-                      onClick={this.onNext}>
-                      Next
-                    </button>
+              </div>
+              <div className="bottom-line">
+                <button className="btn btn-round btn-lg" onClick={this.onPrev}>
+                  Prev
+                </button>
+                <button className="btn modi-btn btn-lg btn-round ml-3" onClick={this.onNext}>
+                  Next
+                </button>
                   </div>
                 </div>
               </div>
