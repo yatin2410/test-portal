@@ -165,9 +165,10 @@ class SearchTable extends Component {
   getquizs(arr) {
     if (arr.length !== 0) {
       let quizs = [];
+      console.log(arr);
       arr.forEach(item => {
-        let attempted = this.countAttemp(item.result);
-        let correct = this.countCorrect(item.result);
+        let attempted = this.countAttemp(item.result.qdata);
+        let correct = this.countCorrect(item.result.qdata);
         let per = ((correct * 100) / item.quiz.questions.length).toFixed(2);
         let perToPass = item.quiz.perToPass;
         let result = per >= perToPass ? "Pass" : "Fail";

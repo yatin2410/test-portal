@@ -2,7 +2,7 @@
 import { ADD_GROUPS } from "../actions/types";
 
 const initialState = {
-    errors: {}
+    errors: {},
 };
 
 export default function(state = initialState, action) {

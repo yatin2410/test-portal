@@ -24,6 +24,7 @@ class Quiz extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.quizs && nextProps.quizs.length !== 0) {
+      console.log((new Date()));
       let quizs = nextProps.quizs.filter(
         item =>
           new Date(item.startDate).getTime() <= new Date().getTime() &&
@@ -47,7 +48,7 @@ class Quiz extends Component {
       console.log(nextProps.user.quizs);
       let arr = [];
       for (let i = 0; i < nextProps.user.quizs.length; i++) {
-        arr.push(...Object.keys(nextProps.user.quizs[i]));
+        arr.push(nextProps.user.quizs[i].qid);
       }
       console.log(arr);
       this.setState({ takenQuizs: arr });

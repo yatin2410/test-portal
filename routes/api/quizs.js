@@ -130,11 +130,11 @@ router.get("/user/:group", userAdmin, (req, res) => {
   });
 });
 
-router.get("/user/quiz/:id", userAdmin, (req, res) => {
-  if (req.params.id == undefined) {
-    res.status(404).json({ error: "quiz not found" });
+router.get("/user/quiz/:qid/:uid", userAdmin, (req, res) => {
+  if (req.params.qid == undefined || req.params.uid==undefined) {
+    res.status(404).json({ error: "Bad Request" });
   }
-  Quiz.find({ _id: req.params.id }).then(data => {
+  Quiz.find({ _id: req.params.qid }).then(data => {
     if (!data) res.status(404).json({ error: "quiz not found" });
     let quiz = data[0];
     let questionids = quiz.questions;
@@ -146,11 +146,58 @@ router.get("/user/quiz/:id", userAdmin, (req, res) => {
       (err, dta) => {
         if (err) res.status(400).json({ error: "no questions" });
         dta.forEach(item => (item.ans = []));
-        let quizFull = {
-          questionsFull: dta,
-          ...quiz.toObject()
-        };
-        res.status(200).json({ quiz: quizFull });
+        User.find({_id:req.params.uid}).then(userData => {
+          if(!userData) res.status(404).json({error:"user not found"});
+          let userQuiz = null;
+          if(userData[0].quizs!==null){
+            userData[0].quizs.forEach(itm => {
+              if (itm.qid === req.params.qid) {
+                userQuiz = itm;
+              }
+            });  
+          }
+          // console.log(userQuiz);
+          if(userQuiz==null){
+            let obj = {};
+            obj.qid = req.params.qid;
+            obj.startTime = (new Date());
+            // console.log(obj);
+            // console.log(req.params.uid);
+            User.updateOne({_id:req.params.uid},{$push:{quizs:obj}},(err,afft,da)=>{
+              if(err) res.status(400).json({error:"can not push quiz"});
+              User.find({_id:req.params.uid}).then(userData => {
+                if(!userData) res.status(404).json({error:"user not found"});
+                let userQuiz = null;
+                if(userData[0].quizs!==null){
+                  userData[0].quizs.forEach(itm => {
+                    if (itm.qid === req.params.qid) {
+                      userQuiz = itm;
+                    }
+                  });  
+                }
+                let dtaf = JSON.parse(JSON.stringify(dta));
+                dtaf.forEach(im => (userQuiz.qdata && userQuiz.qdata[im._id] ? im.userAns = userQuiz.qdata[im._id].ans : im.userAns = []));
+                let quizFull = {
+                  questionsFull: dtaf,
+                  ...quiz.toObject(),
+                  startTime: userQuiz.startTime,
+                };
+                res.status(200).json({ quizFull });            
+              });
+      
+            });
+          }
+          else{
+            let dtaf = JSON.parse(JSON.stringify(dta));
+            dtaf.forEach(im => (userQuiz.qdata && userQuiz.qdata[im._id] ? im.userAns = userQuiz.qdata[im._id].ans : im.userAns = []));
+            let quizFull = {
+              questionsFull: dtaf,
+              ...quiz.toObject(),
+              startTime: userQuiz.startTime,
+            };
+            res.status(200).json({ quizFull });    
+          }
+        });
       }
     );
   });
@@ -175,25 +222,26 @@ router.get("/user/result/:qid/:uid", userAdmin, (req, res) => {
           if(!userData) res.status(404).json({error:"user not found"});
           let userQuiz;
           userData[0].quizs.forEach(itm => {
-            if (Object.keys(itm)[0] === req.params.qid) {
-              userQuiz = itm[req.params.qid];
+            if (itm.qid === req.params.qid) {
+              userQuiz = itm.qdata;
             }
           });
           let dtaf = JSON.parse(JSON.stringify(dta));
           dtaf.forEach(im => (im.userAns = userQuiz[im._id].ans));
           // console.log(dtaf);
+          console.log(quiz);
         let quizFull = {
           questionsFull: dtaf,
           ...quiz.toObject()
         };
-        res.status(200).json({ quiz: quizFull });
+        console.log(quizFull);
+        res.status(200).json({ quizFull });
       }
     );
   });
 
   });
 });
-
 
 router.post("/submit", userAdmin, (req, res) => {
   if (!req.body.userId || !req.body.qid || req.body.anss === null)
@@ -211,8 +259,10 @@ router.post("/submit", userAdmin, (req, res) => {
       (err, dta) => {
         if (err) res.status(400).json({ error: "no questions" });
         dta.forEach(item => {submitAns[item._id].realAns = item.ans});
-        User.update({_id:req.body.userId},{$push:{quizs:{[req.body.qid]:submitAns}}},(err,afft,data)=>{
+        console.log(submitAns);
+        User.updateOne({_id:req.body.userId,'quizs.qid':req.body.qid},{$set:{'quizs.$.qdata':submitAns}},(err,afft,da)=>{
           if(err) res.status(400).error({error:"bad request"});
+          console.log(da);
           res.status(200).json({ ok:"ok" });
         });
       }

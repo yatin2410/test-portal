@@ -248,7 +248,7 @@ router.get("/results/:id", userAdmin, (req, res) => {
     if (!user) res.status(400).json({ error: "bad request" });
     let arr = [];
     for (let i = 0; i < user.quizs.length; i++) {
-      arr.push(...Object.keys(user.quizs[i]));
+      arr.push(user.quizs[i].qid);
     }
     Quiz.find(
       {
@@ -301,6 +301,7 @@ router.post("/forgot", (req, res) => {
         .save()
         .then(ur => {
           mailOptions.text += ur._id;
+          console.log(mailOptions);
           transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
               console.log(error);

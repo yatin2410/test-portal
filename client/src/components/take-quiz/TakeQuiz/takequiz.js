@@ -3,81 +3,25 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Question from "./Question";
 import Question2 from "./Question2";
-import { fetchUserQuizFull } from "../../../actions/fetchActions";
-import { submitQuiz } from "../../../actions/putActions";
-import classNames from "classnames";
-import Timer from "react-compound-timer";
+import { SaveAndfetchUserQuizFull } from "../../../actions/fetchActions";
+import { submitQuiz, saveQuiz } from "../../../actions/putActions";
 import Loading from "../../layout/Loading";
-
-function sideQuestion(props) {
-  return (
-    <div
-      className={
-        "question-item " + classNames({ selected: props.qid === props.aid })
-      }
-      onClick={() => props.onChange(props.index)}>
-      <div className="inline-block float-left">
-        <div className="dark float-left padding-10 width-100">
-          <div className="padding-top-5 padding-left-5 float-left padding-right-5">
-            {props.index + 1}.{" "}
-          </div>
-          <div
-            className="question-statement padding-top-5"
-            dangerouslySetInnerHTML={{ __html: props.question }}></div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-class Timmer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      time: props.Time
-    };
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.Time) {
-      this.setState({ time: nextProps.Time });
-    }
-  }
-  render() {
-    return (
-      <div className="time-widget align-center">
-        {this.state.time ? (
-          <Timer
-            initialTime={this.state.time * 60 * 1000}
-            direction="backward"
-            checkpoints={[
-              {
-                time: 1000 * 60 * 5,
-                callback: () => alert("only five minutes remained")
-              },
-              {
-                time: 0,
-                callback: () => this.props.onSubmit()
-              }
-            ]}>
-            Timer - <Timer.Minutes />:<Timer.Seconds />
-          </Timer>
-        ) : (
-          <div>Timer - 0:0</div>
-        )}
-      </div>
-    );
-  }
-}
+import lodash from "lodash";
+import sideQuestion from "./SideQustion";
+import Timmer from "./Timer";
 
 class TakeQuiz extends Component {
   constructor(props) {
     super(props);
+    this.ele = React.createRef();
     this.state = {
       quiz: {},
       activeIndex: 0,
       anss: [],
-      isLoading: true
+      savedAnss: [],
+      isLoading: true,
     };
+    this.onSave = this.onSave.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onNext = this.onNext.bind(this);
@@ -87,21 +31,36 @@ class TakeQuiz extends Component {
     this.onAnsChange2 = this.onAnsChange2.bind(this);
   }
   componentDidMount() {
-    this.props.fetchUserQuizFull(this.props.match.params.id);
+    this.props.SaveAndfetchUserQuizFull(this.props.match.params.id,this.props.auth.user.id);
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.quiz && nextProps.quiz.quiz) {
+    console.log(nextProps);
+    if (nextProps.quiz && nextProps.quiz.questionsFull) {
       let arr = [];
       for (
         let i = 0;
-        i < parseInt(nextProps.quiz.quiz.questionsFull.length);
+        i < parseInt(nextProps.quiz.questionsFull.length);
         i++
       ) {
-        arr.push([]);
+        if(nextProps.quiz.questionsFull[i].userAns)
+          arr.push(nextProps.quiz.questionsFull[i].userAns);
+        else
+          arr.push([]);
       }
+      let startTime = nextProps.quiz.startTime;
+      let diff = (new Date()).getTime()-(new Date(startTime)).getTime();
+      console.log(diff);
+      if(diff<0){
+        this.props.history.push("/dashboard/quizs");
+      }
+      let duration = diff/(1000*60);
+      let actualDuration  = Number(nextProps.quiz.duration);
+      console.log(duration);
+      nextProps.quiz.duration = actualDuration - duration;
       console.log(nextProps.quiz);
       this.setState({ anss: arr });
-      this.setState({ quiz: nextProps.quiz.quiz });
+      this.setState({savedAnss: arr});
+      this.setState({ quiz: nextProps.quiz });
       this.setState({ isLoading: false });
     }
   }
@@ -119,6 +78,23 @@ class TakeQuiz extends Component {
     console.log(submitAns);
     this.props.submitQuiz(submitAns, this.props.history);
   }
+  onSave(){
+    if(lodash.isEqual(this.state.ans,this.state.savedAnss)===false){
+      let submitAns = {
+        userId: this.props.auth.user.id,
+        qid: this.props.match.params.id,
+        anss: {}
+      };
+      let arr = this.state.anss;
+      this.state.quiz.questionsFull.forEach((element, index) => {
+        {
+          submitAns.anss[element._id] = { ans: this.state.anss[index] };
+        }
+      });
+      this.setState({savedAnss:arr});
+      this.props.saveQuiz(submitAns);
+    }
+  }
   onChange(index) {
     this.setState({ activeIndex: index });
   }
@@ -129,12 +105,15 @@ class TakeQuiz extends Component {
       index + 1 !== this.state.quiz.questionsFull.length
     ) {
       this.setState({ activeIndex: index + 1 });
+      console.log(this.ele.current);
+      this.ele.current.scrollTop += 85;
     }
   }
   onPrev() {
     let index = this.state.activeIndex;
     if (index !== 0) {
       this.setState({ activeIndex: index - 1 });
+      this.ele.current.scrollTop -=85;
     }
   }
   onClearResponse() {
@@ -142,6 +121,7 @@ class TakeQuiz extends Component {
     arr[this.state.activeIndex] = [];
     this.setState({ anss: arr });
   }
+
   onAnsChange(index, ans) {
     console.log(index, ans);
     let arr = [...this.state.anss];
@@ -161,13 +141,11 @@ class TakeQuiz extends Component {
     const { user } = this.props.auth;
     const { name, questionsFull, duration } = this.state.quiz;
     console.log(this.state.isLoading);
-    console.log(duration);
-    console.log(this.state.quiz.questionsFull);
     return (
       <div>
         {this.state.isLoading ? (
-          <div style={{marginLeft:"13%"}}>
-          <Loading />
+          <div style={{ marginLeft: "13%" }}>
+            <Loading />
           </div>
         ) : (
           <div>
@@ -188,7 +166,7 @@ class TakeQuiz extends Component {
             </div>
             <div className="body">
               <div className="view-body">
-                <div className="left-pane">
+                <div className="left-pane" ref={this.ele}>
                   <div className="left-pane-header dark">
                     <div className="float-right">
                       Total Questions:{" "}
@@ -268,8 +246,8 @@ class TakeQuiz extends Component {
                     </button>
                     <button
                       className="btn-submit btn-lg btn-round btn-right"
-                      onClick={this.onSubmit}>
-                      Submit Quiz
+                      onClick={this.onSave}>
+                      Save
                     </button>
                   </div>
                 </div>
@@ -284,16 +262,17 @@ class TakeQuiz extends Component {
 
 TakeQuiz.propTypes = {
   auth: PropTypes.object.isRequired,
-  fetchUserQuizFull: PropTypes.func.isRequired,
+  SaveAndfetchUserQuizFull: PropTypes.func.isRequired,
   submitQuiz: PropTypes.func.isRequired,
+  saveQuiz: PropTypes.func.isRequired,
   quiz: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  quiz: state.data.quizFull
+  quiz: state.data.quizFull.quizFull,
 });
 
-export default connect(mapStateToProps, { fetchUserQuizFull, submitQuiz })(
+export default connect(mapStateToProps, { SaveAndfetchUserQuizFull, submitQuiz, saveQuiz })(
   TakeQuiz
 );

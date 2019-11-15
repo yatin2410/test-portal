@@ -47,8 +47,9 @@ class ViewQuiz extends Component {
     );
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.quiz && nextProps.quiz.quiz) {
-      this.setState({ quiz: nextProps.quiz.quiz });
+    console.log(nextProps);
+    if (nextProps.quiz && nextProps.quiz.quizFull) {
+      this.setState({ quiz: nextProps.quiz.quizFull });
       this.setState({ isLoading: false });
     }
   }

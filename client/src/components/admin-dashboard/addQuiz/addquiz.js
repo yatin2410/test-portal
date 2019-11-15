@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {addQuiz} from "../../../actions/putActions";
-import {addRandom} from "../../../actions/putActions";
+import {addQuiz, addRandom} from "../../../actions/putActions";
 import { fetchGroups } from "../../../actions/fetchActions";
 import DateTimePicker from 'react-datetime-picker';
 

@@ -98,6 +98,7 @@ class ChangePassword extends Component {
             <div className="row  mt-4-5 justify-content-md-center">
               <div className="col-md-auto">
                 <button className="btn btn-primary btn-lg hoverable" type="submit">Update</button>
+                <p className="error-txt mt-5 ml-1">{errors.submit}</p>
               </div>
             </div>
           </form>

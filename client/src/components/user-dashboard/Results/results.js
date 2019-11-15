@@ -28,16 +28,16 @@ class Results extends Component {
         if (new Date(item.endDate).getTime() > new Date().getTime()) {
           let result;
           nextProps.results.quizs.forEach(itm => {
-            if (Object.keys(itm)[0] === item._id) {
-              result = itm[item._id];
+            if (itm.qid === item._id) {
+              result = itm;
             }
           });
           arr1.push({ quiz: item, result });
         } else {
           let result;
           nextProps.results.quizs.forEach(itm => {
-            if (Object.keys(itm)[0] === item._id) {
-              result = itm[item._id];
+            if (itm.qid === item._id) {
+              result = itm;
             }
           });
           arr2.push({ quiz: item, result });
