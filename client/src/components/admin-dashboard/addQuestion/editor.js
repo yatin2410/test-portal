@@ -10,8 +10,16 @@ class Editor extends Component {
     return (
       <div>
         <CKEditor
+          className = "editor-border"
           name = {this.props.name}
           type="inline"
+          config = {{
+            uiColor:"#BA55D3",
+          }}
+            style = {{
+              border:"0.1px solid lightgrey",
+              padding:"2px"
+            }}
           data={this.props.data}
           onChange={(event)=>this.props.onEditorStateChange(event,this.props.which)}
         />

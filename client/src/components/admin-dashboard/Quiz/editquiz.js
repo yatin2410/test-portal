@@ -3,10 +3,21 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { editQuiz } from "../../../actions/putActions";
 import { fetchQuiz, fetchGroups } from "../../../actions/fetchActions";
-import DateTimePicker from 'react-datetime-picker';
+import DateTimePicker from "react-datetime-picker";
+import Loading from "../../layout/Loading";
 
 function InputComponent(props) {
-  const { reff, name, onChange, state, errors, onFocus, OnBlur, type, labelName } = props;
+  const {
+    reff,
+    name,
+    onChange,
+    state,
+    errors,
+    onFocus,
+    OnBlur,
+    type,
+    labelName
+  } = props;
   return (
     <div className="row  mt-4 justify-content-md-center">
       <div className="col-5">
@@ -45,13 +56,14 @@ class EditQuiz extends Component {
     this.state = {
       name: "",
       startDate: "",
-      endDate : "",
+      endDate: "",
       duration: "",
       perToPass: "",
       groups: [],
       allGroups: [],
       questions: [],
-      errors: {}
+      errors: {},
+      isLoading: true
     };
     this.groupdata = [];
     this.editQuestions = this.editQuestions.bind(this);
@@ -69,9 +81,10 @@ class EditQuiz extends Component {
     }
     if (nextProps.quiz) {
       this.setState({ ...nextProps.quiz });
+      this.setState({isLoading: false});
     }
     if (nextProps.groups) {
-      this.setState({ allGroups: nextProps.groups.map((item)=>item.group) });
+      this.setState({ allGroups: nextProps.groups.map(item => item.group) });
     }
   }
 
@@ -79,24 +92,27 @@ class EditQuiz extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  onChange1 = startDate => this.setState({ startDate })
-  onChange2 = endDate => this.setState({ endDate })
+  onChange1 = startDate => this.setState({ startDate });
+  onChange2 = endDate => this.setState({ endDate });
 
   onSubmit = e => {
     e.preventDefault();
     let submitGroups = this.state.allGroups.filter(
       item => this.groupdata[item].checked === true
     );
-    const { name, startDate, duration, perToPass, questions,endDate } = this.state;
-    const newQuiz = {
-        _id: this.props.match.params.id,
+    const {
       name,
-      startDate: startDate
-        ? new Date(startDate).toISOString()
-        : new Date().toISOString(),
-      endDate:endDate
-      ? new Date(endDate).toISOString()
-      : new Date().toISOString(),
+      startDate,
+      duration,
+      perToPass,
+      questions,
+      endDate
+    } = this.state;
+    const newQuiz = {
+      _id: this.props.match.params.id,
+      name,
+      startDate: startDate ? new Date(startDate) : "",
+      endDate: endDate ? new Date(endDate) : "",
       duration,
       perToPass,
       groups: submitGroups,
@@ -105,16 +121,15 @@ class EditQuiz extends Component {
     console.log(newQuiz);
     this.props.editQuiz(newQuiz, this.props.history);
   };
-  checkboxClicked(item){
+  checkboxClicked(item) {
     console.log(item);
     let group = this.state.groups;
-    if(group.indexOf(item)===-1){
+    if (group.indexOf(item) === -1) {
       group.push(item);
-      this.setState({groups:group});
-    }
-    else{
-      group = group.filter((itm)=>itm!==item);
-      this.setState({groups:group});
+      this.setState({ groups: group });
+    } else {
+      group = group.filter(itm => itm !== item);
+      this.setState({ groups: group });
     }
   }
   onFocus(ele) {
@@ -132,12 +147,14 @@ class EditQuiz extends Component {
   }
   render() {
     const { errors, allGroups, groups } = this.state;
-    const arr = ["name","duration", "perToPass"];
+    const arr = ["name", "duration", "perToPass"];
     const arr1 = [this.name, this.duration, this.perToPass];
     const arr2 = ["Name", "Duration", "Percentage To Pass"];
     return (
       <div>
-        <div className="container">
+        {
+          this.state.isLoading ===false ?
+          <div className="container">
           <div className="row  mt-2 justify-content-md-center">
             <div className="col-5">
               <h4>
@@ -160,21 +177,35 @@ class EditQuiz extends Component {
               />
             ))}
 
-<div className="row  mt-4 justify-content-md-center">
+            <div className="row  mt-4 justify-content-md-center">
               <div className="col-5">
-              <p className="label-txt" ref={this.startDate} >
+                <p className="label-txt" ref={this.startDate}>
                   Start Date
-                  </p>
-                <div className = "mt-4"><DateTimePicker value={this.state.startDate} onChange = {this.onChange1} onFocus={()=>this.onFocus(this.startDate)} onBlur={()=>this.OnBlur(this.startDate)}/></div>
+                </p>
+                <div className="mt-4">
+                  <DateTimePicker
+                    value={this.state.startDate}
+                    onChange={this.onChange1}
+                    onFocus={() => this.onFocus(this.startDate)}
+                    onBlur={() => this.OnBlur(this.startDate)}
+                  />
+                </div>
               </div>
             </div>
 
             <div className="row  mt-4 justify-content-md-center">
               <div className="col-5">
-              <p className="label-txt" ref={this.endDate} >
+                <p className="label-txt" ref={this.endDate}>
                   End Date
-                  </p>
-                <div className = "mt-4"><DateTimePicker value={this.state.endDate} onChange = {this.onChange2} onFocus={()=>this.onFocus(this.endDate)} onBlur={()=>this.OnBlur(this.endDate)}/></div>
+                </p>
+                <div className="mt-4">
+                  <DateTimePicker
+                    value={this.state.endDate}
+                    onChange={this.onChange2}
+                    onFocus={() => this.onFocus(this.endDate)}
+                    onBlur={() => this.OnBlur(this.endDate)}
+                  />
+                </div>
               </div>
             </div>
 
@@ -188,16 +219,18 @@ class EditQuiz extends Component {
                   id="groups"
                   className="mt-3"
                   onFocus={() => this.onFocus(this.groups)}
-                  onBlur={() => this.OnBlur(this.groups)}>
+                  onBlur={() => this.OnBlur(this.groups)}
+                >
                   {allGroups.map(item => (
                     <label className="ml-3">
                       <input
                         type="checkbox"
                         ref={ref => (this.groupdata[item] = ref)}
-                        onClick = {()=>this.checkboxClicked(item)}
+                        onClick={() => this.checkboxClicked(item)}
                         id={item}
-                        checked={groups.indexOf(item)!==-1}
-                      /> {item}
+                        checked={groups.indexOf(item) !== -1}
+                      />{" "}
+                      {item}
                     </label>
                   ))}
                 </div>
@@ -207,20 +240,24 @@ class EditQuiz extends Component {
               <div style={{ float: "right" }}>
                 <button
                   className="btn btn-primary btn-lg hoverable"
-                  onClick={this.editQuestions}>
+                  onClick={this.editQuestions}
+                >
                   Edit Questions
                 </button>
               </div>
               <div className="ml-4" style={{ float: "left" }}>
                 <button
                   className="btn btn-primary btn-lg hoverable"
-                  type="submit">
+                  type="submit"
+                >
                   Submit
                 </button>
               </div>
             </div>
           </form>
         </div>
+        : <Loading />
+        }
       </div>
     );
   }
@@ -239,7 +276,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { editQuiz, fetchQuiz, fetchGroups }
-)(EditQuiz);
+export default connect(mapStateToProps, { editQuiz, fetchQuiz, fetchGroups })(
+  EditQuiz
+);

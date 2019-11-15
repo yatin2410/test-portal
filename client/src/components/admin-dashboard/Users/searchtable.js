@@ -48,7 +48,7 @@ const SORTS = {
         <h5>
           Total : <span className="text-info">{reverseList.length}</span> 
         </h5>
-      <table className="table table-bordered table-hover">
+      <table className="table table-bordered table-hover modifiedtable">
         <thead>
           <tr>
             <th><Sort sortKey={"ID"} onSort={onSort} activeSortKey={sortKey}>Id</Sort></th>

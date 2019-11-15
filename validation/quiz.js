@@ -3,11 +3,12 @@ const isEmpty = require("is-empty");
 
 module.exports = function validateQuizInput(data) {
     let errors = {};
-
+    console.log(data.startDate);
     // Convert empty fields to an empty string so we can use validator functions
     data.name = !isEmpty(data.name) ? data.name : "";
     data.startDate = !isEmpty(data.startDate) ? data.startDate : "";
     data.duration = !isEmpty(data.duration) ? data.duration : "";
+    data.endDate = !isEmpty(data.endDate) ? data.endDate : ""
     data.perToPass = !isEmpty(data.perToPass) ? data.perToPass : "";
 
     //Id checks
@@ -41,8 +42,18 @@ module.exports = function validateQuizInput(data) {
         errors.startDate = "It must be Date URI";
     }
 
+    if(!Validator.isISO8601(data.endDate)){
+        errors.endDate = "It must be Date URI";
+    }
+
     if(data.groups==undefined || data.groups.length===0){
         errors.groups = "Select atleast one group";
+    }
+
+    if (!(errors.startDate && errors.endDate)&&(new Date(data.endDate).getTime() <= new Date(data.startDate).getTime())){
+        console.log(new Date(data.startDate).getTime());
+        console.log(new Date(data.endDate).getTime());
+        errors.endDate = "End Date must be greater than Start Date";
     }
 
     return {

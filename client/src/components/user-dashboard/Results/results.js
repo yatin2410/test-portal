@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchUserResults } from "../../../actions/fetchActions";
 import SearchTable from "./resulttable";
+import Loading from '../../layout/Loading';
 
 class Results extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class Results extends Component {
     this.state = {
       results: {},
       onGoingQuizs: [],
-      pastQuizs: []
+      pastQuizs: [],
+      isLoading: true,
     };
     this.onView = this.onView.bind(this);
   }
@@ -26,16 +28,16 @@ class Results extends Component {
         if (new Date(item.endDate).getTime() > new Date().getTime()) {
           let result;
           nextProps.results.quizs.forEach(itm => {
-            if (Object.keys(itm)[0] === item._id) {
-              result = itm[item._id];
+            if (itm.qid === item._id) {
+              result = itm;
             }
           });
           arr1.push({ quiz: item, result });
         } else {
           let result;
           nextProps.results.quizs.forEach(itm => {
-            if (Object.keys(itm)[0] === item._id) {
-              result = itm[item._id];
+            if (itm.qid === item._id) {
+              result = itm;
             }
           });
           arr2.push({ quiz: item, result });
@@ -43,6 +45,7 @@ class Results extends Component {
       });
       this.setState({ onGoingQuizs: arr1 });
       this.setState({ pastQuizs: arr2 });
+      this.setState({isLoading:false});
     }
   }
   onView(id) {
@@ -51,9 +54,11 @@ class Results extends Component {
   render() {
     return (
       <div>
-        <div className="container">
+        {
+          this.state.isLoading ? <Loading /> :
+          <div className="container">
           <div className="mt-5">
-            <h4 className="row justify-content-md-center">Ongoing Quizs</h4>
+            <h4 className="row justify-content-md-center">Ongoing Quizzes</h4>
             <SearchTable
               quizs={this.state.onGoingQuizs}
               onView={this.onView}
@@ -61,7 +66,7 @@ class Results extends Component {
             />
           </div>
           <div className="mt-5">
-            <h4 className="row justify-content-md-center">Past Quizs</h4>
+            <h4 className="row justify-content-md-center">Past Quizzes</h4>
             <SearchTable
               quizs={this.state.pastQuizs}
               onView={this.onView}
@@ -69,6 +74,7 @@ class Results extends Component {
             />
           </div>
         </div>
+        }
       </div>
     );
   }

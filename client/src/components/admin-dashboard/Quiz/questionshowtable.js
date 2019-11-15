@@ -6,8 +6,18 @@ const SORTS = {
   NONE: list => list,
   TYPE: list => sortBy(list, "type"),
   CATEGORY: list => sortBy(list, "category"),
-  QUESTION: list => sortBy(list, "question")
+  QUESTION: list => sortBy(list, "question"),
+  DIFFICULTY: list => sortBy(list, "difficulty")
 };
+
+function func(difficulty) {
+  if (difficulty === "1" )
+    return "<span class=color1>Easy</span>";
+  if ( difficulty === "2" )
+    return "<span class=color2>Medium</span>";
+  if ( difficulty === "3" )
+    return "<span class=color3>Hard</span>";
+}
 
 function Sort(props) {
   const { sortKey, onSort, children, activeSortKey } = props;
@@ -34,7 +44,7 @@ function Table(props) {
       <h5>
         Total : <span className="text-info">{reverseList.length}</span>
       </h5>
-      <table className="table table-bordered table-hover">
+      <table className="table table-bordered table-hover table-striped">
         <thead>
           <tr>
             <th className="first">
@@ -58,6 +68,12 @@ function Table(props) {
                 Type
               </Sort>
             </th>
+            <th
+              className="fourth">
+              <Sort sortKey={"DIFFICULTY"} onSort={onSort} activeSortKey={sortKey}>
+                Difficulty
+              </Sort>
+            </th>
           </tr>
         </thead>
         {reverseList.map(item => (
@@ -78,6 +94,10 @@ function Table(props) {
                 className="cl"
                 dangerouslySetInnerHTML={{
                   __html: item.type === "1" ? "MCSA" : "MCMA"
+                }}></td>
+              <td className="cl"
+                dangerouslySetInnerHTML={{
+                  __html: func(item.difficulty)
                 }}></td>
             </tr>
             <div

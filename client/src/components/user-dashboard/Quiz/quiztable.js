@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { sortBy } from 'lodash';
 import classNames from 'classnames';
+import Moment from 'react-moment';
 
 const SORTS = {
     NONE: list => list,
@@ -30,20 +31,21 @@ const SORTS = {
   function Table(props){
     const {list,sortKey,onSort,isSortReverse, isCurrent, onStart,takenQuizs
     } = props;
+    console.log(list,isCurrent);
     let reverseList = isSortReverse ? SORTS[sortKey](list).reverse() : SORTS[sortKey](list);
     return(
       <div className="container">
         <h5>
           Total : <span className="text-info">{reverseList.length}</span> 
         </h5>
-      <table className="table table-bordered table-hover">
+      <table className="table table-bordered table-hover modifiedtable">
         <thead>
           <tr>
             <th style={{width:"20%"}}><Sort sortKey={"NAME"} onSort={onSort} activeSortKey={sortKey}>Name</Sort> </th>
-            <th style={{width:"20%"}}><Sort sortKey={"STARTDATE"} onSort={onSort} activeSortKey={sortKey}>StartDate</Sort> </th>
-            <th style={{width:"20%"}}><Sort sortKey={"ENDDATE"} onSort={onSort} activeSortKey={sortKey}>endDate</Sort> </th>
+            <th style={{width:"20%"}}><Sort sortKey={"STARTDATE"} onSort={onSort} activeSortKey={sortKey}>Start Date</Sort> </th>
+            <th style={{width:"20%"}}><Sort sortKey={"ENDDATE"} onSort={onSort} activeSortKey={sortKey}>End Date</Sort> </th>
             <th style={{width:"15%"}}><Sort sortKey={"DURATION"} onSort={onSort} activeSortKey={sortKey}><span style={{fontSize:"0.85em"}}>Duration</span></Sort> </th>
-            <th style={{width:"15%"}}><Sort sortKey={"PERTOPASS"} onSort={onSort} activeSortKey={sortKey}><span style={{fontSize:"0.85em"}}>PerToPass</span></Sort> </th>
+            <th style={{width:"15%"}}><Sort sortKey={"PERTOPASS"} onSort={onSort} activeSortKey={sortKey}><span style={{fontSize:"0.85em"}}>Percentage</span></Sort> </th>
             <th>Start</th>
           </tr>
         </thead>
@@ -53,11 +55,11 @@ const SORTS = {
             (item)=>
               <tr key={item._id}>
                 <td >{item.name}</td>
-                <td >{item.startDate}</td>
-                <td >{item.endDate}</td>
+                <td ><Moment format="DD-MM-YYYY HH:mm" local>{item.startDate.toLocaleString()}</Moment></td>
+                <td ><Moment format="DD-MM-YYYY HH:mm" local>{item.endDate.toLocaleString()}</Moment></td>
                 <td >{item.duration+" min"}</td>
                 <td >{item.perToPass+" %"}</td>
-                <td ><button className="btn" disabled={!isCurrent || takenQuizs.indexOf(item._id)!==-1} onClick={()=>onStart(item._id)}><i className="material-icons">play_arrow</i></button> </td>
+                <td ><button className="btn" disabled={isCurrent || takenQuizs.indexOf(item._id)!==-1} onClick={()=>onStart(item._id)}><i className="material-icons">play_arrow</i></button> </td>
               </tr>
           )
         }
@@ -74,7 +76,7 @@ class SearchTable extends Component {
         quizs: props.quizs,
         sortKey: "NONE",
         isSortReverse: false,
-        takenQuizs: [],
+        takenQuizs: props.takenQuizs,
       };
       this.onSort = this.onSort.bind(this);
     }
@@ -108,7 +110,7 @@ class SearchTable extends Component {
               />
             </div>
           ) : (
-            <h3>No Quizs Found.</h3>
+            <h3>No Quizzes Found.</h3>
           )}
         </div>
         );

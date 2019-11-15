@@ -17,7 +17,8 @@ router.post("/", authAdmin, (req, res) => {
       o2: req.body.o2,
       o3: req.body.o3,
       o4: req.body.o4,
-      ans: req.body.ans
+      ans: req.body.ans,
+      difficulty: req.body.difficulty
     });
     newQuetion
       .save()

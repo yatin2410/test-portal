@@ -4,12 +4,14 @@ import { connect } from "react-redux";
 import { fetchUsers } from "../../../actions/fetchActions";
 import axios from 'axios';
 import SearchTable from './searchtable';
+import Loading from "../../layout/Loading";
 
 class Users extends Component {
   constructor(props) {
     super(props);
     this.state = {
       users: [],
+      isLoading: true
     };
     this.onDismiss = this.onDismiss.bind(this);
   }
@@ -17,7 +19,10 @@ class Users extends Component {
     this.props.fetchUsers();
   }
   componentWillReceiveProps(nextProps) {
-    this.setState({ users: nextProps.users.filter((item)=>item.IsAdmin === false) });
+    if(nextProps.users){
+      this.setState({ users: nextProps.users.filter((item)=>item.IsAdmin === false) });
+      this.setState({isLoading:false});
+    }
   }
   onDismiss(id){
     axios.delete('/api/users/',{data:{"Id":id}})
@@ -29,11 +34,15 @@ class Users extends Component {
     });
   }
   render() {
+    console.log(this.state.users);
     return (
+      <div>
+      {this.state.isLoading === false ?
       <SearchTable 
         onDismiss={this.onDismiss}
         users ={this.state.users}
-      />
+      />: <Loading/>}
+      </div>
     );
   }
 }

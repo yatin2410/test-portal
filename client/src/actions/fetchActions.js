@@ -152,9 +152,9 @@ export const fetchUserQuizs = group => dispatch => {
     });
 };
 
-export const fetchUserQuizFull = id => dispatch => {
+export const SaveAndfetchUserQuizFull = (qid,uid) => dispatch => {
   axios
-    .get("/api/quiz/user/quiz/" + id)
+    .get("/api/quiz/user/quiz/" + qid + '/' + uid)
     .then(res => {
       dispatch({
         type: GET_QUIZ_FULL,

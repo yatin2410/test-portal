@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ADD_GROUPS, GET_ERRORS , PUT_SUBMIT_ERROR} from "./types";
+import { ADD_GROUPS, GET_ERRORS , PUT_SUBMIT_ERROR, PUT_SAVE_ERROR, PUT_SAVE_SUCCESS} from "./types";
 
 // Register User
 export const registerGroup = (userData, fun) => dispatch => {
@@ -66,6 +66,36 @@ export const addQuiz = (userData, history) => dispatch => {
     });
 };
 
+export const addRandom = (userData, history) => dispatch => {
+  axios
+    .post("/api/quiz/", userData)
+    .then(res => {
+      history.push("/dashboard/addquiz/random/" + res.data.quiz._id);
+    })
+    .catch(err => {
+      console.log(err.response);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+export const addQRandomly = (userData, history) => dispatch => {
+  axios
+    .post("/api/quiz/random/"+userData._id, userData)
+    .then(res => {
+      history.push("/dashboard/quiz/");
+    })
+    .catch(err => {
+      console.log(err.response);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    });
+};
+
 export const addQuizQuestions = (userData, history) => dispatch => {
   axios
     .put("/api/quiz/questions", userData)
@@ -108,6 +138,20 @@ export const submitQuiz = (data, history) => dispatch => {
         type: PUT_SUBMIT_ERROR,
         payload: err.response.data
       });
+    });
+};
+
+export const saveQuiz = (data) => dispatch => {
+  axios
+    .post("/api/quiz/submit", data)
+    .then(res => {
+      dispatch({
+        type: PUT_SAVE_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
     });
 };
 

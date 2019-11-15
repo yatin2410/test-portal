@@ -1,68 +1,82 @@
 import React, { Component } from "react";
 import SearchTable from "./questiontable.js";
-import {fetchQuestions} from "../../../actions/fetchActions";
+import { fetchQuestions } from "../../../actions/fetchActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
+import Loading from "../../layout/Loading";
 
 class Qbank extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state= {
-      questions: []
+    this.state = {
+      questions: [],
+      isLoading: true,
     };
     this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
     this.props.fetchQuestions();
   }
-  componentWillReceiveProps(nextProps){
-    this.setState({questions:nextProps.questions});
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.questions) {
+      this.setState({ questions: nextProps.questions });
+      this.setState({isLoading: false});
+    }
   }
-  onEdit(id){
-    this.props.history.push('/dashboard/editquestion/'+id);
+  onEdit(id) {
+    this.props.history.push("/dashboard/editquestion/" + id);
   }
-  onDelete(id){
-    axios.delete('/api/questions/',{data:{"_id":id}})
-    .then(res => {
-      this.props.fetchQuestions();
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  onDelete(id) {
+    axios
+      .delete("/api/questions/", { data: { _id: id } })
+      .then(res => {
+        this.props.fetchQuestions();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
   render() {
     return (
       <div>
-        <div className="container mt-5">
-          <div className="row justify-content-md-center">
-            <div className="col-2">
-              <button
-                className="btn btn-primary"
-                onClick={() =>
-                  this.props.history.push("/dashboard/addquestion")
-                }>
-                Add Question
-              </button>
+        {this.state.isLoading ===false ? (
+          <div>
+            <div className="container mt-5">
+              <div className="row justify-content-md-center">
+                <div className="col-2">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() =>
+                      this.props.history.push("/dashboard/addquestion")
+                    }
+                  >
+                    Add Question
+                  </button>
+                </div>
+              </div>
             </div>
+            <SearchTable
+              questions={this.state.questions}
+              onDelete={this.onDelete}
+              onEdit={this.onEdit}
+            ></SearchTable>
           </div>
-        </div>
-        <SearchTable questions={this.state.questions} onDelete={this.onDelete} onEdit={this.onEdit} ></SearchTable>
+        ) : (
+          <Loading />
+        )}
       </div>
     );
   }
 }
-Qbank.propTypes ={
+Qbank.propTypes = {
   fetchQuestions: PropTypes.func.isRequired,
-  questions: PropTypes.array.isRequired,
+  questions: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-  questions: state.data.questions,
+  questions: state.data.questions
 });
 
-export default connect(
-  mapStateToProps,
-  {fetchQuestions}
-)(Qbank);
+export default connect(mapStateToProps, { fetchQuestions })(Qbank);

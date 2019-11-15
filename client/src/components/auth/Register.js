@@ -64,7 +64,7 @@ class Register extends Component {
       password: this.state.password,
       password2: this.state.password2
     };
-
+    console.log(newUser);
     this.props.registerUser(newUser, this.props.history);
   };
 
@@ -81,6 +81,7 @@ class Register extends Component {
     return (
       <div>
       <Navbar/>
+      <div className="main-container mt-3">
       <div className="container">
         <div className="row  mt-2 justify-content-md-center">
 	    		<div className="col-5">
@@ -101,7 +102,7 @@ class Register extends Component {
               className="input"
               onChange={this.onChange}
               value={this.state.Id}
-              error={errors.name}
+              error={errors.Id}
               id="Id"
               type="text"
               onFocus={()=>{this.onFocus(this.Id)}}
@@ -155,6 +156,7 @@ class Register extends Component {
             onFocus={()=>{this.onFocus(this.group)}}
             onBlur={()=>{this.OnBlur(this.group)}}
           >
+            <option></option>
             {
               this.state.groups.map((item)=><option value={item.group}>{item.group}</option>)
             }
@@ -195,13 +197,13 @@ class Register extends Component {
 		</div>
 		<div className="row  mt-4-5 justify-content-md-center">
 			<div className="col-md-auto">
-			  <button className="btn modi-btn btn-lg hoverable" type="submit">submit</button>
+			  <button className="btn modi-btn btn-lg hoverable" type="submit">Register</button>
 			</div>
 		</div>
 	</form>
   </div>
   </div>
-
+  </div>
     );
   }
 }
