@@ -1,5 +1,5 @@
 .modifiedtable>tbody>tr:nth-child(odd){
-    background-color: lightgray;
+    background-color: rgb(230, 231, 233);
   }
   .modifiedtable>tbody>tr:nth-child(even){
     background-color: white;
@@ -379,10 +379,22 @@ hr{
     background-color: rgb(57, 70, 78);
     color: white;
 }
+
+.modi-btn1{
+    background-color: rgb(57, 70, 78);
+    color: white;
+}
+
 .modi-btn:hover{
     transition-duration: 0.3s;
     box-shadow: 8px 5px 0 0 lightgray;
 }
+
+.modi-btn1:hover{
+    transition-duration: 0.3s;
+    box-shadow: 8px 5px 0 0 lightgray;
+}
+
 .que{
     font-family: sans-serif;
     font-size: 1.25em;

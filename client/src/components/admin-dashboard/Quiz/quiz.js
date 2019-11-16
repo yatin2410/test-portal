@@ -53,7 +53,7 @@ class Quiz extends Component {
               <div className="row justify-content-md-center">
                 <div className="col-2">
                   <button
-                    className="btn btn-primary"
+                    className="btn modi-btn1"
                     onClick={() =>
                       this.props.history.push("/dashboard/addquiz")
                     }

@@ -14,7 +14,7 @@ class Editor extends Component {
           name = {this.props.name}
           type="inline"
           config = {{
-            uiColor:"#BA55D3",
+            uiColor:"#698A82",
           }}
             style = {{
               border:"0.1px solid lightgrey",

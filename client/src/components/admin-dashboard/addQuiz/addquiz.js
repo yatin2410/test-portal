@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {addQuiz, addRandom} from "../../../actions/putActions";
 import { fetchGroups } from "../../../actions/fetchActions";
+import { Link } from "react-router-dom";
 import DateTimePicker from 'react-datetime-picker';
 
 function InputComponent(props) {
@@ -133,6 +134,7 @@ class AddQuiz extends Component {
         <div className="container">
           <div className="row  mt-2 justify-content-md-center">
             <div className="col-5">
+            <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
               <h4>
                 <b>Add Quiz Details: </b>
               </h4>
@@ -195,11 +197,11 @@ class AddQuiz extends Component {
             <div className="row  mt-4-5 justify-content-md-center">
               <div className="col-md-auto">
               <button
-                  className="btn btn-primary btn-lg hoverable mr-3" onClick={this.onSubmit1}>
+                  className="btn btn-lg hoverable mr-3 modi-btn" onClick={this.onSubmit1}>
                   Randomly
                 </button>
                 <button
-                  className="btn btn-primary btn-lg hoverable ml-3" onClick={this.onSubmit}
+                  className="btn btn-lg hoverable ml-3 modi-btn" onClick={this.onSubmit}
                   type="submit">
                   Manually
                 </button>

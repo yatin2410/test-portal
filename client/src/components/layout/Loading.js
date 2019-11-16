@@ -30,7 +30,7 @@ class Loading extends React.Component {
           css={override}
           sizeUnit={"px"}
           size={25}
-          color={'#BA55D3'}
+          color={'rgb(57, 70, 78)'}
           loading={this.state.loading}
         />
       </div> 

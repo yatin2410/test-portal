@@ -68,7 +68,7 @@ const SORTS = {
                 <td>{item.email}</td>
                 <td>{item.group}</td>
                 <td>
-                  <button  className="btn btn-danger" onClick = {()=>onDismiss(item.Id)}>
+                  <button  className="btn modi-btn" onClick = {()=>onDismiss(item.Id)}>
                     <i className="material-icons">delete</i>
                   </button>
                 </td>

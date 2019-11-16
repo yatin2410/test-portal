@@ -77,6 +77,7 @@ export const fetchQuestion = id => dispatch => {
   axios
     .get("/api/questions/" + id)
     .then(res => {
+      console.log(res);
       dispatch({
         type: GET_QUESTION,
         payload: res.data

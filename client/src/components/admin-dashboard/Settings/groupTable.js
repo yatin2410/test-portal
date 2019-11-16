@@ -48,7 +48,7 @@ function Table(props) {
             <tr key={item.group}>
               <td>{item.group}</td>
               <td>
-                <button data-toggle="tooltip" title="This action will delete group and all the users associated with it." data-placement="right" className="btn btn-primary" onClick={() => onDismiss(item.group)}>
+                <button data-toggle="tooltip" title="This action will delete group and all the users associated with it." data-placement="right" className="btn modi-btn" onClick={() => onDismiss(item.group)}>
                   <i className="material-icons">delete</i>
                 </button>
               </td>

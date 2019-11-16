@@ -213,7 +213,7 @@ class EditQuestion extends Component {
           className="row justify-content-md-center mt-3"
           style={{ marginBottom: "100px" }}>
           <div className="col-3">
-            <button onClick={this.submitQuestion} className="btn btn-primary">
+            <button onClick={this.submitQuestion} className="btn modi-btn">
               Edit Question
             </button>
             <p className="error-txt">{errors.ans}</p>
