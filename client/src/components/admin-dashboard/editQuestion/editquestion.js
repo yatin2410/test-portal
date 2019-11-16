@@ -214,7 +214,7 @@ class EditQuestion extends Component {
           style={{ marginBottom: "100px" }}>
           <div className="col-3">
             <button onClick={this.submitQuestion} className="btn btn-primary">
-              submit
+              Edit Question
             </button>
             <p className="error-txt">{errors.ans}</p>
           </div>

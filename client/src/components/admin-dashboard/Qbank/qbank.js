@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
 import Loading from "../../layout/Loading";
+import { putFlashMsg } from "../../../actions/putActions";
 
 class Qbank extends Component {
   constructor(props) {
@@ -28,15 +29,15 @@ class Qbank extends Component {
   onEdit(id) {
     this.props.history.push("/dashboard/editquestion/" + id);
   }
-  onDelete(id) {
-    axios
-      .delete("/api/questions/", { data: { _id: id } })
-      .then(res => {
-        this.props.fetchQuestions();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  onDelete(id){
+    axios.delete('/api/questions/',{data:{"_id":id}})
+    .then(res => {
+      this.props.fetchQuestions();
+      this.props.putFlashMsg({msg:"Question deleted successfully!",type:"alert-danger"});
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
   render() {
     return (
@@ -72,11 +73,15 @@ class Qbank extends Component {
 }
 Qbank.propTypes = {
   fetchQuestions: PropTypes.func.isRequired,
-  questions: PropTypes.array.isRequired
+  putFlashMsg: PropTypes.func.isRequired,
+  questions: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
   questions: state.data.questions
 });
 
-export default connect(mapStateToProps, { fetchQuestions })(Qbank);
+export default connect(
+  mapStateToProps,
+  {fetchQuestions, putFlashMsg}
+)(Qbank);

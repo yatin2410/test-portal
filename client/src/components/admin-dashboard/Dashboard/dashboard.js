@@ -19,6 +19,7 @@ import AddQuestionsRandom from "../addQuestionsRandomly/addQuestionsRandomly";
 import EditQuiz from "../Quiz/editquiz";
 import SideBar from './sidebar';
 import NavBar from './navbar';
+import SuccessAlert from '../../layout/Flash';
 import Help from '../Help/help';
 import {Help1} from '../Help/help';
 import {Help2} from '../Help/help';
@@ -83,6 +84,7 @@ class adminDashboard extends Component {
               onLogoutClick={this.onLogoutClick}
             />
             <div className="main-container">
+              <SuccessAlert />
               <Route exact path="/dashboard" component={Home} />
               <Route exact path="/dashboard/home" component={Home} />
               <Route exact path="/dashboard/results" component={Results} />
@@ -96,6 +98,7 @@ class adminDashboard extends Component {
               <Route exact path='/dashboard/addquiz/random/:id' component={AddQuestionsRandom} />
               <Route exact path='/dashboard/editquestion/:id' component={EditQuestion} />
               <Route exact path='/dashboard/addquiz/questions/:id' component={AddQuestionsQuiz} />
+              <Route exact path='/dashboard/addquiz/random/:id' component={AddQuestionsRandom} />
               <Route exact path='/dashboard/showquestions/:id' component={ShowQuizQuestions} />
               <Route exact path='/dashboard/editquiz/:id' component={EditQuiz} />
               <Route exact path="/dashboard/help" component={Help} />

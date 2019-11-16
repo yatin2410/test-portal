@@ -161,7 +161,7 @@ class RegisterAdmin extends Component {
                   style={{height:"3em"}}
                   className="btn btn-primary ml-3 hoverable"
                   type="submit">
-                  submit
+                  Add Admin
                 </button>
             </div>
           </form>

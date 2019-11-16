@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ADD_GROUPS, GET_ERRORS , PUT_SUBMIT_ERROR, PUT_SAVE_ERROR, PUT_SAVE_SUCCESS} from "./types";
+import { ADD_GROUPS, GET_ERRORS , PUT_SUBMIT_ERROR, PUT_SAVE_ERROR, PUT_SAVE_SUCCESS,  FLASH_SUCCESS_MSG} from "./types";
 
 // Register User
 export const registerGroup = (userData, fun) => dispatch => {
@@ -12,6 +12,10 @@ export const registerGroup = (userData, fun) => dispatch => {
         type: ADD_GROUPS,
         payload: {}
       });
+      dispatch({
+        type: FLASH_SUCCESS_MSG,
+        payload:{msg:"Group added successfully!",type:"alert-success"},
+      })
     })
     .catch(err =>
       dispatch({
@@ -26,8 +30,13 @@ export const addQuestion = (userData, history) => dispatch => {
     .post("/api/questions", userData)
     .then(res => {
       history.push("/dashboard/qbank");
+      dispatch({
+        type: FLASH_SUCCESS_MSG,
+        payload:{msg:"Question added successfully!",type:"alert-success"},
+      })
     })
     .catch(err => {
+      console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
@@ -40,6 +49,10 @@ export const putQuestion = (userData, history) => dispatch => {
     .put("/api/questions/", userData)
     .then(res => {
       history.push("/dashboard/qbank");
+      dispatch({
+        type: FLASH_SUCCESS_MSG,
+        payload:{msg:"Question updated successfully!",type:"alert-primary"},
+      })
       console.log(res);
     })
     .catch(err => {
@@ -86,6 +99,10 @@ export const addQRandomly = (userData, history) => dispatch => {
     .post("/api/quiz/random/"+userData._id, userData)
     .then(res => {
       history.push("/dashboard/quiz/");
+      dispatch({
+        type: FLASH_SUCCESS_MSG,
+        payload:{msg:"Quiz added successfully!",type:"alert-success"},
+      })
     })
     .catch(err => {
       console.log(err.response);
@@ -116,6 +133,10 @@ export const editQuiz = (userData, history) => dispatch => {
     .put("/api/quiz/", userData)
     .then(res => {
       history.push("/dashboard/quiz/");
+      dispatch({
+        type: FLASH_SUCCESS_MSG,
+        payload:{msg:"Quiz updated successfully!",type:"alert-primary"},
+      })
     })
     .catch(err => {
       console.log(err.response);
@@ -155,3 +176,9 @@ export const saveQuiz = (data) => dispatch => {
     });
 };
 
+export const putFlashMsg = (data) => dispatch => {
+  dispatch({
+    type: FLASH_SUCCESS_MSG,
+    payload: data,
+  })
+}

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import SearchTable from "./quiztable";
 import { connect } from "react-redux";
 import { fetchQuizs } from "../../../actions/fetchActions";
-import axios from "axios";
+import {putFlashMsg} from "../../../actions/putActions";
+import axios from 'axios';
 import PropTypes from "prop-types";
 import Loading from "../../layout/Loading";
 
@@ -28,13 +29,14 @@ class Quiz extends Component {
   }
   onDismiss(id) {
     axios
-      .delete("/api/quiz/", { data: { _id: id } })
-      .then(res => {
-        this.props.fetchQuizs();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    .delete("/api/quiz/", { data: { _id: id } })
+    .then(res => {
+      this.props.fetchQuizs();
+      this.props.putFlashMsg({msg:"Quiz deleted successfully!",type:"alert-danger"});
+    })
+    .catch(err => {
+      console.log(err);
+    });    
   }
   onOpenQuestions(id) {
     this.props.history.push("/dashboard/showquestions/" + id);
@@ -77,11 +79,15 @@ class Quiz extends Component {
 }
 
 Quiz.propTypes = {
-  fetchQuizs: PropTypes.func.isRequired
+  fetchQuizs :PropTypes.func.isRequired,
+  putFlashMsg: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  quizs: state.data.quizs
+  quizs: state.data.quizs,
 });
 
-export default connect(mapStateToProps, { fetchQuizs })(Quiz);
+export default connect(
+  mapStateToProps,
+  { fetchQuizs,putFlashMsg }
+)(Quiz);

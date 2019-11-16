@@ -80,7 +80,7 @@ class RegisterGroup extends Component {
                   style={{height:"3em"}}
                   className="btn btn-primary ml-3 hoverable"
                   type="submit">
-                  submit
+                  Add Group
                 </button>
             </div>
           </form>

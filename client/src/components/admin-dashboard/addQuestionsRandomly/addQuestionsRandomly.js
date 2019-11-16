@@ -115,8 +115,8 @@ class AddQuestionsRandomly extends Component {
                                 <button
                                     className="btn btn-primary btn-lg hoverable ml-3" onClick={this.onSubmit}
                                     type="submit">
-                                    Submit
-                </button>
+                                    Add Quiz
+                                </button>
                             </div>
                         </div>
                     </form>

@@ -15,3 +15,4 @@ export const PUT_SUBMIT_ERROR  = "PUT_SUBMIT_ERROR";
 export const GET_USER = "GET_USER";
 export const GET_RESULTS  = "GET_RESULTS";
 export const PUT_SAVE_SUCCESS = "PUT_SAVE_SUCCESS";
+export const FLASH_SUCCESS_MSG = "FLASH_SUCCESS_MSG";

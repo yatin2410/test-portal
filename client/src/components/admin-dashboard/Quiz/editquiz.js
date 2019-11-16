@@ -111,8 +111,12 @@ class EditQuiz extends Component {
     const newQuiz = {
       _id: this.props.match.params.id,
       name,
-      startDate: startDate ? new Date(startDate) : "",
-      endDate: endDate ? new Date(endDate) : "",
+      startDate: startDate
+        ? (new Date(startDate))
+        : (""),
+      endDate:endDate
+      ? (new Date(endDate))
+      : (""),
       duration,
       perToPass,
       groups: submitGroups,
@@ -181,15 +185,9 @@ class EditQuiz extends Component {
               <div className="col-5">
                 <p className="label-txt" ref={this.startDate}>
                   Start Date
-                </p>
-                <div className="mt-4">
-                  <DateTimePicker
-                    value={this.state.startDate}
-                    onChange={this.onChange1}
-                    onFocus={() => this.onFocus(this.startDate)}
-                    onBlur={() => this.OnBlur(this.startDate)}
-                  />
-                </div>
+                  </p>
+                  <p className="error-txt">{errors.startDate}</p>
+            <div className = "mt-4">{this.state.startDate?<DateTimePicker value={new Date(this.state.startDate)} onChange = {this.onChange1} onFocus={()=>this.onFocus(this.startDate)} onBlur={()=>this.OnBlur(this.startDate)}/>:null}</div>
               </div>
             </div>
 
@@ -197,15 +195,9 @@ class EditQuiz extends Component {
               <div className="col-5">
                 <p className="label-txt" ref={this.endDate}>
                   End Date
-                </p>
-                <div className="mt-4">
-                  <DateTimePicker
-                    value={this.state.endDate}
-                    onChange={this.onChange2}
-                    onFocus={() => this.onFocus(this.endDate)}
-                    onBlur={() => this.OnBlur(this.endDate)}
-                  />
-                </div>
+                  </p>
+                  <p className="error-txt">{errors.endDate}</p>
+            <div className = "mt-4">{this.state.endDate?<DateTimePicker value={new Date(this.state.endDate)} onChange = {this.onChange2} onFocus={()=>this.onFocus(this.endDate)} onBlur={()=>this.OnBlur(this.endDate)}/>:null}</div>
               </div>
             </div>
 
@@ -267,7 +259,7 @@ EditQuiz.propTypes = {
   fetchQuiz: PropTypes.func.isRequired,
   fetchGroups: PropTypes.func.isRequired,
   editQuiz: PropTypes.func.isRequired,
-  errors: PropTypes.array.isRequired
+  errors: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({

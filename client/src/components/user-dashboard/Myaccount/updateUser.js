@@ -256,7 +256,7 @@ class UpdateUser extends Component {
                 <button
                   className="btn modi-btn btn-lg btn-round hoverable"
                   type="submit">
-                  Submit
+                  Update
                 </button>
               </div>
             </div>

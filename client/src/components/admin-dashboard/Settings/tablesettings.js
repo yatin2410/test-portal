@@ -111,7 +111,7 @@ class SearchTable extends Component {
             />
           </div>
         ) : (
-          <h3>No other Admins.</h3>
+          <h3>No Other Admins.</h3>
         )}
       </div>
     );
