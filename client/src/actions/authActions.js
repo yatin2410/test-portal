@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING} from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING, FLASH_SUCCESS_MSG} from "./types";
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
@@ -20,11 +20,15 @@ export const registerUser = (userData, history) => dispatch => {
 // Register User
 export const registerAdmin = (userData, fun) => dispatch => {
   axios
-    .post("/api/users/register", userData)
+    .post("/api/users/registeradmin", userData)
     .then(res => {fun();
       dispatch({
         type: GET_ERRORS,
         payload: {}
+      })
+      dispatch({
+        type: FLASH_SUCCESS_MSG,
+        payload:{msg:"Admin added successfully!",type:"alert-success"},
       })
     })
     .catch(err =>

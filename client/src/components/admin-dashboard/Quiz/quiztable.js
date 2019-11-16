@@ -133,7 +133,7 @@ class SearchTable extends Component {
               <Search
                 searchTerm={searchTerm}
                 onSearchChange={this.onSearchChange}>
-                search
+                Search
               </Search>
             </div>
           </div>
@@ -151,7 +151,7 @@ class SearchTable extends Component {
               />
             </div>
           ) : (
-            <h3>No Quizs Found.</h3>
+            <h3>No Quizzes Found.</h3>
           )}
         </div>
         );

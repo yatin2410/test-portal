@@ -131,6 +131,7 @@ class UpdateAdmin extends Component {
                 <input
                   type="text"
                   className="input"
+                  disabled
                   onChange={this.onChange}
                   value={this.state.name}
                   error={errors.name}
@@ -215,7 +216,7 @@ class UpdateAdmin extends Component {
                 <button
                   className="btn btn-primary btn-lg hoverable"
                   type="submit">
-                  submit
+                  Update
                 </button>
               </div>
             </div>

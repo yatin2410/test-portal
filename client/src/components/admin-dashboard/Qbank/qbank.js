@@ -4,12 +4,14 @@ import {fetchQuestions} from "../../../actions/fetchActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
+import { stat } from "fs";
+import { putFlashMsg } from "../../../actions/putActions";
 
 class Qbank extends Component {
   constructor(props){
     super(props);
     this.state= {
-      questions: []
+      questions: [],
     };
     this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
@@ -18,7 +20,9 @@ class Qbank extends Component {
     this.props.fetchQuestions();
   }
   componentWillReceiveProps(nextProps){
-    this.setState({questions:nextProps.questions});
+    if(nextProps.questions){
+      this.setState({questions:nextProps.questions});
+    }
   }
   onEdit(id){
     this.props.history.push('/dashboard/editquestion/'+id);
@@ -27,6 +31,7 @@ class Qbank extends Component {
     axios.delete('/api/questions/',{data:{"_id":id}})
     .then(res => {
       this.props.fetchQuestions();
+      this.props.putFlashMsg({msg:"Question deleted successfully!",type:"alert-danger"});
     })
     .catch(err => {
       console.log(err);
@@ -55,6 +60,7 @@ class Qbank extends Component {
 }
 Qbank.propTypes ={
   fetchQuestions: PropTypes.func.isRequired,
+  putFlashMsg: PropTypes.func.isRequired,
   questions: PropTypes.array.isRequired,
 };
 
@@ -64,5 +70,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {fetchQuestions}
+  {fetchQuestions, putFlashMsg}
 )(Qbank);

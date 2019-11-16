@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { forgotPassword } from "../../actions/authActions";
 import Navbar from "../layout/Navbar";
-import "./css/register.css";
 
 class ForgotPassword extends Component {
     constructor() {

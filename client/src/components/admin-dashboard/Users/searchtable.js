@@ -118,7 +118,7 @@ class SearchTable extends Component {
               <Search
                 searchTerm={searchTerm}
                 onSearchChange={this.onSearchChange}>
-                search
+                Search
               </Search>
             </div>
           </div>

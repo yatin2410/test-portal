@@ -256,7 +256,7 @@ class UpdateUser extends Component {
                 <button
                   className="btn btn-primary btn-lg hoverable"
                   type="submit">
-                  Submit
+                  Update
                 </button>
               </div>
             </div>

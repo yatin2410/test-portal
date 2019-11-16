@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SearchTable from "./questionaddtable";
 import { fetchQuestions,getQuizQuestions } from "../../../actions/fetchActions";
-import { addQuizQuestions } from "../../../actions/putActions"
+import { addQuizQuestions,putFlashMsg } from "../../../actions/putActions"
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -43,6 +43,7 @@ class AddQuestionsQuiz extends Component {
         _id: this.props.match.params.id,
         questions: this.state.addedQuestions,
     }
+    this.props.putFlashMsg({msg:"Questions added/updated to quiz succsessfully!",type:"alert-success"});
     this.props.addQuizQuestions(updateData,this.props.history);
   }
   componentDidMount(){
@@ -55,7 +56,7 @@ class AddQuestionsQuiz extends Component {
         <div className="container mt-4">
             <div className="row justify-content-md-center">
                 <button className="btn btn-primary" onClick={this.onSubmit}>
-                    Submit
+                    Add Quiz
                 </button>
             </div>
         </div>
@@ -73,6 +74,7 @@ class AddQuestionsQuiz extends Component {
 
 AddQuestionsQuiz.propTypes = {
   fetchQuestions: PropTypes.func.isRequired,
+  putFlashMsg: PropTypes.func.isRequired,
   addQuizQuestions: PropTypes.func.isRequired,
   getQuizQuestions: PropTypes.func.isRequired,
   questions: PropTypes.array.isRequired
@@ -86,5 +88,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchQuestions, addQuizQuestions, getQuizQuestions }
+  { fetchQuestions, addQuizQuestions, getQuizQuestions, putFlashMsg }
 )(AddQuestionsQuiz);
