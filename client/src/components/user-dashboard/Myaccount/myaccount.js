@@ -3,7 +3,7 @@ import UpdateUser from "./updateUser";
 class Myaccount extends Component {
     render() {
         return (
-            <div>
+            <div style={{marginBottom:"100px"}}>
                 <div className="row justify-content-md-center">
                     <div className="col">
                         <UpdateUser/>

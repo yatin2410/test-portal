@@ -5,6 +5,7 @@ import { editQuiz } from "../../../actions/putActions";
 import { fetchQuiz, fetchGroups } from "../../../actions/fetchActions";
 import DateTimePicker from "react-datetime-picker";
 import Loading from "../../layout/Loading";
+import {Link} from "react-router-dom";
 
 function InputComponent(props) {
   const {
@@ -161,6 +162,7 @@ class EditQuiz extends Component {
           <div className="container">
           <div className="row  mt-2 justify-content-md-center">
             <div className="col-5">
+            <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
               <h4>
                 <b>Edit Quiz Details: </b>
               </h4>
@@ -231,7 +233,7 @@ class EditQuiz extends Component {
             <div className="row  mt-4-5 justify-content-md-center">
               <div style={{ float: "right" }}>
                 <button
-                  className="btn btn-primary btn-lg hoverable"
+                  className="btn btn-lg hoverable modi-btn1"
                   onClick={this.editQuestions}
                 >
                   Edit Questions
@@ -239,7 +241,7 @@ class EditQuiz extends Component {
               </div>
               <div className="ml-4" style={{ float: "left" }}>
                 <button
-                  className="btn btn-primary btn-lg hoverable"
+                  className="btn btn-lg hoverable modi-btn1"
                   type="submit"
                 >
                   Submit

@@ -3,6 +3,7 @@ import Editor from "./editor";
 import {addQuestion} from "../../../actions/putActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import {  Link } from "react-router-dom";
 
 function OptionEditor(props){
     return(
@@ -114,6 +115,7 @@ class AddQuestion extends Component {
       <div className="container mt-2">
         <div className="row justify-content-md-center mt-3">
           <div className="col-6">
+          <h6 ><Link to="/dashboard/qbank" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Question Bank </Link></h6>
             <label forhtml="questiontype">Question Type:</label>
             <select
               className="custom-select"
@@ -172,7 +174,7 @@ class AddQuestion extends Component {
         </div>
         <div className="row justify-content-md-center mt-3" style={{marginBottom:"100px"}}>
           <div className="col-3" >
-          <button onClick={this.submitQuestion} className="btn btn-primary">Add question</button>
+          <button onClick={this.submitQuestion} className="btn modi-btn">Add question</button>
           <p className="error-txt">{errors.ans}</p>
           </div>
           {/* <div className="col-3" style={{float:"left"}}>

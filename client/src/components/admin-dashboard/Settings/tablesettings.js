@@ -62,7 +62,7 @@ function Table(props) {
               <td>{item.name}</td>
               <td>{item.email}</td>
               <td>
-                <button className="btn btn-primary" onClick={() => onDismiss(item.Id)}>
+                <button className="btn modi-btn" onClick={() => onDismiss(item.Id)}>
                   <i className="material-icons">delete</i>
                 </button>
               </td>

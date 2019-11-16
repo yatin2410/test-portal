@@ -81,7 +81,7 @@ const SORTS = {
                 <td ><button className="btn" onClick={()=>onOpenQuestions(item._id)}><i className="material-icons">open_in_new</i></button></td>
                 <td ><button className="btn"><i className="material-icons" onClick={()=>onEdit(item._id)}>edit</i></button></td>
                 <td >
-                  <button  className="btn btn-danger" onClick = {()=>onDismiss(item._id)}>
+                  <button  className="btn modi-btn" onClick = {()=>onDismiss(item._id)}>
                     <i className="material-icons">delete</i>
                   </button>
                 </td>

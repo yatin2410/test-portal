@@ -81,8 +81,8 @@ class Register extends Component {
     return (
       <div>
       <Navbar/>
-      <div className="main-container mt-3">
-      <div className="container">
+      <div className="main-container mt-3 mb-5">
+      <div className="container" style={{marginBottom:"150px"}}>
         <div className="row  mt-2 justify-content-md-center">
 	    		<div className="col-5">
               <h4>

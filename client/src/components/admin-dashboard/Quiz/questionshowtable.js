@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { sortBy } from "lodash";
 import classNames from "classnames";
+import {Link} from "react-router-dom";
 
 const SORTS = {
   NONE: list => list,
@@ -196,6 +197,9 @@ class SearchTable extends Component {
     const { questions, sortKey, isSortReverse } = this.state;
     return (
       <div className="container">
+        <div className = "ml-4 mb-4">
+          <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
+        </div>
         {questions ? (
           <div className="row mx-3">
             <Table

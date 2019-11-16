@@ -214,7 +214,7 @@ class UpdateAdmin extends Component {
             <div className="row  mt-4-5 justify-content-md-center">
               <div className="col-md-auto">
                 <button
-                  className="btn btn-primary btn-lg hoverable"
+                  className="btn btn-lg hoverable modi-btn"
                   type="submit">
                   Update
                 </button>

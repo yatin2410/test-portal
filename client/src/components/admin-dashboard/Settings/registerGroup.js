@@ -78,7 +78,7 @@ class RegisterGroup extends Component {
             <div className="row  mt-4-5"  style={{paddingLeft:"30%"}}>
                 <button
                   style={{height:"3em"}}
-                  className="btn btn-primary ml-3 hoverable"
+                  className="btn modi-btn ml-3 hoverable"
                   type="submit">
                   Add Group
                 </button>

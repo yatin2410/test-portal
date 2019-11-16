@@ -113,7 +113,7 @@ class AddQuestionsRandomly extends Component {
                             <div className="col-md-auto">
 
                                 <button
-                                    className="btn btn-primary btn-lg hoverable ml-3" onClick={this.onSubmit}
+                                    className="btn btn-lg hoverable ml-3 modi-btn" onClick={this.onSubmit}
                                     type="submit">
                                     Add Quiz
                                 </button>

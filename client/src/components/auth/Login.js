@@ -140,7 +140,7 @@ class Login extends Component {
           </form>
           <div className="row mt-4-5 mr-5 d-flex flex-row-reverse">
             <div className="col-5">
-            <Link to="/forgotPassword">Forgot your password?</Link>
+            <Link to="/forgotPassword" className="questionFont">Forgot your password?</Link>
             </div>
           </div>
         </div>
