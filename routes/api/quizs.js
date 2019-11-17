@@ -371,4 +371,71 @@ router.post("/random/:id", authAdmin, (req, res) => {
   });
 });
 
+function isSame(a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length != b.length) return false;
+  a.sort();
+  b.sort();
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+function countCorrect(arr) {
+  let cnt = 0;
+  for (let item in arr) {
+    if (isSame(arr[item].ans, arr[item].realAns)) {
+      cnt++;
+    }
+  }
+  return cnt;
+}
+
+function countPer(qdata,total){
+  return ((countCorrect(qdata)*100) / Number(total)).toFixed(2);
+}
+
+router.get("/results/all",authAdmin,(req,res) => {
+  User.find().then(users=>{
+    Quiz.find().then(quizs => {
+      // users attempted, total passed, total failed, pertopass, name, avg. percentage
+      
+      let results = [];
+      quizs.forEach((item)=>{
+        let obj = {};
+        obj.name = item.name;
+        obj.qid = item._id;
+        obj.perToPass = item.perToPass;
+        obj.totalQue = item.questions.length;
+        obj.totalPer = 0;
+        obj.passed = 0;
+        obj.failed = 0;
+        obj.total = 0;
+        results.push(obj);
+      });
+      users.forEach((item)=>{
+        item.quizs.forEach((itm)=>{
+          for(let i=0;i<results.length;i++){
+            // console.log(itm.qid,results[i].qid);
+            if(results[i].qid==itm.qid){
+                let per = countPer(itm.qdata,results[i].totalQue);
+                results[i].totalPer += Number(per);
+                results[i].total++;
+                if(per>=results[i].perToPass){
+                  results[i].passed++;
+                }
+                else{
+                  results[i].failed++;
+                }
+            }            
+          }
+        });
+      });
+      console.log(results);
+      res.status(200).json(results);
+    });
+  });
+});
+
 module.exports = router;

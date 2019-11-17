@@ -40,7 +40,7 @@ const SORTS = {
   }
   
   function Table(props){
-    const {list,sortKey,onSort,onDismiss,isSortReverse, searchTerm} = props;
+    const {list,sortKey,onSort,onDismiss,isSortReverse, searchTerm,onOpenResult} = props;
     let reverseList = isSortReverse ? SORTS[sortKey](list).reverse() : SORTS[sortKey](list);
     reverseList =  reverseList.filter((item)=>item.email.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1 || item.name.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1 || item.group.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1);
     return(
@@ -51,11 +51,12 @@ const SORTS = {
       <table className="table table-bordered table-hover modifiedtable">
         <thead>
           <tr>
-            <th><Sort sortKey={"ID"} onSort={onSort} activeSortKey={sortKey}>Id</Sort></th>
-            <th><Sort sortKey={"NAME"} onSort={onSort} activeSortKey={sortKey}>Name</Sort> </th>
-            <th><Sort sortKey={"EMAIL"} onSort={onSort} activeSortKey={sortKey}>Email</Sort></th>
-            <th><Sort sortKey={"GROUP"} onSort={onSort} activeSortKey={sortKey}>Group</Sort></th>
-            <th>DELETE</th>
+            <th style={{width:"20%"}}><Sort sortKey={"ID"} onSort={onSort} activeSortKey={sortKey}>Id</Sort></th>
+            <th style={{width:"20%"}}><Sort sortKey={"NAME"} onSort={onSort} activeSortKey={sortKey}>Name</Sort> </th>
+            <th style={{width:"20%"}}><Sort sortKey={"EMAIL"} onSort={onSort} activeSortKey={sortKey}>Email</Sort></th>
+            <th style={{width:"20%"}}><Sort sortKey={"GROUP"} onSort={onSort} activeSortKey={sortKey}>Group</Sort></th>
+            <th style={{width:"10%"}}>Result</th>
+            <th style={{width:"10%"}}>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -67,6 +68,11 @@ const SORTS = {
                 <td>{item.name}</td>
                 <td>{item.email}</td>
                 <td>{item.group}</td>
+                <td>
+                  <button className="btn modi-btn" onClick={()=>onOpenResult(item._id)}>
+                    <i className="material-icons">assessment</i>
+                  </button>
+                </td>
                 <td>
                   <button  className="btn modi-btn" onClick = {()=>onDismiss(item.Id)}>
                     <i className="material-icons">delete</i>
@@ -126,6 +132,7 @@ class SearchTable extends Component {
                 onSort={this.onSort}
                 sortKey={sortKey}
                 isSortReverse={isSortReverse}
+                onOpenResult={this.props.onOpenResult}
               />
             </div>
           ) : (

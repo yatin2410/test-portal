@@ -17,6 +17,7 @@ import AddQuestionsQuiz from '../addQuestionsQuiz/addquestionquiz';
 import ShowQuizQuestions from "../Quiz/showquizquestions";
 import AddQuestionsRandom from "../addQuestionsRandomly/addQuestionsRandomly";
 import EditQuiz from "../Quiz/editquiz";
+import UserResult from "../Results/userResult";
 import SideBar from './sidebar';
 import NavBar from './navbar';
 import SuccessAlert from '../../layout/Flash';
@@ -100,6 +101,7 @@ class adminDashboard extends Component {
               <Route exact path='/dashboard/addquiz/random/:id' component={AddQuestionsRandom} />
               <Route exact path='/dashboard/showquestions/:id' component={ShowQuizQuestions} />
               <Route exact path='/dashboard/editquiz/:id' component={EditQuiz} />
+              <Route exact path='/dashboard/user/result/:id' component={UserResult} />
               <Route exact path="/dashboard/help" component={Help} />
               <Route exact path="/dashboard/help1" component={Help1} />
               <Route exact path="/dashboard/help2" component={Help2} />

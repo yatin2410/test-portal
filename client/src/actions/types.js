@@ -14,3 +14,4 @@ export const GET_QUIZ_FULL = "GET_QUIZ_FULL";
 export const GET_USER = "GET_USER";
 export const GET_RESULTS  = "GET_RESULTS";
 export const FLASH_SUCCESS_MSG = "FLASH_SUCCESS_MSG";
+export const GET_QUIZ_RESULTS = "GET_QUIZ_RESULTS";

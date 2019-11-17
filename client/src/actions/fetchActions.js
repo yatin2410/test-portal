@@ -11,6 +11,7 @@ import {
   GET_QUIZ,
   GET_QUIZ_FULL,
   GET_RESULTS,
+  GET_QUIZ_RESULTS,
   FLASH_SUCCESS_MSG
 } from "./types";
 
@@ -209,6 +210,22 @@ export const fetchUserResults = id => dispatch => {
     .then(res => {
       dispatch({
         type: GET_RESULTS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log("error in fetching results");
+      console.log(err);
+    });
+};
+
+export const fetchQuizResults = () => dispatch => {
+  axios
+    .get("/api/quiz/results/all")
+    .then(res => {
+      console.log(res);
+      dispatch({
+        type: GET_QUIZ_RESULTS,
         payload: res.data
       });
     })

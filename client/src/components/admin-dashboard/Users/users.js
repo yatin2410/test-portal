@@ -15,6 +15,7 @@ class Users extends Component {
       isLoading: true
     };
     this.onDismiss = this.onDismiss.bind(this);
+    this.onOpenResult = this.onOpenResult.bind(this);
   }
   componentDidMount() {
     this.props.fetchUsers();
@@ -26,6 +27,10 @@ class Users extends Component {
     }
   }
   onDismiss(id){
+    let confirm = window.confirm("ALERT!!. If you select okay then this action will delete User and all the data associated with it.");
+    if(confirm===false){
+      return;
+    }
     axios.delete('/api/users/',{data:{"Id":id}})
     .then(res => {
       this.props.fetchUsers();
@@ -35,6 +40,9 @@ class Users extends Component {
       console.log(err);
     });
   }
+  onOpenResult(id){
+    this.props.history.push("/dashboard/user/result/"+id);
+  }
   render() {
     console.log(this.state.users);
     return (
@@ -42,6 +50,7 @@ class Users extends Component {
       {this.state.isLoading === false ?
       <SearchTable 
         onDismiss={this.onDismiss}
+        onOpenResult = {this.onOpenResult}
         users ={this.state.users}
       />: <Loading/>}
       </div>
