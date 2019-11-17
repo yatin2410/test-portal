@@ -95,7 +95,7 @@ class LineChart extends Component {
     let arr1 = [];
     let arr2 = [];
     let arr3 = [];
-    if(arr.length!==0){
+    if(arr && arr.length!==0){
       arr.forEach((item) => {
         arr1.push(item.name);
         arr2.push(item.per);

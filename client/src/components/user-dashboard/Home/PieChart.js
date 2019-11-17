@@ -43,11 +43,13 @@ class PieChart extends Component {
     }
   }
   getData(quiz){
-    let arr = [];
-    arr.push(quiz.correct);
-    arr.push(quiz.attempted-quiz.correct);
-    arr.push(quiz.total-quiz.attempted);
-    return arr;
+    if(quiz && quiz.length!==0){
+      let arr = [];
+      arr.push(quiz.correct);
+      arr.push(quiz.attempted-quiz.correct);
+      arr.push(quiz.total-quiz.attempted);
+      return arr;  
+    }
   }
   render() {
     dataPie.datasets[0].data = this.state.data;

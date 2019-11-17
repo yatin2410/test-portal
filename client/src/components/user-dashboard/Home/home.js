@@ -111,13 +111,13 @@ class Home extends Component {
                   className="input"
                   onChange={this.onChange}
                   value={this.state.currentIndex}>
-                  {this.state.quizs.map((item,index) => (
+                  {this.state.quizs?this.state.quizs.map((item,index) => (
                     <option value={index}>{item.name}</option>
-                  ))}
+                  )):<options></options>}
                 </select>
               </div>
               <div className="mt-4">
-                <PieChart quiz={this.state.quizs[this.state.currentIndex]} />
+                <PieChart quiz={this.state.quizs?this.state.quizs[this.state.currentIndex]:null} />
               </div>
             </div>
           </div>
