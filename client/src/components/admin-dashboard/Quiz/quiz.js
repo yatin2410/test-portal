@@ -49,25 +49,12 @@ class Quiz extends Component {
       <div>
         {this.state.isLoading === false ? (
           <div>
-            <div className="container mt-5">
-              <div className="row justify-content-md-center">
-                <div className="col-2">
-                  <button
-                    className="btn modi-btn1"
-                    onClick={() =>
-                      this.props.history.push("/dashboard/addquiz")
-                    }
-                  >
-                    Add Quiz
-                  </button>
-                </div>
-              </div>
-            </div>
             <SearchTable
               quizs={this.state.quizs}
               onDismiss={this.onDismiss}
               onOpenQuestions={this.onOpenQuestions}
               onEdit={this.onEdit}
+              history={this.props.history}
             />
           </div>
         ) : (

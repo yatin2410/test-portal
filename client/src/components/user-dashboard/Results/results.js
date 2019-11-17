@@ -9,19 +9,18 @@ class Results extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      results: {},
       onGoingQuizs: [],
       pastQuizs: [],
       isLoading: true,
     };
     this.onView = this.onView.bind(this);
+    this.openInNewTab = this.openInNewTab.bind(this);
   }
   componentDidMount() {
     this.props.fetchUserResults(this.props.auth.user.id);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.results) {
-      this.setState(nextProps.results);
       let arr1 = [],
         arr2 = [];
       nextProps.results.quizDatail.forEach(item => {
@@ -48,8 +47,12 @@ class Results extends Component {
       this.setState({isLoading:false});
     }
   }
+  openInNewTab(url) {
+    var win = window.open(url, '_blank');
+    win.focus();
+  }
   onView(id) {
-    this.props.history.push("/viewquiz/"+id);
+    this.openInNewTab(window.location.origin.toString()+"/viewquiz/"+id);
   }
   render() {
     return (

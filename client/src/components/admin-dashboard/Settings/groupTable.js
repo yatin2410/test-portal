@@ -32,15 +32,15 @@ function Table(props) {
       <h5>
         Total : <span className="text-info">{reverseList.length}</span>
       </h5>
-      <table className="table table-bordered table-hover">
+      <table className="table table-bordered table-hover modifiedtable" style={{width:"60%"}}>
         <thead>
           <tr>
-            <th>
+            <th width="60%">
               <Sort sortKey={"GROUP"} onSort={onSort} activeSortKey={sortKey}>
                 Group
               </Sort>
             </th>
-            <th>DELETE</th>
+            <th width="40%">DELETE</th>
           </tr>
         </thead>
         <tbody>
@@ -83,11 +83,11 @@ class GroupTable extends Component {
     console.log(groups);
     return (
       <div className="container">
-        <div className="row my-4 ml-4">
+        <div className="row ml-5">
           <h4>Groups:</h4>
         </div>
         {groups ? (
-          <div className="row mx-3">
+          <div className="row ml-5">
             <Table
               list={groups}
               onDismiss={this.props.onDeleteGroup}

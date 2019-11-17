@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ADD_GROUPS, GET_ERRORS , PUT_SUBMIT_ERROR, PUT_SAVE_ERROR, PUT_SAVE_SUCCESS,  FLASH_SUCCESS_MSG} from "./types";
+import { ADD_GROUPS, GET_ERRORS , FLASH_SUCCESS_MSG} from "./types";
 
 // Register User
 export const registerGroup = (userData, fun) => dispatch => {
@@ -152,12 +152,16 @@ export const submitQuiz = (data, history) => dispatch => {
     .post("/api/quiz/submit", data)
     .then(res => {
       history.push("/dashboard/results");
+      dispatch({
+        type: FLASH_SUCCESS_MSG,
+        payload: {msg:"Quiz Submitted successfully!",type:"alert-success"}
+      });
     })
     .catch(err => {
       console.log(err.response);
       dispatch({
-        type: PUT_SUBMIT_ERROR,
-        payload: err.response.data
+        type: FLASH_SUCCESS_MSG,
+        payload: {msg:"Quiz is not submitted!",type:"alert-danger"}
       });
     });
 };
@@ -167,12 +171,15 @@ export const saveQuiz = (data) => dispatch => {
     .post("/api/quiz/submit", data)
     .then(res => {
       dispatch({
-        type: PUT_SAVE_SUCCESS,
-        payload: res.data
+        type: FLASH_SUCCESS_MSG,
+        payload: {msg:"Quiz Saved successfully!",type:"alert-success"}
       });
     })
     .catch(err => {
-      console.log(err);
+      dispatch({
+        type: FLASH_SUCCESS_MSG,
+        payload: {msg:"Quiz is not saved!",type:"alert-danger"}
+      });
     });
 };
 

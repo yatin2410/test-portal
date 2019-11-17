@@ -223,7 +223,6 @@ class UpdateUser extends Component {
                 />
               </div>
             </div>
-            
             <div className="row mt-4-5 justify-content-md-center">
               <div className="col-5">
                 <p className="label-txt" ref={this.group}>
@@ -244,6 +243,7 @@ class UpdateUser extends Component {
                     this.OnBlur(this.group);
                   }}
                 >
+                <option></option>
                   {
                     this.state.groups.map((item)=><option value={item.group}>{item.group}</option>)
                   }

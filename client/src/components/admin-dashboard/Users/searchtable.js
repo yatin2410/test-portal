@@ -16,9 +16,9 @@ const SORTS = {
       return(
         <div className="input-group input-group-lg">
           <div className="input-group-prepend">
-            <span className="input-group-text" id="inputGroup-sizing-lg">{children}</span>
+            <span className="input-group-text" style={{height:"2em"}} id="inputGroup-sizing-lg"><i className="material-icons">search</i></span>
           </div>
-          <input  type="text" value = {searchTerm} ref={el => this.input=el} onChange = {onSearchChange} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"/>       
+          <input  type="text" value = {searchTerm} ref={el => this.input=el} onChange = {onSearchChange} style={{height:"2em"}} className="form-control" />       
         </div>
       );
     }
@@ -108,8 +108,8 @@ class SearchTable extends Component {
       const { users, searchTerm, sortKey, isSortReverse } = this.state;
     return (
         <div className="container">
-          <div className="row my-4 justify-content-md-center">
-            <div className="col col-lg-5">
+          <div className="row mt-4 justify-content-end mr-3">
+            <div className="col col-lg-4" style={{float:"right"}}>
               <Search
                 searchTerm={searchTerm}
                 onSearchChange={this.onSearchChange}>

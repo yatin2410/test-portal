@@ -14,7 +14,7 @@ import {Help1} from '../Help/help';
 import {Help2} from '../Help/help';
 import {Help3} from '../Help/help';
 import {Help4} from '../Help/help';
-import {Help5} from '../Help/help';
+import SuccessAlert from "../../layout/Flash";
 
 class userDashboard extends Component {
   constructor(props) {
@@ -72,6 +72,7 @@ class userDashboard extends Component {
               onLogoutClick={this.onLogoutClick}
             />
             <div className="main-container">
+              <SuccessAlert />
               <Route exact path="/dashboard" component={Home} />
               <Route exact path="/dashboard/home" component={Home} />
               <Route exact path="/dashboard/results" component={Results} />
@@ -82,7 +83,7 @@ class userDashboard extends Component {
               <Route exact path="/dashboard/help2" component={Help2} />
               <Route exact path="/dashboard/help3" component={Help3} />
               <Route exact path="/dashboard/help4" component={Help4} />
-              <Route exact path="/dashboard/help5" component={Help5} />
+              
             </div>
           </div>
         </div>

@@ -10,7 +10,8 @@ import {
   GET_SHOW_QUESTIONS,
   GET_QUIZ,
   GET_QUIZ_FULL,
-  GET_RESULTS
+  GET_RESULTS,
+  FLASH_SUCCESS_MSG
 } from "./types";
 
 export const fetchUsers = () => dispatch => {
@@ -168,7 +169,7 @@ export const SaveAndfetchUserQuizFull = (qid,uid) => dispatch => {
     });
 };
 
-export const fetchUserQuizResult = (qid,uid) => dispatch => {
+export const fetchUserQuizResult = (qid,uid,history) => dispatch => {
   axios
     .get("/api/quiz/user/result/" + qid+"/"+uid)
     .then(res => {
@@ -178,8 +179,11 @@ export const fetchUserQuizResult = (qid,uid) => dispatch => {
       });
     })
     .catch(err => {
-      console.log("error in fetching qustions");
-      console.log(err);
+      history.push("/dashboard/quiz");
+      dispatch({
+        type: FLASH_SUCCESS_MSG,
+        payload:{msg:"Quiz has not ended yet!",type:"alert-danger"},  
+      });
     });
 };
 

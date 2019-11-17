@@ -8,13 +8,15 @@ import RegisterAdmin from "./registerAdmin";
 import GroupTable from "./groupTable";
 import RegisterGroup from "./registerGroup";
 import { putFlashMsg } from "../../../actions/putActions";
+import Loading from "../../layout/Loading";
 
 class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
       users: [],
-      groups: []
+      groups: [],
+      isLoading: true,
     };
     this.onDeleteGroup = this.onDeleteGroup.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
@@ -41,6 +43,7 @@ class Settings extends Component {
       this.setState({
         groups: nextProps.groups
       });
+      this.setState({isLoading:false});
     }
   }
   onDeleteGroup(group){
@@ -71,8 +74,18 @@ class Settings extends Component {
   }
   render() {
     return (
-      <div className="container">
-        <div className="row justify-content-md-center mt-3">
+      <div className="container mt-4" style={{marginBottom:"100px"}}>
+        {this.state.isLoading ? <Loading/> :
+        <div>
+      <div className="row justify-content-md-center">
+          <div className="col-6">
+          <RegisterGroup   fetchGroups={this.props.fetchGroups} />
+          </div>
+          <div className="col-6">
+          <GroupTable onDeleteGroup={this.onDeleteGroup} groups={this.state.groups} />
+          </div>
+        </div>
+        <div className="row mt-5 justify-content-md-center">
           <div className="col-6">
             <RegisterAdmin fetchUsers={this.props.fetchUsers} />
           </div>
@@ -80,15 +93,8 @@ class Settings extends Component {
             <SearchTable onDismiss={this.onDismiss} users={this.state.users} />
           </div>
         </div>
-        <hr className="mt-5"/>
-        <div className="row justify-content-md-center mt-3">
-          <div className="col-4 ">
-            <GroupTable onDeleteGroup={this.onDeleteGroup} groups={this.state.groups} />
-          </div>
-          <div className="col-6">
-          <RegisterGroup   fetchGroups={this.props.fetchGroups} />
-          </div>
         </div>
+      }
       </div>
     );
   }

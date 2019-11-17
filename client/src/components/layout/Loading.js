@@ -8,7 +8,7 @@ import FadeLoader from 'react-spinners/FadeLoader';
 const override = css`
     display: block;
     top:30px;
-    left:500px;
+    left:50%;
     height: 15px;
     width: 5px;
     radius: 2px;

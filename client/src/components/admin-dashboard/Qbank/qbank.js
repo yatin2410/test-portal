@@ -44,7 +44,7 @@ class Qbank extends Component {
       <div>
         {this.state.isLoading ===false ? (
           <div>
-            <div className="container mt-5">
+            <div className="container mt-4">
               <div className="row justify-content-md-center">
                 <div className="col-2">
                   <button

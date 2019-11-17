@@ -144,8 +144,8 @@ function Table(props) {
                     <div dangerouslySetInnerHTML={{ __html: "<span class='ans'> Ans: </span> <span class='ml-1.75'> " + item.ans + "</span>" }}></div>
                   </div>
                   <div>
-                    <button className="btn mt-4 btn-warning sp" onClick={() => onEdit(item._id)}>Edit</button>
-                    <button className="btn mt-4 ml-3 btn-danger" onClick={() => onDelete(item._id)}>Delete</button>
+                    <button className="btn mt-4 btn-round btn-lg sp" onClick={() => onEdit(item._id)}>Edit</button>
+                    <button className="btn mt-4 ml-3 btn-lg btn-round modi-btn" onClick={() => onDelete(item._id)}>Delete</button>
                   </div>
                 </div>
               </div>

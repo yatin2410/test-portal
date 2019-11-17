@@ -68,7 +68,7 @@ class UpdateAdmin extends Component {
     return (
       <div>
         <div className="container">
-          <div className="row  mt-2 justify-content-md-center">
+          <div className="row justify-content-md-center">
             <div className="col-5">
               <h4>
                 <b>EDIT: </b>

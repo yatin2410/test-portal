@@ -38,7 +38,7 @@ function Table(props) {
       <h5>
         Total : <span className="text-info">{reverseList.length}</span>
       </h5>
-      <table className="table table-bordered table-hover">
+      <table className="table table-bordered table-hover modifiedtable">
         <thead>
           <tr>
             <th>
@@ -66,7 +66,7 @@ function Table(props) {
             </th>
             <th>
               <Sort sortKey={"PER"} onSort={onSort} activeSortKey={sortKey}>
-                Per
+                <span style={{ fontSize: "0.85em" }}>Percentage</span>
               </Sort>{" "}
             </th>
             <th>
@@ -74,7 +74,7 @@ function Table(props) {
                 sortKey={"PERTOPASS"}
                 onSort={onSort}
                 activeSortKey={sortKey}>
-                <span style={{ fontSize: "0.85em" }}>PerToPass</span>
+                <span style={{ fontSize: "0.85em" }}>Required</span>
               </Sort>{" "}
             </th>
             <th>
@@ -94,7 +94,7 @@ function Table(props) {
               <td>{item.correct}</td>
               <td>{item.per + " %"}</td>
               <td>{item.perToPass + " %"}</td>
-              <td>{item.result}</td>
+              <td>{item.result==="Pass"?<span className="text-success">{item.result}</span>:<span className="text-danger">{item.result}</span>}</td>
               <td>
                 <button
                   className="btn"

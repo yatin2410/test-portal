@@ -28,13 +28,7 @@ export default function Help(props) {
                   How to know correct answers of a past quiz?
         </Link></h5>
         </div></li>
-
-        <li><div>
-        <h5><Link to="/dashboard/help5" className="questionFont">
-                  How to view my feedback given by the admins?
-        </Link></h5>
-        </div></li>
-
+        
         </ul> 
       </div>
     );
@@ -44,7 +38,7 @@ export default function Help(props) {
     return (
       <div className = "container">
           <div className = "mt-4 ml-5">
-          <h6 ><Link to="/dashboard/help" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
+          <h6 ><Link to="/dashboard/help" className="arrowFont"><i  className="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
         </div>
         <div className="mt-5 ml-5">
             <h3>How to take a quiz?</h3>
@@ -69,7 +63,7 @@ export default function Help(props) {
     return (
         <div className = "container">
         <div className = "mt-4 ml-5">
-        <h6 ><Link to="/dashboard/help" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
+        <h6 ><Link to="/dashboard/help" className="arrowFont"><i  className="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
       </div>
       <div className="mt-5 ml-5">
           <h3>How to change my account details?</h3>
@@ -86,7 +80,7 @@ export default function Help(props) {
     return (
         <div className = "container">
         <div className = "mt-4 ml-5">
-        <h6 ><Link to="/dashboard/help" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
+        <h6 ><Link to="/dashboard/help" className="arrowFont"><i  className="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
       </div>
       <div className="mt-5 ml-5">
           <h3>How to change my password?</h3>
@@ -103,30 +97,13 @@ export default function Help(props) {
     return (
         <div className = "container">
         <div className = "mt-4 ml-5">
-        <h6 ><Link to="/dashboard/help" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
+        <h6 ><Link to="/dashboard/help" className="arrowFont"><i  className="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
       </div>
       <div className="mt-5 ml-5">
           <h3> How to know correct answers of a past quiz?</h3>
       </div>
       <p className="mt-3 ml-5">
         Go to Results page from side bar or navigation bar. There previous attempted quizzes will be shown. By clicking on the button, you will be shown all the questions with the answers you selected and the correct answers. Also, you will be able to see total correct answers you attempted and incorrect answers you attempted. You will also be able to see whether you passed or failed and if passed, then with what percentage.
-      </p>
-      <h5 className="mt-3 ml-5">All the best for your Quizzes.</h5>
-    </div>
-    );
-  }
-
-  export function Help5(props) {
-    return (
-        <div className = "container">
-        <div className = "mt-4 ml-5">
-        <h6 ><Link to="/dashboard/help" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
-      </div>
-      <div className="mt-5 ml-5">
-          <h3> How to view my feedback given by the admins?</h3>
-      </div>
-      <p className="mt-3 ml-5">
-        On the home page, you can see the feedback button. On clicking it, you will be able to see the feedback given by the admins on the basis of your attempted quizzes like on what you need to improve, what are your strong points, etc. So, that you can improve your performance.
       </p>
       <h5 className="mt-3 ml-5">All the best for your Quizzes.</h5>
     </div>

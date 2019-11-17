@@ -43,7 +43,8 @@ class ViewQuiz extends Component {
   componentDidMount() {
     this.props.fetchUserQuizResult(
       this.props.match.params.id,
-      this.props.auth.user.id
+      this.props.auth.user.id,
+      this.props.history
     );
   }
   componentWillReceiveProps(nextProps) {

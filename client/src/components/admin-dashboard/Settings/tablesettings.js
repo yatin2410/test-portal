@@ -34,7 +34,7 @@ function Table(props) {
       <h5>
         Total : <span className="text-info">{reverseList.length}</span>
       </h5>
-      <table className="table table-bordered table-hover">
+      <table className="table table-bordered table-hover modifiedtable">
         <thead>
           <tr>
             <th>
@@ -97,7 +97,7 @@ class SearchTable extends Component {
     const { users, sortKey, isSortReverse } = this.state;
     return (
       <div className="container">
-        <div className="row my-4 ml-4">
+        <div className="row ml-4">
           <h4>Other Admins:</h4>
         </div>
         {users ? (

@@ -128,7 +128,7 @@ class AddQuiz extends Component {
     const { errors,groups } = this.state;
     const arr = ["name", "duration", "perToPass"];
     const arr1 = [this.name, this.duration, this.perToPass];
-    const arr2 = ["Name", "Duration", "Percentage To Pass"];
+    const arr2 = ["Name", "Duration (min)", "Percentage To Pass"];
     return (
       <div>
         <div className="container">

@@ -47,7 +47,7 @@ class RegisterGroup extends Component {
     return (
       <div>
         <div className="container">
-        <div className="row my-2 pt-4 ml-1" style={{paddingLeft:"30%"}}>
+        <div className="row ml-1" style={{paddingLeft:"30%"}}>
               <h4>
                 Add Group:
               </h4>

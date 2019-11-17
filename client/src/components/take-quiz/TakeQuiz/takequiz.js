@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 import Question from "./Question";
 import Question2 from "./Question2";
 import { SaveAndfetchUserQuizFull } from "../../../actions/fetchActions";
-import { submitQuiz, saveQuiz } from "../../../actions/putActions";
+import { submitQuiz, saveQuiz,putFlashMsg } from "../../../actions/putActions";
 import Loading from "../../layout/Loading";
 import lodash from "lodash";
 import sideQuestion from "./SideQustion";
 import Timmer from "./Timer";
+import  SuccessAlert from "../../layout/Flash";
 
 class TakeQuiz extends Component {
   constructor(props) {
@@ -47,15 +48,19 @@ class TakeQuiz extends Component {
         else
           arr.push([]);
       }
+      if(nextProps.quiz.submitTime && nextProps.quiz.submitTime === true){
+        this.props.putFlashMsg({msg:"Quiz is already sumbmitted!",type:"alert-danger"});
+        this.props.history.push("/dashboard/quiz");        
+      }
       let startTime = nextProps.quiz.startTime;
       let diff = (new Date()).getTime()-(new Date(startTime)).getTime();
-      console.log(diff);
-      if(diff<0){
-        this.props.history.push("/dashboard/quizs");
-      }
       let duration = diff/(1000*60);
       let actualDuration  = Number(nextProps.quiz.duration);
       console.log(duration);
+      if(actualDuration-duration<0){
+        this.props.putFlashMsg({msg:"Quiz Time is up!",type:"alert-danger"});
+        this.props.history.push("/dashboard/quiz");
+      }
       nextProps.quiz.duration = actualDuration - duration;
       console.log(nextProps.quiz);
       this.setState({ anss: arr });
@@ -68,7 +73,8 @@ class TakeQuiz extends Component {
     let submitAns = {
       userId: this.props.auth.user.id,
       qid: this.props.match.params.id,
-      anss: {}
+      anss: {},
+      submitTime: true,
     };
     this.state.quiz.questionsFull.forEach((element, index) => {
       {
@@ -79,7 +85,7 @@ class TakeQuiz extends Component {
     this.props.submitQuiz(submitAns, this.props.history);
   }
   onSave(){
-    if(lodash.isEqual(this.state.ans,this.state.savedAnss)===false){
+    if(lodash.isEqual(this.state.anss,this.state.savedAnss)===false){
       let submitAns = {
         userId: this.props.auth.user.id,
         qid: this.props.match.params.id,
@@ -229,6 +235,7 @@ class TakeQuiz extends Component {
                     </div>
                   </div>
                   <div className="bottom-line">
+                  <SuccessAlert />
                  <button className="btn btn-round btn-lg " onClick={this.onPrev}>
                     Prev
                   </button>
@@ -256,8 +263,8 @@ TakeQuiz.propTypes = {
   auth: PropTypes.object.isRequired,
   SaveAndfetchUserQuizFull: PropTypes.func.isRequired,
   submitQuiz: PropTypes.func.isRequired,
+  putFlashMsg: PropTypes.func.isRequired,
   saveQuiz: PropTypes.func.isRequired,
-  quiz: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -265,6 +272,6 @@ const mapStateToProps = state => ({
   quiz: state.data.quizFull.quizFull,
 });
 
-export default connect(mapStateToProps, { SaveAndfetchUserQuizFull, submitQuiz, saveQuiz })(
+export default connect(mapStateToProps, { SaveAndfetchUserQuizFull, submitQuiz, saveQuiz, putFlashMsg })(
   TakeQuiz
 );
