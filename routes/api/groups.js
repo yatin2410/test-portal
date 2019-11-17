@@ -12,7 +12,7 @@ router.get("/",(req,res)=>{
 
 router.post("/",authAdmin,(req,res)=>{
     if(req.body.group === undefined){
-        res.status(400).send({group:"Group name is required."});
+        return res.status(400).send({group:"Group name is required."});
     }
     console.log(req.body.group);
     Group.findOne({group : req.body.group}).then((grp)=>{
@@ -32,10 +32,10 @@ router.post("/",authAdmin,(req,res)=>{
 router.delete("/", authAdmin, (req, res) => {
     console.log("in delete");
     User.deleteMany({group: req.body.group},err => {
-        if(err) res.status(400).json({error: "no users in this group"});
+        if(err) return res.status(400).json({error: "no users in this group"});
         Group.deleteOne({ group: req.body.group }, err => {
-            if (err) res.status(400).json({ error: "group does not exist" });
-            res.status(200).json({ ok: "ok" });
+            if (err) return res.status(400).json({ error: "group does not exist" });
+            return res.status(200).json({ ok: "ok" });
           });      
     })
 });

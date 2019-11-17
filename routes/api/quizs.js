@@ -9,10 +9,11 @@ const Question = require("../../models/Question");
 const isEmpty = require("is-empty");
 const Validator = require("validator");
 const User = require("../../models/User");
+
 router.post("/", authAdmin, (req, res) => {
   const { errors, isValid } = validateQuizInput(req.body);
   if (!isValid) {
-    res.status(400).json(errors);
+    return res.status(400).json(errors);
   } else {
     const newQuiz = new Quiz({
       ...req.body
@@ -27,21 +28,21 @@ router.post("/", authAdmin, (req, res) => {
 router.put("/", authAdmin, (req, res) => {
   const { errors, isValid } = validateQuizInput(req.body);
   if (!isValid) {
-    res.status(400).json(errors);
+    return res.status(400).json(errors);
   } else {
     const newQuiz = new Quiz({
       ...req.body
     });
     Quiz.find({ _id: req.body._id }).then(data => {
-      if (!data) res.status(400).json({ error: "some errors" });
+      if (!data) return res.status(400).json({ error: "some errors" });
       Quiz.update(
         { _id: req.body._id },
         {
           ...req.body
         },
         (err, afft, data) => {
-          if (err) res.status(400).json({ error: "some error" });
-          res.status(200).json({ ok: "ok" });
+          if (err) return res.status(400).json({ error: "some error" });
+          return res.status(200).json({ ok: "ok" });
         }
       );
     });
@@ -54,13 +55,13 @@ router.put("/questions", authAdmin, (req, res) => {
     errors.questions = "Please select atleast one question.";
   }
   if (errors.questions !== undefined) {
-    res.status(400).json(errors);
+    return res.status(400).json(errors);
   } else {
     Quiz.find({ _id: req.body._id }).then(data => {
-      if (!data) res.status(404).json({ ans: "_id is not found" });
+      if (!data) return res.status(404).json({ ans: "_id is not found" });
       Quiz.update({ _id: req.body._id }, { ...req.body }, (err, afft, data) => {
-        if (err) res.status(400).json({ error: "unexpected error" });
-        else res.status(200).json({ ok: "ok" });
+        if (err) return res.status(400).json({ error: "unexpected error" });
+        else return res.status(200).json({ ok: "ok" });
       });
     });
   }
@@ -74,41 +75,41 @@ router.get("/", authAdmin, (req, res) => {
 
 router.get("/questions/:id", authAdmin, (req, res) => {
   if (req.params.id == null) {
-    res.status(400).json({ error: "cant find quiz" });
+    return res.status(400).json({ error: "cant find quiz" });
   }
   Quiz.find({ _id: req.params.id }).then(data => {
-    if (!data) res.status(404).json({ error: "cant find quiz" });
-    res.status(200).json(data[0].questions);
+    if (!data) return res.status(404).json({ error: "cant find quiz" });
+    return res.status(200).json(data[0].questions);
   });
 });
 
 router.get("/:id", authAdmin, (req, res) => {
   if (req.params.id == null) {
-    res.status(400).json({ error: "cant find quiz" });
+    return res.status(400).json({ error: "cant find quiz" });
   }
   Quiz.find({ _id: req.params.id }).then(data => {
-    if (!data) res.status(404).json({ error: "cant find quiz" });
-    res.status(200).json(data[0]);
+    if (!data) return res.status(404).json({ error: "cant find quiz" });
+    return res.status(200).json(data[0]);
   });
 });
 
 router.delete("/", authAdmin, (req, res) => {
   console.log("in delete");
   Quiz.deleteMany({ _id: req.body._id }, err => {
-    if (err) res.status(400).json({ error: "no quiz in this group" });
+    if (err) return res.status(400).json({ error: "no quiz in this group" });
     Quiz.deleteOne({ group: req.body._id }, err => {
-      if (err) res.status(400).json({ error: "quiz does not exist" });
-      res.status(200).json({ ok: "ok" });
+      if (err) return res.status(400).json({ error: "quiz does not exist" });
+      return res.status(200).json({ ok: "ok" });
     });
   });
 });
 
 router.get("/showquestions/:id", authAdmin, (req, res) => {
   if (req.params.id == undefined) {
-    res.status(404).json({ error: "quiz not found" });
+    return res.status(404).json({ error: "quiz not found" });
   }
   Quiz.find({ _id: req.params.id }).then(data => {
-    if (!data) res.status(404).json({ error: "quiz not found" });
+    if (!data) return res.status(404).json({ error: "quiz not found" });
     let questionids = data[0].questions;
     questionids = questionids.map(item => moongose.Types.ObjectId(item));
     Question.find(
@@ -116,8 +117,8 @@ router.get("/showquestions/:id", authAdmin, (req, res) => {
         _id: { $in: questionids }
       },
       (err, data) => {
-        if (err) res.status(400).json({ error: "no questions" });
-        res.status(200).json({ data });
+        if (err) return res.status(400).json({ error: "no questions" });
+        return res.status(200).json({ data });
       }
     );
   });
@@ -126,16 +127,16 @@ router.get("/showquestions/:id", authAdmin, (req, res) => {
 router.get("/user/:group", userAdmin, (req, res) => {
   const group = req.params.group;
   Quiz.find({ groups: group }).then(data => {
-    res.status(200).json(data);
+    return res.status(200).json(data);
   });
 });
 
 router.get("/user/quiz/:qid/:uid", userAdmin, (req, res) => {
   if (req.params.qid == undefined || req.params.uid==undefined) {
-    res.status(404).json({ error: "Bad Request" });
+    return res.status(404).json({ error: "Bad Request" });
   }
   Quiz.find({ _id: req.params.qid }).then(data => {
-    if (!data) res.status(404).json({ error: "quiz not found" });
+    if (!data) return res.status(404).json({ error: "quiz not found" });
     let quiz = data[0];
     let questionids = quiz.questions;
     questionids = questionids.map(item => moongose.Types.ObjectId(item));
@@ -144,10 +145,10 @@ router.get("/user/quiz/:qid/:uid", userAdmin, (req, res) => {
         _id: { $in: questionids }
       },
       (err, dta) => {
-        if (err) res.status(400).json({ error: "no questions" });
+        if (err) return res.status(400).json({ error: "no questions" });
         dta.forEach(item => (item.ans = []));
         User.find({_id:req.params.uid}).then(userData => {
-          if(!userData) res.status(404).json({error:"user not found"});
+          if(!userData) return res.status(404).json({error:"user not found"});
           let userQuiz = null;
           if(userData[0].quizs!==null){
             userData[0].quizs.forEach(itm => {
@@ -164,9 +165,9 @@ router.get("/user/quiz/:qid/:uid", userAdmin, (req, res) => {
             // console.log(obj);
             // console.log(req.params.uid);
             User.updateOne({_id:req.params.uid},{$push:{quizs:obj}},(err,afft,da)=>{
-              if(err) res.status(400).json({error:"can not push quiz"});
+              if(err) return res.status(400).json({error:"can not push quiz"});
               User.find({_id:req.params.uid}).then(userData => {
-                if(!userData) res.status(404).json({error:"user not found"});
+                if(!userData) return res.status(404).json({error:"user not found"});
                 let userQuiz = null;
                 if(userData[0].quizs!==null){
                   userData[0].quizs.forEach(itm => {
@@ -181,8 +182,10 @@ router.get("/user/quiz/:qid/:uid", userAdmin, (req, res) => {
                   questionsFull: dtaf,
                   ...quiz.toObject(),
                   startTime: userQuiz.startTime,
+                  submitTime: userQuiz.submitTime,
                 };
-                res.status(200).json({ quizFull });            
+                console.log(quizFull.submitTime);
+                return res.status(200).json({ quizFull });            
               });
       
             });
@@ -194,8 +197,9 @@ router.get("/user/quiz/:qid/:uid", userAdmin, (req, res) => {
               questionsFull: dtaf,
               ...quiz.toObject(),
               startTime: userQuiz.startTime,
+              submitTime: userQuiz.submitTime,
             };
-            res.status(200).json({ quizFull });    
+            return res.status(200).json({ quizFull });    
           }
         });
       }
@@ -205,11 +209,15 @@ router.get("/user/quiz/:qid/:uid", userAdmin, (req, res) => {
 
 router.get("/user/result/:qid/:uid", userAdmin, (req, res) => {
   if (req.params.qid == undefined || req.params.uid==undefined) {
-    res.status(404).json({ error: "quiz not found" });
+    return res.status(404).json({ error: "quiz not found" });
   }
   Quiz.find({ _id: req.params.qid }).then(data => {
-    if (!data) res.status(404).json({ error: "quiz not found" });
+    if (!data) return res.status(404).json({ error: "quiz not found" });
     let quiz = data[0];
+    if((new Date()).getTime()<=(new Date(quiz.endDate)).getTime()){
+      return res.status(400).json({error:"quiz is not ended"});
+      return;
+    }
     let questionids = quiz.questions;
     questionids = questionids.map(item => moongose.Types.ObjectId(item));
     Question.find(
@@ -217,9 +225,9 @@ router.get("/user/result/:qid/:uid", userAdmin, (req, res) => {
         _id: { $in: questionids }
       },
       (err, dta) => {
-        if (err) res.status(400).json({ error: "no questions" });
+        if (err) return res.status(400).json({ error: "no questions" });
         User.find({_id:req.params.uid}).then(userData => {
-          if(!userData) res.status(404).json({error:"user not found"});
+          if(!userData) return res.status(404).json({error:"user not found"});
           let userQuiz;
           userData[0].quizs.forEach(itm => {
             if (itm.qid === req.params.qid) {
@@ -235,7 +243,7 @@ router.get("/user/result/:qid/:uid", userAdmin, (req, res) => {
           ...quiz.toObject()
         };
         console.log(quizFull);
-        res.status(200).json({ quizFull });
+        return res.status(200).json({ quizFull });
       }
     );
   });
@@ -245,9 +253,11 @@ router.get("/user/result/:qid/:uid", userAdmin, (req, res) => {
 
 router.post("/submit", userAdmin, (req, res) => {
   if (!req.body.userId || !req.body.qid || req.body.anss === null)
-    res.status(400).json({ error: "bad request" });
+    {
+      return res.status(400).json({ error: "bad request" });
+    }
   Quiz.find({ _id: req.body.qid }).then(data => {
-    if (!data) res.status(400).json({ error: "bad request" });
+    if (!data) return res.status(400).json({ error: "bad request" });
     let quiz = data[0];
     let questionids = quiz.questions;
     questionids = questionids.map(item => moongose.Types.ObjectId(item));
@@ -257,13 +267,13 @@ router.post("/submit", userAdmin, (req, res) => {
         _id: { $in: questionids }
       },
       (err, dta) => {
-        if (err) res.status(400).json({ error: "no questions" });
+        if (err) return res.status(400).json({ error: "no questions" });
         dta.forEach(item => {submitAns[item._id].realAns = item.ans});
         console.log(submitAns);
-        User.updateOne({_id:req.body.userId,'quizs.qid':req.body.qid},{$set:{'quizs.$.qdata':submitAns}},(err,afft,da)=>{
-          if(err) res.status(400).error({error:"bad request"});
+        User.updateOne({_id:req.body.userId,'quizs.qid':req.body.qid},{$set:{'quizs.$.qdata':submitAns,'quizs.$.submitTime':req.body.submitTime}},(err,afft,da)=>{
+          if(err) return res.status(400).error({error:"bad request"});
           console.log(da);
-          res.status(200).json({ ok:"ok" });
+          return res.status(200).json({ ok:"ok" });
         });
       }
     );
@@ -303,7 +313,7 @@ function validateRandomQuiz(obj,easyQ,mediumQ,hardQ){
 }
 
 router.post("/random/:id", authAdmin, (req, res) => {
-  if(!req.params.id) res.status(400).json({error:"bad request"});
+  if(!req.params.id) return res.status(400).json({error:"bad request"});
   let easyQ, mediumQ, hardQ;
   Question.find({difficulty:"1"}).then(data=>{
     easyQ = data;
@@ -314,7 +324,7 @@ router.post("/random/:id", authAdmin, (req, res) => {
         let errors = validateRandomQuiz(req.body,easyQ,mediumQ,hardQ);
         console.log(errors,isEmpty(errors));
         if(!isEmpty(errors)){
-          res.status(404).json(errors);
+          return res.status(404).json(errors);
         }
         else{
         let questionids = [];
@@ -352,8 +362,8 @@ router.post("/random/:id", authAdmin, (req, res) => {
           },
           (err,afft,data)=>{
             console.log(err);
-            if(err) res.status(400).json({error:"bad request"});
-            res.status(200).json({ok:"ok"});
+            if(err) return res.status(400).json({error:"bad request"});
+            return res.status(200).json({ok:"ok"});
           });
         }
       });
