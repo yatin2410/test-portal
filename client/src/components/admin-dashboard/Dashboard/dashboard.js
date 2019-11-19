@@ -9,6 +9,7 @@ import Myaccount from "../Myaccount/myaccount";
 import Qbank from "../Qbank/qbank";
 import Quiz from "../Quiz/quiz";
 import Results from "../Results/results";
+import QuizUserResults from "../Results/quizUserResults";
 import Settings from "../Settings/settings";
 import AddQuestion from '../addQuestion/addquestion';
 import AddQuiz from '../addQuiz/addquiz';
@@ -89,6 +90,7 @@ class adminDashboard extends Component {
               <Route exact path="/dashboard" component={Home} />
               <Route exact path="/dashboard/home" component={Home} />
               <Route exact path="/dashboard/results" component={Results} />
+              <Route exact path="/dashboard/quiz/result/:id" component={QuizUserResults} />
               <Route exact path="/dashboard/users" component={Users} />
               <Route exact path="/dashboard/quiz" component={Quiz} />
               <Route exact path="/dashboard/qbank" component={Qbank} />

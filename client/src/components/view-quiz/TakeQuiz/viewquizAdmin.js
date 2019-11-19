@@ -48,6 +48,7 @@ class ViewQuizAdmin extends Component {
       this.props.match.params.id2,
       this.props.history
     );
+    this.props.fetchUser(this.props.match.params.id2);
   }
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);

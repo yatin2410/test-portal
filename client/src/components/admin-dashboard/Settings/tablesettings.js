@@ -34,7 +34,7 @@ function Table(props) {
       <h5>
         Total : <span className="text-info">{reverseList.length}</span>
       </h5>
-      <table className="table table-bordered table-hover table-striped modifiedtable">
+      <table className="table table-bordered table-hover table-striped modifiedtable" style={{overflow:"hidden"}}>
         <thead>
           <tr>
             <th>
@@ -48,7 +48,7 @@ function Table(props) {
               </Sort>{" "}
             </th>
             <th>
-              <Sort sortKey={"EMAIL"} onSort={onSort} activeSortKey={sortKey}>
+              <Sort sortKey={"EMAIL"} onSort={onSort} activeSortKey={sortKey} style={{overflow:"hidden"}}>
                 Email
               </Sort>
             </th>
@@ -60,7 +60,7 @@ function Table(props) {
             <tr key={item.Id}>
               <td>{item.Id}</td>
               <td>{item.name}</td>
-              <td>{item.email}</td>
+              <td style={{overflow:"hidden"}} title={item.email}>{item.email}</td>
               <td>
                 <button className="btn modi-btn" onClick={() => onDismiss(item.Id)}>
                   <i className="material-icons">delete</i>

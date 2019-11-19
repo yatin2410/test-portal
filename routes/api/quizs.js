@@ -392,6 +392,16 @@ function countCorrect(arr) {
   return cnt;
 }
 
+function countAttemp(arr) {
+  let cnt = 0;
+  for (let item in arr) {
+    if (arr[item].ans.length != 0) {
+      cnt++;
+    }
+  }
+  return cnt;
+}
+
 function countPer(qdata,total){
   return ((countCorrect(qdata)*100) / Number(total)).toFixed(2);
 }
@@ -432,8 +442,95 @@ router.get("/results/all",authAdmin,(req,res) => {
           }
         });
       });
-      console.log(results);
+      // console.log(results);
       res.status(200).json(results);
+    });
+  });
+});
+
+
+router.get("/results/:id",authAdmin,(req,res) => {
+  const id = req.params.id;
+  if(!id) return res.status(400).json({error:"bad request"});
+  User.find().then(users=>{
+    Quiz.find({_id:id}).then(quiz => {
+      // users attempted, total passed, total failed, pertopass, name, avg. percentage
+      if(!quiz[0]) return res.status(404).json({error:"can not find quiz"});
+      let results = [];
+      console.log(quiz[0]);
+      let totalQue = quiz[0].questions.length;
+      let perToPass = quiz[0].perToPass;
+      users.forEach((item)=>{
+        item.quizs.forEach((itm)=>{
+            if(id==itm.qid){
+                let obj = {};
+                let per = countPer(itm.qdata,totalQue);
+                obj.name = item.name,
+                obj.correct = countCorrect(itm.qdata);
+                obj.per = per;
+                obj.total = totalQue;
+                obj.attempted = countAttemp(itm.qdata);
+                obj.perToPass = perToPass;
+                obj._id = item._id;
+                obj.result = per >= perToPass ? "Pass" : "Fail";
+                results.push(obj);
+            }            
+        });
+      });
+      // console.log(results);
+      res.status(200).json(results);
+    });
+  });
+});
+
+
+
+router.get("/admin/states",authAdmin,(req,res)=>{
+  User.find().then(usersR=>{
+    Quiz.find().then(quizsR => {
+      Question.find().then(questionsR => {
+        let users = {}, quizs = {}, questions = {};
+        users.total = usersR.length;
+        users.admin = 0;
+        users.user = 0;
+        usersR.forEach((item)=>{
+          if(item.IsAdmin){
+            users.admin++;
+          }
+          else{
+            users.user++;
+          }
+        });
+        quizs.archived = 0;
+        quizs.ongoing = 0;
+        quizs.upcoming = 0;
+        quizsR.forEach((item)=>{
+          if((new Date()).getTime()>(new Date(item.endDate)).getTime()){
+            quizs.archived++;
+          }
+          else if(((new Date()).getTime()>(new Date(item.startDate)).getTime()) && ((new Date()).getTime()<(new Date(item.endDate)).getTime())){
+            quizs.ongoing++;
+          }
+          else{
+            quizs.upcoming++;
+          }
+        });
+        questions.easy = 0;
+        questions.medium = 0;
+        questions.hard = 0;
+        questionsR.forEach((item)=>{
+          if(item.difficulty==="1"){
+            questions.easy++;
+          }
+          else if(item.difficulty==="2"){
+            questions.medium++;
+          }
+          else{
+            questions.hard++;
+          }
+        });
+        res.status(200).json({users,quizs,questions});
+      });
     });
   });
 });

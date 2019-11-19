@@ -10,7 +10,9 @@ import {
   GET_QUIZ_FULL,
   GET_USER,
   GET_RESULTS,
-  GET_QUIZ_RESULTS
+  GET_QUIZ_RESULTS,
+  GET_ADMIN_STATES,
+  GET_QUIZ_USER_RESULTS,
 } from "../actions/types";
 
 const initialState = {
@@ -26,6 +28,8 @@ const initialState = {
   user: {},
   results: null,
   quizResults: null,
+  adminStates: null,
+  quizUserResults: null,
 };
 
 export default function(state = initialState, action) {
@@ -80,16 +84,26 @@ export default function(state = initialState, action) {
         ...state,
         user: action.payload
       };
-      case GET_RESULTS:
-        return {
-          ...state,
-          results: action.payload
-        };
-      case GET_QUIZ_RESULTS:
-        return {
-          ...state,
-          quizResults: action.payload
-        }
+    case GET_RESULTS:
+      return {
+        ...state,
+        results: action.payload
+      };
+    case GET_QUIZ_RESULTS:
+      return {
+        ...state,
+        quizResults: action.payload
+      };
+    case GET_ADMIN_STATES:
+      return {
+        ...state,
+        adminStates: action.payload
+      };
+    case GET_QUIZ_USER_RESULTS:
+      return{
+        ...state,
+        quizUserResults: action.payload
+      }
     default:
       return state;
   }

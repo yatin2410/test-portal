@@ -12,7 +12,9 @@ import {
   GET_QUIZ_FULL,
   GET_RESULTS,
   GET_QUIZ_RESULTS,
-  FLASH_SUCCESS_MSG
+  FLASH_SUCCESS_MSG,
+  GET_ADMIN_STATES,
+  GET_QUIZ_USER_RESULTS
 } from "./types";
 
 export const fetchUsers = () => dispatch => {
@@ -234,3 +236,34 @@ export const fetchQuizResults = () => dispatch => {
       console.log(err);
     });
 };
+
+export const fetchQuizUserResults = (id) => dispatch => {
+  axios
+    .get("/api/quiz/results/"+id)
+    .then(res => {
+      dispatch({
+        type: GET_QUIZ_USER_RESULTS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log("error in fetching results");
+      console.log(err);
+    });
+};
+
+export const fetchAdminStates = () => dispatch => {
+  axios
+  .get("/api/quiz/admin/states")
+  .then(res => {
+    console.log(res);
+    dispatch({
+      type: GET_ADMIN_STATES,
+      payload: res.data
+    });
+  })
+  .catch(err => {
+    console.log("error in fetching admin states");
+    console.log(err);
+  });
+}
