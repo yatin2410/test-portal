@@ -4,6 +4,7 @@ import { fetchQuestion } from "../../../actions/fetchActions";
 import { putQuestion } from "../../../actions/putActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import {Link} from "react-router-dom";
 
 function OptionEditor(props) {
   return (
@@ -141,7 +142,8 @@ class EditQuestion extends Component {
     const arr = ["1", "2", "3", "4"];
     const { errors } = this.state;
     return (
-      <div className="container mt-2">
+      <div className="container mt-3">
+      <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
         <div className="row justify-content-md-center mt-3">
           <div className="col-6">
             <label forhtml="questiontype">Question Type:</label>

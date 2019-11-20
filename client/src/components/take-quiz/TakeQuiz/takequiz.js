@@ -160,7 +160,7 @@ class TakeQuiz extends Component {
               <div className="float-right box-padding-20">
                 <div className="user-name float-left mr-3">ID: {user.Id}</div>
                 <div className="timer private-timer">
-                  <Timmer Time={duration} onSubmit = {this.onSubmit}/>
+                  <Timmer Time={duration} onSave={this.onSave} onSubmit = {this.onSubmit} putFlashMsg={this.props.putFlashMsg}/>
                 </div>
                 <button
                   className="end-test btn"

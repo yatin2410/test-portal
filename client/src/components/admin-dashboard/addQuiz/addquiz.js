@@ -131,10 +131,10 @@ class AddQuiz extends Component {
     const arr2 = ["Name", "Duration (min)", "Percentage To Pass"];
     return (
       <div>
-        <div className="container">
+        <div className="container mt-3">
+        <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
           <div className="row  mt-2 justify-content-md-center">
             <div className="col-5">
-            <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
               <h4>
                 <b>Add Quiz Details: </b>
               </h4>

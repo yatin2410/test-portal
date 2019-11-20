@@ -47,6 +47,25 @@ export default function Help(props) {
         </Link></h5>
         </div></li>
 
+        <li><div>
+        <h5><Link to="/dashboard/help8" className="questionFont">
+                  What are the features of the text editor?
+        </Link></h5>
+        </div></li>
+
+        <li><div>
+        <h5><Link to="/dashboard/help9" className="questionFont">
+                  How to see a quiz's overall result?
+        </Link></h5>
+        </div></li>
+
+        <li><div>
+        <h5><Link to="/dashboard/help10" className="questionFont">
+                  How to see an individual's result?
+        </Link></h5>
+        </div></li>
+
+
         </ul> 
       </div>
     );
@@ -162,3 +181,51 @@ export default function Help(props) {
     </div>
     );
   }
+
+    export function Help8(props) {
+      return (
+          <div className = "container">
+          <div className = "mt-4 ml-5">
+          <h6 ><Link to="/dashboard/help" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
+        </div>
+        <div className="mt-5 ml-5">
+        <h3>What are the features of the text editor?</h3>
+        </div>
+        <p className="mt-3 ml-5">
+          There are many different features of the text editor. Some of them are uploading images in the questions and their options, writing mathematical equations, writing in code language, changing the font size, changing font, adding symbols, etc. This is useful in adding questions which are not just text, but have extra things like images, code, etc. 
+        </p>
+      </div>
+      );
+    }
+
+      export function Help9(props) {
+        return (
+            <div className = "container">
+            <div className = "mt-4 ml-5">
+            <h6 ><Link to="/dashboard/help" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
+          </div>
+          <div className="mt-5 ml-5">
+          <h3>How to see a quiz's overall result?</h3>
+          </div>
+          <p className="mt-3 ml-5">
+            In Results page on Admin side, you can see all the quizzes that has been taken by the students till now. On the side, you can see a results button and by clicking on it, you will be taken to a page where result of all individual student who took that quiz, will come and clicking on play button, you will see the correct answers and the answers that student selected.  
+          </p>
+        </div>
+        );
+      }
+
+        export function Help10(props) {
+          return (
+              <div className = "container">
+              <div className = "mt-4 ml-5">
+              <h6 ><Link to="/dashboard/help" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
+            </div>
+            <div className="mt-5 ml-5">
+            <h3>How to see an individual's result?</h3>
+            </div>
+            <p className="mt-3 ml-5">
+              In Users page, a result button is seen where you will taken to a page which will show all the quizzes he has taken and  and by clicking on the play button besides it, you will be able to see the correct answers and the answers that student selected.
+            </p>
+          </div>
+          );
+        }

@@ -29,6 +29,9 @@ import {Help4} from '../Help/help';
 import {Help5} from '../Help/help';
 import {Help6} from '../Help/help';
 import {Help7} from '../Help/help';
+import {Help8} from '../Help/help';
+import {Help9} from '../Help/help';
+import {Help10} from '../Help/help';
 
 class adminDashboard extends Component {
   constructor(props) {
@@ -110,6 +113,9 @@ class adminDashboard extends Component {
               <Route exact path="/dashboard/help5" component={Help5} />
               <Route exact path="/dashboard/help6" component={Help6} />
               <Route exact path="/dashboard/help7" component={Help7} />
+              <Route exact path="/dashboard/help8" component={Help8} />
+              <Route exact path="/dashboard/help9" component={Help9} />
+              <Route exact path="/dashboard/help10" component={Help10} />
             </div>
           </div>
         </div>

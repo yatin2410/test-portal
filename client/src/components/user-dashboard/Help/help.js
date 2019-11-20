@@ -79,8 +79,8 @@ export default function Help(props) {
   export function Help3(props) {
     return (
         <div className = "container">
-        <div className = "mt-4 ml-5">
         <h6 ><Link to="/dashboard/help" className="arrowFont"><i  className="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Help Home </Link></h6>
+        <div className = "mt-4 ml-5">
       </div>
       <div className="mt-5 ml-5">
           <h3>How to change my password?</h3>
