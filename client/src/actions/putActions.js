@@ -170,6 +170,7 @@ export const saveQuiz = (data) => dispatch => {
   axios
     .post("/api/quiz/submit", data)
     .then(res => {
+      console.log(res);
       dispatch({
         type: FLASH_SUCCESS_MSG,
         payload: {msg:"Quiz Saved successfully!",type:"alert-success"}

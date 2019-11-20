@@ -24,7 +24,7 @@ class ShowQuizQuestions extends Component {
     }
     render() {
     return(
-        <div className="mt-5">
+        <div>
             {this.state.isLoading === false ?
             <SearchTable questions={this.state.showQuestions}/>
             :<Loading/>}

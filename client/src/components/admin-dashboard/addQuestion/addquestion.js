@@ -112,10 +112,10 @@ class AddQuestion extends Component {
     const arr = ["1","2","3","4"];
     const {errors} = this.state;
     return (
-      <div className="container mt-2">
+      <div className="container mt-3">
+        <h6 ><Link to="/dashboard/qbank" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Question Bank </Link></h6>
         <div className="row justify-content-md-center mt-3">
           <div className="col-6">
-          <h6 ><Link to="/dashboard/qbank" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Question Bank </Link></h6>
             <label forhtml="questiontype">Question Type:</label>
             <select
               className="custom-select"

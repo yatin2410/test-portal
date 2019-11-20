@@ -196,9 +196,9 @@ class SearchTable extends Component {
   render() {
     const { questions, sortKey, isSortReverse } = this.state;
     return (
-      <div className="container">
+      <div className="container mt-3">
+      <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
         <div className = "ml-4 mb-4">
-          <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
         </div>
         {questions ? (
           <div className="row mx-3">
