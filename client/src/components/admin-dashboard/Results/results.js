@@ -23,7 +23,7 @@ class Results extends Component {
         }
     }
     onView(id){
-        alert(id);
+        this.props.history.push("/dashboard/quiz/result/"+id);
     }
     render() {
         return (

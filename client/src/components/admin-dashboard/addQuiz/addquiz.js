@@ -134,7 +134,8 @@ class AddQuiz extends Component {
         <div className="container mt-3">
         <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
           <div className="row  mt-2 justify-content-md-center">
-            <div className="col-5">
+            <div className="col-5 mt-4">
+            <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
               <h4>
                 <b>Add Quiz Details: </b>
               </h4>
@@ -194,7 +195,7 @@ class AddQuiz extends Component {
                   </p>
               </div>
             </div>
-            <div className="row  mt-4-5 justify-content-md-center">
+            <div className="row  mt-4-5 mb-4 justify-content-md-center">
               <div className="col-md-auto">
               <button
                   className="btn btn-lg hoverable mr-3 modi-btn" onClick={this.onSubmit1}>
