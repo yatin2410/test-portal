@@ -61,7 +61,7 @@ class AddQuestionsQuiz extends Component {
             <div className="container mt-4">
               <div className="row justify-content-md-center">
                 <button className="btn modi-btn" onClick={this.onSubmit}>
-                    Add Quiz
+                  Submit
                 </button>
               </div>
             </div>

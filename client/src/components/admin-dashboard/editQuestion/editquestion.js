@@ -143,7 +143,7 @@ class EditQuestion extends Component {
     const { errors } = this.state;
     return (
       <div className="container mt-3">
-      <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
+      <h6 ><Link to="/dashboard/qbank" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Question Bank </Link></h6>
         <div className="row justify-content-md-center mt-3">
           <div className="col-6">
             <label forhtml="questiontype">Question Type:</label>
