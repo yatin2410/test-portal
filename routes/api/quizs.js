@@ -501,6 +501,7 @@ router.get("/admin/states",authAdmin,(req,res)=>{
             users.user++;
           }
         });
+        quizs.total = quizsR.length;
         quizs.archived = 0;
         quizs.ongoing = 0;
         quizs.upcoming = 0;
@@ -515,6 +516,7 @@ router.get("/admin/states",authAdmin,(req,res)=>{
             quizs.upcoming++;
           }
         });
+        questions.total = questionsR.length;
         questions.easy = 0;
         questions.medium = 0;
         questions.hard = 0;

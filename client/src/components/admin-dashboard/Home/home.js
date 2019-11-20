@@ -85,9 +85,9 @@ class Home extends Component {
                     <p className="card-text">
                       Easy: {questions?questions.easy:null}
                       <br />
-                      Medium : {questions?questions.medium:null}
+                      Medium: {questions?questions.medium:null}
                       <br />
-                      Hard : {questions?questions.hard:null}
+                      Hard: {questions?questions.hard:null}
                     </p>
                     </div>
                   </div>

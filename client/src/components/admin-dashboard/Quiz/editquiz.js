@@ -161,7 +161,7 @@ class EditQuiz extends Component {
           this.state.isLoading ===false ?
           <div className="container">
           <div className="row  mt-2 justify-content-md-center">
-            <div className="col-5">
+            <div className="col-5 mt-4">
             <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
               <h4>
                 <b>Edit Quiz Details: </b>
@@ -230,7 +230,7 @@ class EditQuiz extends Component {
                 </div>
               </div>
             </div>
-            <div className="row  mt-4-5 justify-content-md-center">
+            <div className="row  mt-4-5 mb-4 justify-content-md-center">
               <div style={{ float: "right" }}>
                 <button
                   className="btn btn-lg hoverable modi-btn1"

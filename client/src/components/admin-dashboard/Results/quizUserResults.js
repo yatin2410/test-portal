@@ -45,13 +45,13 @@ class QuizUserResults extends Component {
           <Loading />
         ) : (
           <div className="container">
-            <div className="mt-5">
+            <div className="mt-3">
               <h6 className="mb-4">
                 <Link to="/dashboard/results" className="arrowFont">
                   <i
                     class="fas fa-arrow-left arrowFont"
                     style={{ fontSize: "0.75em" }}></i>{" "}
-                  Back to Users Page{" "}
+                  Back to Results Page{" "}
                 </Link>
               </h6>
               <SearchTable

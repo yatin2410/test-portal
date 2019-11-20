@@ -287,6 +287,10 @@ hr{
     /* border-left: 3px solid rgb(30, 47, 56); */
 }
 
+.answered{
+    background-color: rgb(63, 172, 121);
+}
+
 .question-item {
     position: relative;
     cursor: pointer;

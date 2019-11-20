@@ -28,6 +28,11 @@ class Quiz extends Component {
     }
   }
   onDismiss(id) {
+    let confirm = window.confirm("ALERT!!. If you select okay then this action will delete quiz and all the data associated with it.");
+    if(confirm===false){
+      return;
+    }
+
     axios
     .delete("/api/quiz/", { data: { _id: id } })
     .then(res => {

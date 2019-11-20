@@ -60,7 +60,7 @@ class UserResult extends Component {
           <Loading />
         ) : (
           <div className="container">
-            <div className="mt-5">
+            <div className="mt-3">
               <h6>
                 <Link to="/dashboard/users" className="arrowFont">
                   <i

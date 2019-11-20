@@ -10,6 +10,7 @@ import lodash from "lodash";
 import sideQuestion from "./SideQustion";
 import Timmer from "./Timer";
 import  SuccessAlert from "../../layout/Flash";
+import classNames from "classnames";
 
 class TakeQuiz extends Component {
   constructor(props) {
@@ -188,6 +189,7 @@ class TakeQuiz extends Component {
                             index,
                             onChange: this.onChange,
                             question: item.question,
+                            ans: this.state.anss,
                             qid: item._id,
                             aid: this.state.quiz.questionsFull[
                               this.state.activeIndex

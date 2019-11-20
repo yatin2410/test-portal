@@ -30,6 +30,11 @@ class Qbank extends Component {
     this.props.history.push("/dashboard/editquestion/" + id);
   }
   onDelete(id){
+    let confirm = window.confirm("ALERT!!. If you select okay then this action will delete Questions and all the data associated with it.");
+    if(confirm===false){
+      return;
+    }
+
     axios.delete('/api/questions/',{data:{"_id":id}})
     .then(res => {
       this.props.fetchQuestions();

@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import classNames from "classnames";
+import lodash from "lodash";
 
 export default function sideQuestion(props) {
+  console.log(props.ans);
     return (
       <div
         className={
-          "question-item " + classNames({ selected: props.qid === props.aid })
+          "question-item " + classNames({ selected: props.qid === props.aid },{answered: !lodash.isEmpty(props.ans[props.index])})
         }
         onClick={() => props.onChange(props.index)}>
         <div className="inline-block float-left">
