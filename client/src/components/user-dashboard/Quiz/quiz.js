@@ -24,18 +24,12 @@ class Quiz extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.quizs && nextProps.quizs.length !== 0) {
-      console.log((new Date()));
       let quizs = nextProps.quizs.filter(
         item =>
           new Date(item.startDate).getTime() <= new Date().getTime() &&
           new Date(item.endDate).getTime() > new Date().getTime()
       );
       this.setState({ currentQuizs: quizs });
-      console.log(nextProps.quizs);
-      console.log(
-        new Date(nextProps.quizs[0].startDate).getTime(),
-        new Date().getTime()
-      );
       quizs = nextProps.quizs.filter(
         item =>
           new Date(item.startDate).getTime() > new Date().getTime() &&
@@ -45,12 +39,10 @@ class Quiz extends Component {
       this.setState({ isLoading: false });
     }
     if (nextProps.user && nextProps.user.quizs) {
-      console.log(nextProps.user.quizs);
       let arr = [];
       for (let i = 0; i < nextProps.user.quizs.length; i++) {
         arr.push(nextProps.user.quizs[i].qid);
       }
-      console.log(arr);
       this.setState({ takenQuizs: arr });
     }
   }
@@ -58,7 +50,6 @@ class Quiz extends Component {
     this.props.history.push("/takequiz/" + id);
   }
   render() {
-    console.log(this.state);
     return (
       <div>
         {this.state.isLoading ? (

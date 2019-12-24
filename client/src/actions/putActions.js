@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ADD_GROUPS, GET_ERRORS , FLASH_SUCCESS_MSG} from "./types";
+import { ADD_GROUPS, GET_ERRORS, FLASH_SUCCESS_MSG } from "./types";
 
 // Register User
 export const registerGroup = (userData, fun) => dispatch => {
@@ -14,8 +14,8 @@ export const registerGroup = (userData, fun) => dispatch => {
       });
       dispatch({
         type: FLASH_SUCCESS_MSG,
-        payload:{msg:"Group added successfully!",type:"alert-success"},
-      })
+        payload: { msg: "Group added successfully!", type: "alert-success" }
+      });
     })
     .catch(err =>
       dispatch({
@@ -32,8 +32,8 @@ export const addQuestion = (userData, history) => dispatch => {
       history.push("/dashboard/qbank");
       dispatch({
         type: FLASH_SUCCESS_MSG,
-        payload:{msg:"Question added successfully!",type:"alert-success"},
-      })
+        payload: { msg: "Question added successfully!", type: "alert-success" }
+      });
     })
     .catch(err => {
       console.log(err);
@@ -51,9 +51,11 @@ export const putQuestion = (userData, history) => dispatch => {
       history.push("/dashboard/qbank");
       dispatch({
         type: FLASH_SUCCESS_MSG,
-        payload:{msg:"Question updated successfully!",type:"alert-primary"},
-      })
-      console.log(res);
+        payload: {
+          msg: "Question updated successfully!",
+          type: "alert-primary"
+        }
+      });
     })
     .catch(err => {
       console.log(err);
@@ -71,7 +73,6 @@ export const addQuiz = (userData, history) => dispatch => {
       history.push("/dashboard/addquiz/questions/" + res.data.quiz._id);
     })
     .catch(err => {
-      console.log(err.response);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
@@ -96,20 +97,20 @@ export const addRandom = (userData, history) => dispatch => {
 
 export const addQRandomly = (userData, history) => dispatch => {
   axios
-    .post("/api/quiz/random/"+userData._id, userData)
+    .post("/api/quiz/random/" + userData._id, userData)
     .then(res => {
       history.push("/dashboard/quiz/");
       dispatch({
         type: FLASH_SUCCESS_MSG,
-        payload:{msg:"Quiz added successfully!",type:"alert-success"},
-      })
+        payload: { msg: "Quiz added successfully!", type: "alert-success" }
+      });
     })
     .catch(err => {
       console.log(err.response);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
+      });
     });
 };
 
@@ -135,8 +136,8 @@ export const editQuiz = (userData, history) => dispatch => {
       history.push("/dashboard/quiz/");
       dispatch({
         type: FLASH_SUCCESS_MSG,
-        payload:{msg:"Quiz updated successfully!",type:"alert-primary"},
-      })
+        payload: { msg: "Quiz updated successfully!", type: "alert-primary" }
+      });
     })
     .catch(err => {
       console.log(err.response);
@@ -154,39 +155,38 @@ export const submitQuiz = (data, history) => dispatch => {
       history.push("/dashboard/results");
       dispatch({
         type: FLASH_SUCCESS_MSG,
-        payload: {msg:"Quiz Submitted successfully!",type:"alert-success"}
+        payload: { msg: "Quiz Submitted successfully!", type: "alert-success" }
       });
     })
     .catch(err => {
       console.log(err.response);
       dispatch({
         type: FLASH_SUCCESS_MSG,
-        payload: {msg:"Quiz is not submitted!",type:"alert-danger"}
+        payload: { msg: "Quiz is not submitted!", type: "alert-danger" }
       });
     });
 };
 
-export const saveQuiz = (data) => dispatch => {
+export const saveQuiz = data => dispatch => {
   axios
     .post("/api/quiz/submit", data)
     .then(res => {
-      console.log(res);
       dispatch({
         type: FLASH_SUCCESS_MSG,
-        payload: {msg:"Quiz Saved successfully!",type:"alert-success"}
+        payload: { msg: "Quiz Saved successfully!", type: "alert-success" }
       });
     })
     .catch(err => {
       dispatch({
         type: FLASH_SUCCESS_MSG,
-        payload: {msg:"Quiz is not saved!",type:"alert-danger"}
+        payload: { msg: "Quiz is not saved!", type: "alert-danger" }
       });
     });
 };
 
-export const putFlashMsg = (data) => dispatch => {
+export const putFlashMsg = data => dispatch => {
   dispatch({
     type: FLASH_SUCCESS_MSG,
-    payload: data,
-  })
-}
+    payload: data
+  });
+};

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {  withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updateAdmin, logoutUser } from "../../../actions/authActions";
@@ -48,11 +48,10 @@ class UpdateAdmin extends Component {
       oldpassword: this.state.oldpassword,
       password: this.state.password,
       password2: this.state.password2,
-      group: "Admin",
+      group: "Admin"
     };
 
-    this.props.updateAdmin(newUser,this.props.logoutUser);
-    
+    this.props.updateAdmin(newUser, this.props.logoutUser);
   };
 
   onFocus(ele) {
@@ -213,9 +212,7 @@ class UpdateAdmin extends Component {
             </div>
             <div className="row  mt-4-5 justify-content-md-center">
               <div className="col-md-auto">
-                <button
-                  className="btn btn-lg hoverable modi-btn"
-                  type="submit">
+                <button className="btn btn-lg hoverable modi-btn" type="submit">
                   Update
                 </button>
               </div>
@@ -239,7 +236,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { updateAdmin, logoutUser }
-)(withRouter(UpdateAdmin));
+export default connect(mapStateToProps, { updateAdmin, logoutUser })(
+  withRouter(UpdateAdmin)
+);

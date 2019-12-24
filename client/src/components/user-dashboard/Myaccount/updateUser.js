@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import {  withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updateAdmin, logoutUser } from "../../../actions/authActions";
-import {fetchGroups} from "../../../actions/fetchActions";
+import { fetchGroups } from "../../../actions/fetchActions";
 
 class UpdateUser extends Component {
   constructor(props) {
@@ -25,7 +25,6 @@ class UpdateUser extends Component {
       password2: "",
       errors: {},
       groups: []
-
     };
     this.onFocus = this.onFocus.bind(this);
   }
@@ -40,9 +39,9 @@ class UpdateUser extends Component {
         errors: nextProps.errors
       });
     }
-    if(nextProps.data.groups){
+    if (nextProps.data.groups) {
       this.setState({
-        groups : nextProps.data.groups
+        groups: nextProps.data.groups
       });
     }
   }
@@ -61,11 +60,10 @@ class UpdateUser extends Component {
       oldpassword: this.state.oldpassword,
       password: this.state.password,
       password2: this.state.password2,
-      group: this.state.group,
+      group: this.state.group
     };
 
-    this.props.updateAdmin(newUser,this.props.logoutUser);
-    
+    this.props.updateAdmin(newUser, this.props.logoutUser);
   };
 
   onFocus(ele) {
@@ -80,7 +78,7 @@ class UpdateUser extends Component {
 
     return (
       <div>
-        <div className="container" style={{margin:"30px"}}>
+        <div className="container" style={{ margin: "30px" }}>
           <div className="row  mt-2 justify-content-md-center">
             <div className="col-5">
               <h4>
@@ -241,12 +239,11 @@ class UpdateUser extends Component {
                   }}
                   onBlur={() => {
                     this.OnBlur(this.group);
-                  }}
-                >
-                <option></option>
-                  {
-                    this.state.groups.map((item)=><option value={item.group}>{item.group}</option>)
-                  }
+                  }}>
+                  <option></option>
+                  {this.state.groups.map(item => (
+                    <option value={item.group}>{item.group}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -278,10 +275,11 @@ UpdateUser.propTypes = {
 const mapStateToProps = state => ({
   errors: state.errors,
   auth: state.auth,
-  data: state.data,
+  data: state.data
 });
 
-export default connect(
-  mapStateToProps,
-  { updateAdmin, logoutUser, fetchGroups }
-)(withRouter(UpdateUser));
+export default connect(mapStateToProps, {
+  updateAdmin,
+  logoutUser,
+  fetchGroups
+})(withRouter(UpdateUser));

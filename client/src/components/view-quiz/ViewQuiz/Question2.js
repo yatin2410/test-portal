@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 
-class Question2 extends Component {
+class Question extends Component {
   render() {
     const { question, o1, o2, o3, o4 } = this.props.activequestion;
-    const { onAnsChange, Index, ans } = this.props;
+    let ans = this.props.activequestion.userAns;
+    let ansReal = this.props.activequestion.ans;
+    const { Index } = this.props;
     return (
       <div className="container mt-5 ml-3 que">
         <div className="mt-3">
@@ -20,7 +22,7 @@ class Question2 extends Component {
             <b>Options:</b>
           </label>
           <br />
-          <div className="ml-4 mt-2" onClick={() => onAnsChange(Index, 1)}>
+          <div className="ml-4 mt-2">
             {" "}
             <input
               type="checkbox"
@@ -30,8 +32,21 @@ class Question2 extends Component {
             <label
               className="ml-1"
               dangerouslySetInnerHTML={{ __html: o1 }}></label>
+            {ansReal ? (
+              ansReal.indexOf(1) !== -1 ? (
+                <i
+                  className="material-icons ml-5"
+                  style={{ color: "green", fontSize: "1.85em" }}>
+                  done
+                </i>
+              ) : (
+                ""
+              )
+            ) : (
+              ""
+            )}
           </div>
-          <div className="ml-4 mt-2" onClick={() => onAnsChange(Index, 2)}>
+          <div className="ml-4 mt-2">
             {" "}
             <input
               type="checkbox"
@@ -41,8 +56,21 @@ class Question2 extends Component {
             <label
               className="ml-1"
               dangerouslySetInnerHTML={{ __html: o2 }}></label>
+            {ansReal ? (
+              ansReal.indexOf(2) !== -1 ? (
+                <i
+                  className="material-icons ml-5"
+                  style={{ color: "green", fontSize: "1.85em" }}>
+                  done
+                </i>
+              ) : (
+                ""
+              )
+            ) : (
+              ""
+            )}
           </div>
-          <div className="ml-4 mt-2" onClick={() => onAnsChange(Index, 3)}>
+          <div className="ml-4 mt-2">
             {" "}
             <input
               type="checkbox"
@@ -52,8 +80,21 @@ class Question2 extends Component {
             <label
               className="ml-1"
               dangerouslySetInnerHTML={{ __html: o3 }}></label>
+            {ansReal ? (
+              ansReal.indexOf(3) !== -1 ? (
+                <i
+                  className="material-icons ml-5"
+                  style={{ color: "green", fontSize: "1.85em" }}>
+                  done
+                </i>
+              ) : (
+                ""
+              )
+            ) : (
+              ""
+            )}
           </div>
-          <div className="ml-4 mt-2" onClick={() => onAnsChange(Index, 4)}>
+          <div className="ml-4 mt-2">
             {" "}
             <input
               type="checkbox"
@@ -63,6 +104,19 @@ class Question2 extends Component {
             <label
               className="ml-1"
               dangerouslySetInnerHTML={{ __html: o4 }}></label>
+            {ansReal ? (
+              ansReal.indexOf(4) !== -1 ? (
+                <i
+                  className="material-icons ml-5"
+                  style={{ color: "green", fontSize: "1.85em" }}>
+                  done
+                </i>
+              ) : (
+                ""
+              )
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
@@ -70,4 +124,4 @@ class Question2 extends Component {
   }
 }
 
-export default Question2;
+export default Question;

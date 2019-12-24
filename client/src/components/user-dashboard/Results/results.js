@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchUserResults } from "../../../actions/fetchActions";
 import SearchTable from "./resulttable";
-import Loading from '../../layout/Loading';
+import Loading from "../../layout/Loading";
 
 class Results extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class Results extends Component {
     this.state = {
       onGoingQuizs: [],
       pastQuizs: [],
-      isLoading: true,
+      isLoading: true
     };
     this.onView = this.onView.bind(this);
     this.openInNewTab = this.openInNewTab.bind(this);
@@ -44,40 +44,41 @@ class Results extends Component {
       });
       this.setState({ onGoingQuizs: arr1 });
       this.setState({ pastQuizs: arr2 });
-      this.setState({isLoading:false});
+      this.setState({ isLoading: false });
     }
   }
   openInNewTab(url) {
-    var win = window.open(url, '_blank');
+    var win = window.open(url, "_blank");
     win.focus();
   }
   onView(id) {
-    this.openInNewTab(window.location.origin.toString()+"/viewquiz/"+id);
+    this.openInNewTab(window.location.origin.toString() + "/viewquiz/" + id);
   }
   render() {
     return (
       <div>
-        {
-          this.state.isLoading ? <Loading /> :
+        {this.state.isLoading ? (
+          <Loading />
+        ) : (
           <div className="container">
-          <div className="mt-5">
-            <h4 className="row justify-content-md-center">Ongoing Quizzes</h4>
-            <SearchTable
-              quizs={this.state.onGoingQuizs}
-              onView={this.onView}
-              isCurrent={true}
-            />
+            <div className="mt-5">
+              <h4 className="row justify-content-md-center">Ongoing Quizzes</h4>
+              <SearchTable
+                quizs={this.state.onGoingQuizs}
+                onView={this.onView}
+                isCurrent={true}
+              />
+            </div>
+            <div className="mt-5">
+              <h4 className="row justify-content-md-center">Past Quizzes</h4>
+              <SearchTable
+                quizs={this.state.pastQuizs}
+                onView={this.onView}
+                isCurrent={false}
+              />
+            </div>
           </div>
-          <div className="mt-5">
-            <h4 className="row justify-content-md-center">Past Quizzes</h4>
-            <SearchTable
-              quizs={this.state.pastQuizs}
-              onView={this.onView}
-              isCurrent={false}
-            />
-          </div>
-        </div>
-        }
+        )}
       </div>
     );
   }
@@ -92,7 +93,4 @@ const mapStateToProps = state => ({
   results: state.data.results
 });
 
-export default connect(
-  mapStateToProps,
-  { fetchUserResults }
-)(Results);
+export default connect(mapStateToProps, { fetchUserResults })(Results);

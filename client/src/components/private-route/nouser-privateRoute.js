@@ -6,13 +6,15 @@ import PropTypes from "prop-types";
 const NoUserPrivateRoute = ({ component: Component, auth, ...rest }) => (
   <Route
     {...rest}
-    render={props =>{
-      if(auth.isAuthenticated === undefined || auth.isAuthenticated===false){
-        return <Redirect to="/" />
-      } 
+    render={props => {
+      if (
+        auth.isAuthenticated === undefined ||
+        auth.isAuthenticated === false
+      ) {
+        return <Redirect to="/" />;
+      }
       return null;
-    }
-    }
+    }}
   />
 );
 

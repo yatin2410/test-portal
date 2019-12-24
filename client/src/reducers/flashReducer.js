@@ -1,8 +1,7 @@
-
 import { FLASH_SUCCESS_MSG } from "../actions/types";
 
 const initialState = {
-    msg: {}
+  msg: {}
 };
 
 export default function(state = initialState, action) {
@@ -10,7 +9,7 @@ export default function(state = initialState, action) {
     case FLASH_SUCCESS_MSG:
       return {
         ...state,
-        msg: action.payload,
+        msg: action.payload
       };
     default:
       return state;

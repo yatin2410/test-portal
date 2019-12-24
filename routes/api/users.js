@@ -18,7 +18,7 @@ const Quiz = require("../../models/Quiz");
 const Request = require("../../models/Request");
 
 // mail
-var nodemailer = require('nodemailer');
+var nodemailer = require("nodemailer");
 
 // @route POST api/users/register
 // @desc Register user
@@ -75,9 +75,7 @@ router.post("/registeradmin", authAdmin, (req, res) => {
   Admin.group = "Admin";
   const { errors, isValid } = validateRegisterInput(Admin);
   // Check validation
-  console.log(errors);
   if (!isValid) {
-    console.log(errors);
     return res.status(400).json(errors);
   }
   User.findOne({ email: Admin.email }).then(user => {
@@ -112,7 +110,6 @@ router.post("/registeradmin", authAdmin, (req, res) => {
   });
 });
 
-
 router.put("/register", (req, res) => {
   // Form validation
   let Admin = req.body;
@@ -122,13 +119,16 @@ router.put("/register", (req, res) => {
     return res.status(400).json(errors);
   }
   if (Admin.oldpassword === Admin.password) {
-    return res.status(400).json({ password: "password field should be different then oldpassword." });
+    return res
+      .status(400)
+      .json({
+        password: "password field should be different then oldpassword."
+      });
   }
   User.findOne({ email: Admin.email }).then(user => {
     if (!user) {
       return res.status(400).json({ email: "Email does not exists" });
     } else {
-      console.log(user.Id, Admin.Id);
       if (user.Id != Admin.Id) {
         return res.status(400).json({ Id: "Id does not match" });
       }
@@ -138,23 +138,29 @@ router.put("/register", (req, res) => {
         }
         bcrypt.compare(Admin.oldpassword, user.password).then(isMatch => {
           if (isMatch) {
-            console.log(Admin.oldpassword, user.password);
             // Hash password before saving in database
             bcrypt.genSalt(10, (err, salt) => {
               bcrypt.hash(Admin.password, salt, (err, hash) => {
                 if (err) throw err;
                 Admin.password = hash;
-                console.log(Admin.password);
-                User.update({ Id: Admin.Id }, { name: Admin.name, group: Admin.group, password: Admin.password }, (err, afft, data) => {
-                  if (err)
-                    return res.status(400).json({ error: "unexpected error" });
-                  else
-                    return res.status(200).json({ ok: "ok" });
-                });
+                User.update(
+                  { Id: Admin.Id },
+                  {
+                    name: Admin.name,
+                    group: Admin.group,
+                    password: Admin.password
+                  },
+                  (err, afft, data) => {
+                    if (err)
+                      return res
+                        .status(400)
+                        .json({ error: "unexpected error" });
+                    else return res.status(200).json({ ok: "ok" });
+                  }
+                );
               });
             });
-          }
-          else {
+          } else {
             return res.status(404).json({ oldpassword: "password not match" });
           }
         });
@@ -162,7 +168,6 @@ router.put("/register", (req, res) => {
     }
   });
 });
-
 
 // @route POST api/users/login
 // @desc Login user and return JWT token
@@ -222,13 +227,32 @@ router.post("/login", (req, res) => {
 });
 
 router.get("/", authAdmin, (req, res) => {
-  User.find().then(data => {
-    return res.status(200).json(data);
-  });
+  let pageOptions = {
+    page: req.query.page || 0,
+    limit: 50
+  };
+  let search = req.query.search;
+  search = String(search).toUpperCase();
+  let obj = {
+    $or: [
+      { email: new RegExp(search, "i") },
+      { group: new RegExp(search, "i") },
+      { name: new RegExp(search, "i") }
+    ]
+  };
+  User.find(obj)
+    .skip(pageOptions.page * pageOptions.limit)
+    .limit(pageOptions.limit)
+    .then(data => {
+      res.status(200).json(data);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ err });
+    });
 });
 
 router.delete("/", authAdmin, (req, res) => {
-  console.log("in delete");
   User.deleteOne({ Id: req.body.Id }, err => {
     if (err) return res.status(400).json({ error: "Id does not exist" });
     return res.status(200).json({ ok: "ok" });
@@ -236,7 +260,6 @@ router.delete("/", authAdmin, (req, res) => {
 });
 
 router.get("/:id", userAdmin, (req, res) => {
-  console.log(req.params);
   if (!req.params.id) return res.status(400).json({ error: "bad request" });
   User.findOne({ _id: req.params.id }).then(user => {
     if (!user) return res.status(400).json({ error: "bad request" });
@@ -257,14 +280,15 @@ router.get("/results/:id", userAdmin, (req, res) => {
         _id: { $in: arr }
       },
       (err, data) => {
-        if (err) return res.status(400).json({ error: "bad request" });;
+        if (err) return res.status(400).json({ error: "bad request" });
         return res.status(200).json({ quizDatail: data, quizs: user.quizs });
-      });
+      }
+    );
   });
 });
 
 let smtpConfig = {
-  host: 'smtp.gmail.com',
+  host: "smtp.gmail.com",
   port: 465,
   secure: true, // use SSL
   auth: {
@@ -273,7 +297,6 @@ let smtpConfig = {
   }
 };
 let transporter = nodemailer.createTransport(smtpConfig);
-
 
 router.post("/forgot", (req, res) => {
   let email = req.body.email;
@@ -287,28 +310,25 @@ router.post("/forgot", (req, res) => {
     if (isEmpty(data)) {
       errors.emailnotfound = "Email not found";
       return res.status(404).json({ errors });
-    }
-    else {
+    } else {
       let mailOptions = {
         from: keys.email,
         to: email,
-        subject: 'Password change request from spc-test-portal',
-        text: 'Please change password using this link: '
+        subject: "Password change request from spc-test-portal",
+        text:
+          "Please change password using this link: https://spc-test-portal.herokuapp.com/changePassword/"
       };
-      console.log(data[0]._id);
       const newRequest = new Request({
-        uid: data[0]._id,
+        uid: data[0]._id
       });
       newRequest
         .save()
         .then(ur => {
           mailOptions.text += ur._id;
-          console.log(mailOptions);
-          transporter.sendMail(mailOptions, function (error, info) {
+          transporter.sendMail(mailOptions, function(error, info) {
             if (error) {
               console.log(error);
             } else {
-              console.log('Email sent: ' + info.response);
               return res.status(200).json({ ok: "ok" });
             }
           });
@@ -333,44 +353,38 @@ router.post("/changePassword", (req, res) => {
   if (data.password !== data.password2) {
     errors.password2 = "password does not match";
   }
-  console.log(errors);
-  console.log(data._id);
-
-  Request.find({ _id: data._id }).then(dta => {
-    if (!dta) {
-      errors.submit = "please use link from sent mail"
-    }
-    console.log(errors);
-    console.log(dta);
-    if (!isEmpty(errors)) {
-      console.log(errors);
-      return res.status(400).json({ errors });
-    }
-    else {
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(data.password, salt, (err, hash) => {
-          if (err) return res.status(400).json({errors});
-          console.log(dta[0].uid);
-          console.log(hash);
-          User.update({ _id: dta[0].uid }, { password: hash }, (err, afft, da) => {
-            if (err) return res.status(400).json({ err });
-            else {
-              Request.deleteOne({ _id: data._id }).then(d => {
-                console.log("done", da);
-                return res.status(200).json({ ok: "ok" });
-              });
-            }
+  Request.find({ _id: data._id })
+    .then(dta => {
+      if (!dta) {
+        errors.submit = "please use link from sent mail";
+      }
+      if (!isEmpty(errors)) {
+        console.log(errors);
+        return res.status(400).json({ errors });
+      } else {
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(data.password, salt, (err, hash) => {
+            if (err) return res.status(400).json({ errors });
+            User.update(
+              { _id: dta[0].uid },
+              { password: hash },
+              (err, afft, da) => {
+                if (err) return res.status(400).json({ err });
+                else {
+                  Request.deleteOne({ _id: data._id }).then(d => {
+                    return res.status(200).json({ ok: "ok" });
+                  });
+                }
+              }
+            );
           });
         });
-      });
-    }
-  })
+      }
+    })
     .catch(err => {
       errors.submit = "please use link from sent mail";
       return res.status(400).json({ errors });
     });
 });
-
-
 
 module.exports = router;

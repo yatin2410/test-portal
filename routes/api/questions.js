@@ -47,9 +47,30 @@ router.put("/", authAdmin, (req, res) => {
 });
 
 router.get("/", authAdmin, (req, res) => {
-  Question.find().then(data => {
-    res.status(200).json(data);
-  });
+  let pageOptions = {
+    page: req.query.page || 0,
+    limit: 50
+  };
+  let search = req.query.search;
+  search = String(search).toUpperCase();
+  obj = { question: new RegExp(search, "i") };
+  if (search === "TECHNICAL" || search === "APTITUDE") {
+    obj = { category: search === "TECHNICAL" ? 1 : 2 };
+  } else if (search === "MCSA" || search === "MCMA") {
+    obj = { type: search === "MCSA" ? 1 : 2 };
+  } else if (search === "EASY" || search === "MEDIUM" || search === "HARD") {
+    obj = { difficulty: search === "EASY" ? 1 : search === "MEDIUM" ? 2 : 3 };
+  }
+  Question.find(obj)
+    .sort({ $natural: -1 })
+    .skip(pageOptions.page * pageOptions.limit)
+    .limit(pageOptions.limit)
+    .then(data => {
+      res.status(200).json(data);
+    })
+    .catch(err => {
+      res.status(500).json({ err });
+    });
 });
 
 router.get("/:id", authAdmin, (req, res) => {
@@ -60,7 +81,6 @@ router.get("/:id", authAdmin, (req, res) => {
 });
 
 router.delete("/", authAdmin, (req, res) => {
-  console.log("in delete");
   Question.deleteOne({ _id: req.body._id }, err => {
     if (err) return res.status(400).json({ error: "_id does not exist" });
     res.status(200).json({ ok: "ok" });

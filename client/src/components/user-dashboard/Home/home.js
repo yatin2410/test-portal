@@ -69,7 +69,6 @@ class Home extends Component {
           result
         });
       });
-      console.log(quizs);
       return quizs;
     }
   }
@@ -90,8 +89,7 @@ class Home extends Component {
     }
   }
   onChange(e) {
-    console.log(e.target.value);
-    this.setState({currentIndex:e.target.value});
+    this.setState({ currentIndex: e.target.value });
   }
   render() {
     return (
@@ -100,10 +98,10 @@ class Home extends Component {
           <Loading />
         ) : (
           <div className="row mt-5 ml-4">
-            <div className="col">
+            <div className="ml-3">
               <LineChart quizs={this.state.quizs} />
             </div>
-            <div className="col">
+            <div className="ml-5">
               <div className="row justify-content-md-center">
                 <select
                   style={{ width: "50%" }}
@@ -111,13 +109,23 @@ class Home extends Component {
                   className="input"
                   onChange={this.onChange}
                   value={this.state.currentIndex}>
-                  {this.state.quizs?this.state.quizs.map((item,index) => (
-                    <option value={index}>{item.name}</option>
-                  )):<options></options>}
+                  {this.state.quizs ? (
+                    this.state.quizs.map((item, index) => (
+                      <option value={index}>{item.name}</option>
+                    ))
+                  ) : (
+                    <options></options>
+                  )}
                 </select>
               </div>
-              <div className="mt-4">
-                <PieChart quiz={this.state.quizs?this.state.quizs[this.state.currentIndex]:null} />
+              <div className="col mt-4">
+                <PieChart
+                  quiz={
+                    this.state.quizs
+                      ? this.state.quizs[this.state.currentIndex]
+                      : null
+                  }
+                />
               </div>
             </div>
           </div>

@@ -16,7 +16,7 @@ class Settings extends Component {
     this.state = {
       users: [],
       groups: [],
-      isLoading: true,
+      isLoading: true
     };
     this.onDeleteGroup = this.onDeleteGroup.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
@@ -26,7 +26,7 @@ class Settings extends Component {
     this.props.fetchUsers();
     this.props.fetchGroups();
   }
-  
+
   componentDidUpdate() {
     window.$('[data-toggle="tooltip"]').tooltip();
   }
@@ -39,34 +39,41 @@ class Settings extends Component {
       });
     }
     if (nextProps.groups) {
-      console.log(nextProps.groups);
       this.setState({
         groups: nextProps.groups
       });
-      this.setState({isLoading:false});
+      this.setState({ isLoading: false });
     }
   }
-  onDeleteGroup(group){
-    let confirm = window.confirm("ALERT!!. If you select okay then this action will delete group and all the users associated with it.");
-    if(confirm===false){
+  onDeleteGroup(group) {
+    let confirm = window.confirm(
+      "ALERT!!. If you select okay then this action will delete group and all the users associated with it."
+    );
+    if (confirm === false) {
       return;
     }
     axios
       .delete("/api/groups/", { data: { group: group } })
       .then(res => {
         this.props.fetchGroups();
-        this.props.putFlashMsg({msg:"Group deleted successfully!",type:"alert-danger"});
+        this.props.putFlashMsg({
+          msg: "Group deleted successfully!",
+          type: "alert-danger"
+        });
       })
       .catch(err => {
         console.log(err);
-      });    
+      });
   }
   onDismiss(id) {
     axios
       .delete("/api/users/", { data: { Id: id } })
       .then(res => {
         this.props.fetchUsers();
-        this.props.putFlashMsg({msg:"Admin deleted successfully!",type:"alert-danger"});
+        this.props.putFlashMsg({
+          msg: "Admin deleted successfully!",
+          type: "alert-danger"
+        });
       })
       .catch(err => {
         console.log(err);
@@ -74,27 +81,35 @@ class Settings extends Component {
   }
   render() {
     return (
-      <div className="container mt-4" style={{marginBottom:"100px"}}>
-        {this.state.isLoading ? <Loading/> :
-        <div>
-      <div className="row justify-content-md-center">
-          <div className="col-6">
-          <RegisterGroup   fetchGroups={this.props.fetchGroups} />
+      <div className="container mt-4" style={{ marginBottom: "100px" }}>
+        {this.state.isLoading ? (
+          <Loading />
+        ) : (
+          <div>
+            <div className="row justify-content-md-center">
+              <div className="col-6">
+                <RegisterGroup fetchGroups={this.props.fetchGroups} />
+              </div>
+              <div className="col-6">
+                <GroupTable
+                  onDeleteGroup={this.onDeleteGroup}
+                  groups={this.state.groups}
+                />
+              </div>
+            </div>
+            {/* <div className="row mt-5 justify-content-md-center">
+              <div className="col-6">
+                <RegisterAdmin fetchUsers={this.props.fetchUsers} />
+              </div>
+              <div className="col-6">
+                <SearchTable
+                  onDismiss={this.onDismiss}
+                  users={this.state.users}
+                />
+              </div>
+            </div> */}
           </div>
-          <div className="col-6">
-          <GroupTable onDeleteGroup={this.onDeleteGroup} groups={this.state.groups} />
-          </div>
-        </div>
-        <div className="row mt-5 justify-content-md-center">
-          <div className="col-6">
-            <RegisterAdmin fetchUsers={this.props.fetchUsers} />
-          </div>
-          <div className="col-6">
-            <SearchTable onDismiss={this.onDismiss} users={this.state.users} />
-          </div>
-        </div>
-        </div>
-      }
+        )}
       </div>
     );
   }
@@ -114,7 +129,8 @@ const mapStateToProps = state => ({
   groups: state.data.groups
 });
 
-export default connect(
-  mapStateToProps,
-  { fetchUsers,fetchGroups,putFlashMsg }
-)(Settings);
+export default connect(mapStateToProps, {
+  fetchUsers,
+  fetchGroups,
+  putFlashMsg
+})(Settings);

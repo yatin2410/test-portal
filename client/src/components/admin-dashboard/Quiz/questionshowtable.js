@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { sortBy } from "lodash";
 import classNames from "classnames";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SORTS = {
   NONE: list => list,
@@ -12,12 +12,9 @@ const SORTS = {
 };
 
 function func(difficulty) {
-  if (difficulty === "1" )
-    return "<span class=color1>Easy</span>";
-  if ( difficulty === "2" )
-    return "<span class=color2>Medium</span>";
-  if ( difficulty === "3" )
-    return "<span class=color3>Hard</span>";
+  if (difficulty === "1") return "<span class=color1>Easy</span>";
+  if (difficulty === "2") return "<span class=color2>Medium</span>";
+  if (difficulty === "3") return "<span class=color3>Hard</span>";
 }
 
 function Sort(props) {
@@ -69,9 +66,11 @@ function Table(props) {
                 Type
               </Sort>
             </th>
-            <th
-              className="fourth">
-              <Sort sortKey={"DIFFICULTY"} onSort={onSort} activeSortKey={sortKey}>
+            <th className="fourth">
+              <Sort
+                sortKey={"DIFFICULTY"}
+                onSort={onSort}
+                activeSortKey={sortKey}>
                 Difficulty
               </Sort>
             </th>
@@ -96,7 +95,8 @@ function Table(props) {
                 dangerouslySetInnerHTML={{
                   __html: item.type === "1" ? "MCSA" : "MCMA"
                 }}></td>
-              <td className="cl"
+              <td
+                className="cl"
                 dangerouslySetInnerHTML={{
                   __html: func(item.difficulty)
                 }}></td>
@@ -189,17 +189,21 @@ class SearchTable extends Component {
   }
 
   toggleBtn(id) {
-    console.log(id);
-    console.log(this.refss[id]);
     window.$(this.refss[id]).collapse("toggle");
   }
   render() {
     const { questions, sortKey, isSortReverse } = this.state;
     return (
       <div className="container mt-3">
-      <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
-        <div className = "ml-4 mb-4">
-        </div>
+        <h6>
+          <Link to="/dashboard/quiz" className="arrowFont">
+            <i
+              class="fas fa-arrow-left arrowFont"
+              style={{ fontSize: "0.75em" }}></i>{" "}
+            Back to Quiz Page{" "}
+          </Link>
+        </h6>
+        <div className="ml-4 mb-4"></div>
         {questions ? (
           <div className="row mx-3">
             <Table

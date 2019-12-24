@@ -6,13 +6,11 @@ import PropTypes from "prop-types";
 const PrivateRouteAdmin = ({ component: Component, auth, ...rest }) => (
   <Route
     {...rest}
-    render={props =>{
-      if(auth.isAuthenticated === true && auth.user.IsAdmin===true){
-        return <Component {...props}/>
-      }else
-      return null;      
-    }
-    }
+    render={props => {
+      if (auth.isAuthenticated === true && auth.user.IsAdmin === true) {
+        return <Component {...props} />;
+      } else return null;
+    }}
   />
 );
 

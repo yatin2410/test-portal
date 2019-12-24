@@ -49,69 +49,73 @@ const data = {
   ]
 };
 
-const  options =  {
+const options = {
   responsive: true,
   title: {
     display: true,
-    text: 'Quiz performace'
+    text: "Quiz performace"
   },
   scales: {
-    xAxes: [ {
-      display: true,
-      scaleLabel: {
+    xAxes: [
+      {
         display: true,
-        labelString: 'Quiz Name'
-      },
-      ticks:{
-        padding:10
+        scaleLabel: {
+          display: true,
+          labelString: "Quiz Name"
+        },
+        ticks: {
+          padding: 10
+        }
       }
-    } ],
-    yAxes: [ {
-      display: true,
-      scaleLabel: {
+    ],
+    yAxes: [
+      {
         display: true,
-        labelString: 'Avg. Percentage'
-      },
-      ticks: {
-        beginAtZero: true,
-        steps: 10,
-        stepValue: 10,
-        max: 100,
-        padding:10
-    }
-    } ]
+        scaleLabel: {
+          display: true,
+          labelString: "Avg. Percentage"
+        },
+        ticks: {
+          beginAtZero: true,
+          steps: 10,
+          stepValue: 10,
+          max: 100,
+          padding: 10
+        }
+      }
+    ]
   }
 };
 
 class LineChart extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.changeData = this.changeData.bind(this);
     this.state = {
       ...this.changeData(props.quizs)
     };
   }
-  changeData(arr){
+  changeData(arr) {
     let arr1 = [];
     let arr2 = [];
     let arr3 = [];
-    if(arr && arr.length!==0){
-      arr.forEach((item) => {
+    if (arr && arr.length !== 0) {
+      arr.forEach(item => {
         arr1.push(item.name);
         arr2.push((Number(item.totalPer) / Number(item.total)).toFixed(2));
         arr3.push(item.perToPass);
       });
     }
     return {
-      labels:arr1,
-      data:arr2,
-      perToPass:arr3,
+      labels: arr1,
+      data: arr2,
+      perToPass: arr3
     };
   }
-  componentWillReceiveProps(nextProps){
-    if(nextProps.quizs){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.quizs) {
       let obj = this.changeData(nextProps.quizs);
-      this.setState({...obj});
+      this.setState({ ...obj });
     }
   }
   render() {

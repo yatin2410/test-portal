@@ -5,7 +5,7 @@ import { editQuiz } from "../../../actions/putActions";
 import { fetchQuiz, fetchGroups } from "../../../actions/fetchActions";
 import DateTimePicker from "react-datetime-picker";
 import Loading from "../../layout/Loading";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function InputComponent(props) {
   const {
@@ -75,14 +75,13 @@ class EditQuiz extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      console.log(nextProps.errors);
       this.setState({
         errors: nextProps.errors
       });
     }
     if (nextProps.quiz) {
       this.setState({ ...nextProps.quiz });
-      this.setState({isLoading: false});
+      this.setState({ isLoading: false });
     }
     if (nextProps.groups) {
       this.setState({ allGroups: nextProps.groups.map(item => item.group) });
@@ -112,22 +111,16 @@ class EditQuiz extends Component {
     const newQuiz = {
       _id: this.props.match.params.id,
       name,
-      startDate: startDate
-        ? (new Date(startDate))
-        : (""),
-      endDate:endDate
-      ? (new Date(endDate))
-      : (""),
+      startDate: startDate ? new Date(startDate) : "",
+      endDate: endDate ? new Date(endDate) : "",
       duration,
       perToPass,
       groups: submitGroups,
       questions: questions
     };
-    console.log(newQuiz);
     this.props.editQuiz(newQuiz, this.props.history);
   };
   checkboxClicked(item) {
-    console.log(item);
     let group = this.state.groups;
     if (group.indexOf(item) === -1) {
       group.push(item);
@@ -157,101 +150,123 @@ class EditQuiz extends Component {
     const arr2 = ["Name", "Duration", "Percentage To Pass"];
     return (
       <div>
-        {
-          this.state.isLoading ===false ?
+        {this.state.isLoading === false ? (
           <div className="container mt-3">
-          <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>  
-          <div className="row  mt-2 justify-content-md-center">
-            <div className="col-5 mt-4">
-              <h4>
-                <b>Edit Quiz Details: </b>
-              </h4>
+            <h6>
+              <Link to="/dashboard/quiz" className="arrowFont">
+                <i
+                  class="fas fa-arrow-left arrowFont"
+                  style={{ fontSize: "0.75em" }}></i>{" "}
+                Back to Quiz Page{" "}
+              </Link>
+            </h6>
+            <div className="row  mt-2 justify-content-md-center">
+              <div className="col-5 mt-4">
+                <h4>
+                  <b>Edit Quiz Details: </b>
+                </h4>
+              </div>
             </div>
-          </div>
-          <form noValidate onSubmit={this.onSubmit}>
-            {arr.map((item, ind) => (
-              <InputComponent
-                name={item}
-                type={"text"}
-                reff={arr1[ind]}
-                onChange={this.onChange}
-                state={this.state}
-                errors={errors}
-                labelName={arr2[ind]}
-                onFocus={this.onFocus}
-                OnBlur={this.OnBlur}
-              />
-            ))}
+            <form noValidate onSubmit={this.onSubmit}>
+              {arr.map((item, ind) => (
+                <InputComponent
+                  name={item}
+                  type={"text"}
+                  reff={arr1[ind]}
+                  onChange={this.onChange}
+                  state={this.state}
+                  errors={errors}
+                  labelName={arr2[ind]}
+                  onFocus={this.onFocus}
+                  OnBlur={this.OnBlur}
+                />
+              ))}
 
-            <div className="row  mt-4 justify-content-md-center">
-              <div className="col-5">
-                <p className="label-txt" ref={this.startDate}>
-                  Start Date
+              <div className="row  mt-4 justify-content-md-center">
+                <div className="col-5">
+                  <p className="label-txt" ref={this.startDate}>
+                    Start Date
                   </p>
                   <p className="error-txt">{errors.startDate}</p>
-            <div className = "mt-4">{this.state.startDate?<DateTimePicker value={new Date(this.state.startDate)} onChange = {this.onChange1} onFocus={()=>this.onFocus(this.startDate)} onBlur={()=>this.OnBlur(this.startDate)}/>:null}</div>
-              </div>
-            </div>
-
-            <div className="row  mt-4 justify-content-md-center">
-              <div className="col-5">
-                <p className="label-txt" ref={this.endDate}>
-                  End Date
-                  </p>
-                  <p className="error-txt">{errors.endDate}</p>
-            <div className = "mt-4">{this.state.endDate?<DateTimePicker value={new Date(this.state.endDate)} onChange = {this.onChange2} onFocus={()=>this.onFocus(this.endDate)} onBlur={()=>this.OnBlur(this.endDate)}/>:null}</div>
-              </div>
-            </div>
-
-            <div className="row  mt-4 justify-content-md-center">
-              <div className="col-5">
-                <p className="label-txt" ref={this.groups}>
-                  Assign to groups:
-                </p>
-                <p className="error-txt">{errors.groups}</p>
-                <div
-                  id="groups"
-                  className="mt-3"
-                  onFocus={() => this.onFocus(this.groups)}
-                  onBlur={() => this.OnBlur(this.groups)}
-                >
-                  {allGroups.map(item => (
-                    <label className="ml-3">
-                      <input
-                        type="checkbox"
-                        ref={ref => (this.groupdata[item] = ref)}
-                        onClick={() => this.checkboxClicked(item)}
-                        id={item}
-                        checked={groups.indexOf(item) !== -1}
-                      />{" "}
-                      {item}
-                    </label>
-                  ))}
+                  <div className="mt-4">
+                    {this.state.startDate ? (
+                      <DateTimePicker
+                        value={new Date(this.state.startDate)}
+                        onChange={this.onChange1}
+                        onFocus={() => this.onFocus(this.startDate)}
+                        onBlur={() => this.OnBlur(this.startDate)}
+                      />
+                    ) : null}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="row  mt-4-5 mb-4 justify-content-md-center">
-              <div style={{ float: "right" }}>
-                <button
-                  className="btn btn-lg hoverable modi-btn1"
-                  onClick={this.editQuestions}
-                >
-                  Edit Questions
-                </button>
+
+              <div className="row  mt-4 justify-content-md-center">
+                <div className="col-5">
+                  <p className="label-txt" ref={this.endDate}>
+                    End Date
+                  </p>
+                  <p className="error-txt">{errors.endDate}</p>
+                  <div className="mt-4">
+                    {this.state.endDate ? (
+                      <DateTimePicker
+                        value={new Date(this.state.endDate)}
+                        onChange={this.onChange2}
+                        onFocus={() => this.onFocus(this.endDate)}
+                        onBlur={() => this.OnBlur(this.endDate)}
+                      />
+                    ) : null}
+                  </div>
+                </div>
               </div>
-              <div className="ml-4" style={{ float: "left" }}>
-                <button
-                  className="btn btn-lg hoverable modi-btn1"
-                  type="submit"
-                >
-                  Submit
-                </button>
+
+              <div className="row  mt-4 justify-content-md-center">
+                <div className="col-5">
+                  <p className="label-txt" ref={this.groups}>
+                    Assign to groups:
+                  </p>
+                  <p className="error-txt">{errors.groups}</p>
+                  <div
+                    id="groups"
+                    className="mt-3"
+                    onFocus={() => this.onFocus(this.groups)}
+                    onBlur={() => this.OnBlur(this.groups)}>
+                    {allGroups.map(item => (
+                      <label className="ml-3">
+                        <input
+                          type="checkbox"
+                          ref={ref => (this.groupdata[item] = ref)}
+                          onClick={() => this.checkboxClicked(item)}
+                          id={item}
+                          checked={groups.indexOf(item) !== -1}
+                        />{" "}
+                        {item}
+                      </label>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          </form>
-        </div>
-        : <Loading />
-        }
+              <div className="row  mt-4-5 mb-4 justify-content-md-center">
+                <div style={{ float: "right" }}>
+                  <button
+                    className="btn btn-lg hoverable modi-btn1"
+                    onClick={this.editQuestions}>
+                    Edit Questions
+                  </button>
+                </div>
+                <div className="ml-4" style={{ float: "left" }}>
+                  <button
+                    className="btn btn-lg hoverable modi-btn1"
+                    type="submit">
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        ) : (
+          <Loading />
+        )}
       </div>
     );
   }
@@ -261,7 +276,7 @@ EditQuiz.propTypes = {
   fetchQuiz: PropTypes.func.isRequired,
   fetchGroups: PropTypes.func.isRequired,
   editQuiz: PropTypes.func.isRequired,
-  errors: PropTypes.array.isRequired,
+  errors: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({

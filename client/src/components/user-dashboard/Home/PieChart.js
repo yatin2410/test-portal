@@ -20,42 +20,41 @@ const dataPie = {
   ]
 };
 
-const  options =  {
+const options = {
   responsive: true,
   title: {
     display: true,
-    text: 'Performance Pie chart'
-  },
-
+    text: "Performance Pie chart"
+  }
 };
 
 class PieChart extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.getData = this.getData.bind(this);
     this.state = {
-      data : this.getData(props.quiz)
+      data: this.getData(props.quiz)
     };
   }
-  componentWillReceiveProps(nextProps){
-    if(nextProps.quiz){
-      this.setState({data:this.getData(nextProps.quiz)});
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.quiz) {
+      this.setState({ data: this.getData(nextProps.quiz) });
     }
   }
-  getData(quiz){
-    if(quiz && quiz.length!==0){
+  getData(quiz) {
+    if (quiz && quiz.length !== 0) {
       let arr = [];
       arr.push(quiz.correct);
-      arr.push(quiz.attempted-quiz.correct);
-      arr.push(quiz.total-quiz.attempted);
-      return arr;  
+      arr.push(quiz.attempted - quiz.correct);
+      arr.push(quiz.total - quiz.attempted);
+      return arr;
     }
   }
   render() {
     dataPie.datasets[0].data = this.state.data;
     return (
       <div>
-        <Pie data={dataPie} height={150} options={options} />
+        <Pie data={dataPie} height={300} options={options} />
       </div>
     );
   }

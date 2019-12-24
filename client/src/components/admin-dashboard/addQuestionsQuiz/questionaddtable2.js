@@ -189,10 +189,11 @@ function Table(props) {
   );
 }
 
-class SearchTable1 extends Component {
+class SearchTable2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      questions: props.questions,
       addedQuestions: props.addedQuestions,
       sortKey: "NONE",
       isSortReverse: false
@@ -203,6 +204,9 @@ class SearchTable1 extends Component {
     this.id1 = React.createRef();
   }
   componentWillReceiveProps(nextProps) {
+    if (nextProps.questions) {
+      this.setState({ questions: nextProps.questions });
+    }
     if (nextProps.addedQuestions) {
       this.setState({ addedQuestions: nextProps.addedQuestions });
     }
@@ -217,15 +221,15 @@ class SearchTable1 extends Component {
     window.$(this.refss[id]).collapse("toggle");
   }
   render() {
-    const { sortKey, isSortReverse, addedQuestions } = this.state;
+    const { questions, sortKey, isSortReverse, addedQuestions } = this.state;
     return (
       <div className="container">
-        {addedQuestions ? (
-          <div className="row mx-3">
+        {questions ? (
+          <div className="mx-3">
             <Table
               onAdd={this.props.onAdd}
               onRemove={this.props.onRemove}
-              list={addedQuestions}
+              list={questions}
               addedList={this.props.addedQuestions}
               toggleBtn={this.toggleBtn}
               onSort={this.onSort}
@@ -234,13 +238,18 @@ class SearchTable1 extends Component {
               sortKey={sortKey}
               isSortReverse={isSortReverse}
             />
+            <div className="row justify-content-md-center">
+              <button className="btn modi-btn" onClick={this.props.onMore}>
+                More
+              </button>
+            </div>
           </div>
         ) : (
-          <h1>No Questions In the Quiz.</h1>
+          <h1>No Questions.</h1>
         )}
       </div>
     );
   }
 }
 
-export default SearchTable1;
+export default SearchTable2;

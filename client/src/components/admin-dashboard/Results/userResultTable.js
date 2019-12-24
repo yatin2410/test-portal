@@ -94,11 +94,15 @@ function Table(props) {
               <td>{item.correct}</td>
               <td>{item.per + " %"}</td>
               <td>{item.perToPass + " %"}</td>
-              <td>{item.result==="Pass"?<span className="text-success">{item.result}</span>:<span className="text-danger">{item.result}</span>}</td>
               <td>
-                <button
-                  className="btn"
-                  onClick={() => onView(item._id)}>
+                {item.result === "Pass" ? (
+                  <span className="text-success">{item.result}</span>
+                ) : (
+                  <span className="text-danger">{item.result}</span>
+                )}
+              </td>
+              <td>
+                <button className="btn" onClick={() => onView(item._id)}>
                   <i className="material-icons">play_arrow</i>
                 </button>{" "}
               </td>
@@ -123,7 +127,6 @@ class SearchTable extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.quizs) {
-      console.log(nextProps.quizs);
       this.setState({ quizs: this.getquizs(nextProps.quizs) });
     }
   }
@@ -164,7 +167,6 @@ class SearchTable extends Component {
   getquizs(arr) {
     if (arr.length !== 0) {
       let quizs = [];
-      console.log(arr);
       arr.forEach(item => {
         let attempted = this.countAttemp(item.result.qdata);
         let correct = this.countCorrect(item.result.qdata);
@@ -182,13 +184,11 @@ class SearchTable extends Component {
           result
         });
       });
-      console.log(quizs);
       return quizs;
     }
   }
   render() {
     const { quizs, sortKey, isSortReverse } = this.state;
-    console.log(quizs);
     return (
       <div className="container">
         {quizs ? (

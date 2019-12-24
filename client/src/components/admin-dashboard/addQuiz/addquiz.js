@@ -1,13 +1,23 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {addQuiz, addRandom} from "../../../actions/putActions";
+import { addQuiz, addRandom } from "../../../actions/putActions";
 import { fetchGroups } from "../../../actions/fetchActions";
 import { Link } from "react-router-dom";
-import DateTimePicker from 'react-datetime-picker';
+import DateTimePicker from "react-datetime-picker";
 
 function InputComponent(props) {
-  const { reff, name, onChange, state, errors, onFocus, OnBlur, type, labelName} = props;
+  const {
+    reff,
+    name,
+    onChange,
+    state,
+    errors,
+    onFocus,
+    OnBlur,
+    type,
+    labelName
+  } = props;
 
   return (
     <div className="row  mt-4 justify-content-md-center">
@@ -55,18 +65,17 @@ class AddQuiz extends Component {
     };
     this.groupdata = [];
   }
-  componentDidMount(){
-        this.props.fetchGroups();
+  componentDidMount() {
+    this.props.fetchGroups();
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      console.log(nextProps.errors);
       this.setState({
         errors: nextProps.errors
       });
     }
     if (nextProps.groups) {
-      this.setState({ groups: nextProps.groups.map((item)=>item.group) });
+      this.setState({ groups: nextProps.groups.map(item => item.group) });
     }
   }
 
@@ -74,65 +83,70 @@ class AddQuiz extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  onChange1 = startDate => this.setState({ startDate })
-  onChange2 = endDate => this.setState({ endDate })
+  onChange1 = startDate => this.setState({ startDate });
+  onChange2 = endDate => this.setState({ endDate });
 
   onSubmit = e => {
     e.preventDefault();
-    let submitGroups = this.state.groups.filter((item)=>this.groupdata[item].checked===true);  
-    const {name,startDate,duration,perToPass,endDate} = this.state;
+    let submitGroups = this.state.groups.filter(
+      item => this.groupdata[item].checked === true
+    );
+    const { name, startDate, duration, perToPass, endDate } = this.state;
     const newQuiz = {
-        name,
-        startDate:startDate?(new Date(startDate)):(""),
-        endDate: endDate?(new Date(endDate)):(""),
-        duration,
-        perToPass,
-        groups: submitGroups,
-        questions: [],
+      name,
+      startDate: startDate ? new Date(startDate) : "",
+      endDate: endDate ? new Date(endDate) : "",
+      duration,
+      perToPass,
+      groups: submitGroups,
+      questions: []
     };
-    console.log(newQuiz);
-    this.props.addQuiz(newQuiz,this.props.history);
+    this.props.addQuiz(newQuiz, this.props.history);
   };
 
   onSubmit1 = e => {
     e.preventDefault();
-    let submitGroups = this.state.groups.filter((item)=>this.groupdata[item].checked===true);  
-    const {name,startDate,duration,perToPass,endDate} = this.state;
+    let submitGroups = this.state.groups.filter(
+      item => this.groupdata[item].checked === true
+    );
+    const { name, startDate, duration, perToPass, endDate } = this.state;
     const newQuiz = {
-        name,
-        startDate:startDate?(new Date(startDate)):(""),
-        endDate: endDate?(new Date(endDate)):(""),
-        duration,
-        perToPass,
-        groups: submitGroups,
-        questions: [],
+      name,
+      startDate: startDate ? new Date(startDate) : "",
+      endDate: endDate ? new Date(endDate) : "",
+      duration,
+      perToPass,
+      groups: submitGroups,
+      questions: []
     };
-    console.log(newQuiz);
-    this.props.addRandom(newQuiz,this.props.history);
+    this.props.addRandom(newQuiz, this.props.history);
   };
 
   onFocus(ele) {
-    if(ele.current)
-    ele.current.className += " label-active"
-    else
-    ele.reff.current.className += " label-active";
+    if (ele.current) ele.current.className += " label-active";
+    else ele.reff.current.className += " label-active";
   }
   OnBlur(ele) {
-    if(ele.current)
-    ele.current.className = " label-txt"
-    else
-    ele.reff.current.className = "label-txt";
+    if (ele.current) ele.current.className = " label-txt";
+    else ele.reff.current.className = "label-txt";
   }
 
   render() {
-    const { errors,groups } = this.state;
+    const { errors, groups } = this.state;
     const arr = ["name", "duration", "perToPass"];
     const arr1 = [this.name, this.duration, this.perToPass];
     const arr2 = ["Name", "Duration (min)", "Percentage To Pass"];
     return (
       <div>
         <div className="container mt-3">
-        <h6 ><Link to="/dashboard/quiz" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Quiz Page </Link></h6>
+          <h6>
+            <Link to="/dashboard/quiz" className="arrowFont">
+              <i
+                class="fas fa-arrow-left arrowFont"
+                style={{ fontSize: "0.75em" }}></i>{" "}
+              Back to Quiz Page{" "}
+            </Link>
+          </h6>
           <div className="row  mt-2 justify-content-md-center">
             <div className="col-5 mt-4">
               <h4>
@@ -140,7 +154,7 @@ class AddQuiz extends Component {
               </h4>
             </div>
           </div>
-          <form noValidate >
+          <form noValidate>
             {arr.map((item, ind) => (
               <InputComponent
                 name={item}
@@ -156,52 +170,79 @@ class AddQuiz extends Component {
             ))}
             <div className="row  mt-4 justify-content-md-center">
               <div className="col-5">
-              <p className="label-txt" ref={this.startDate} >
+                <p className="label-txt" ref={this.startDate}>
                   Start Date
-                  </p>
-                  <p className="error-txt">{errors.startDate}</p>
-                <div className = "mt-4"><DateTimePicker value={this.state.startDate} onChange = {this.onChange1} onFocus={()=>this.onFocus(this.startDate)} onBlur={()=>this.OnBlur(this.startDate)}/></div>
+                </p>
+                <p className="error-txt">{errors.startDate}</p>
+                <div className="mt-4">
+                  <DateTimePicker
+                    value={this.state.startDate}
+                    onChange={this.onChange1}
+                    onFocus={() => this.onFocus(this.startDate)}
+                    onBlur={() => this.OnBlur(this.startDate)}
+                  />
+                </div>
               </div>
             </div>
 
             <div className="row  mt-4 justify-content-md-center">
               <div className="col-5">
-              <p className="label-txt" ref={this.endDate} >
+                <p className="label-txt" ref={this.endDate}>
                   End Date
-                  </p>
-                  <p className="error-txt">{errors.endDate}</p>
-                <div className = "mt-4"><DateTimePicker value={this.state.endDate} onChange = {this.onChange2} onFocus={()=>this.onFocus(this.endDate)} onBlur={()=>this.OnBlur(this.endDate)}/></div>
+                </p>
+                <p className="error-txt">{errors.endDate}</p>
+                <div className="mt-4">
+                  <DateTimePicker
+                    value={this.state.endDate}
+                    onChange={this.onChange2}
+                    onFocus={() => this.onFocus(this.endDate)}
+                    onBlur={() => this.OnBlur(this.endDate)}
+                  />
+                </div>
               </div>
             </div>
-            
+
             <div className="row  mt-4 justify-content-md-center">
               <div className="col-5">
-                <p className="label-txt" ref={this.groups} >
+                <p className="label-txt" ref={this.groups}>
                   Assign to Groups:
                 </p>
                 <p className="error-txt">{errors.groups}</p>
-                <div id="groups" className="mt-3" onFocus={()=>this.onFocus(this.groups)} onBlur={()=>this.OnBlur(this.groups)}>
-                {groups.map((item)=>
-                    <label className="ml-3"><input type="checkbox" ref={(ref)=>this.groupdata[item]=ref} id={item}/> {item}</label>
-                )}
-              </div>
+                <div
+                  id="groups"
+                  className="mt-3"
+                  onFocus={() => this.onFocus(this.groups)}
+                  onBlur={() => this.OnBlur(this.groups)}>
+                  {groups.map(item => (
+                    <label className="ml-3">
+                      <input
+                        type="checkbox"
+                        ref={ref => (this.groupdata[item] = ref)}
+                        id={item}
+                      />{" "}
+                      {item}
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="row  mt-4 justify-content-md-center">
               <div className="col-5">
-              <p className="label-txt" ref={this.addQuestions} >
+                <p className="label-txt" ref={this.addQuestions}>
                   Add Questions:
-                  </p>
+                </p>
               </div>
             </div>
             <div className="row  mt-4-5 mb-4 justify-content-md-center">
               <div className="col-md-auto">
-              <button
-                  className="btn btn-lg hoverable mr-3 modi-btn" onClick={this.onSubmit1}>
+                <button
+                  className="btn btn-lg hoverable mr-3 modi-btn"
+                  onClick={this.onSubmit1}>
                   Randomly
                 </button>
                 <button
-                  className="btn btn-lg hoverable ml-3 modi-btn" onClick={this.onSubmit}
+                  className="btn btn-lg hoverable ml-3 modi-btn"
+                  onClick={this.onSubmit}
                   type="submit">
                   Manually
                 </button>
@@ -215,10 +256,10 @@ class AddQuiz extends Component {
 }
 
 AddQuiz.propTypes = {
-    addQuiz: PropTypes.func.isRequired,
-    addRandom: PropTypes.func.isRequired,
-    fetchGroups: PropTypes.func.isRequired,
-    errors: PropTypes.array.isRequired,
+  addQuiz: PropTypes.func.isRequired,
+  addRandom: PropTypes.func.isRequired,
+  fetchGroups: PropTypes.func.isRequired,
+  errors: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -226,7 +267,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  {addQuiz,fetchGroups,addRandom}
-)(AddQuiz);
+export default connect(mapStateToProps, { addQuiz, fetchGroups, addRandom })(
+  AddQuiz
+);

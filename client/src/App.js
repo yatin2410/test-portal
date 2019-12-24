@@ -18,9 +18,9 @@ import PrivateRouteAdmin from "./components/private-route/admin-privateRoute";
 import NoUserPrivateRoute from "./components/private-route/nouser-privateRoute";
 import adminDashboard from "./components/admin-dashboard/Dashboard/dashboard";
 import userDashboard from "./components/user-dashboard/UserDashboard/Dashboard";
-import TakeQuiz from './components/take-quiz/TakeQuiz/takequiz';
-import ViewQuiz from './components/view-quiz/TakeQuiz/viewquiz';
-import ViewQuizAdmin from "./components/view-quiz/TakeQuiz/viewquizAdmin";
+import TakeQuiz from "./components/take-quiz/TakeQuiz/takequiz";
+import ViewQuiz from "./components/view-quiz/ViewQuiz/viewquiz";
+import ViewQuizAdmin from "./components/view-quiz/ViewQuiz/viewquizAdmin";
 import "./App.css";
 
 // Check for token to keep user logged in
@@ -43,6 +43,14 @@ if (localStorage.jwtToken) {
   }
 }
 class App extends Component {
+  constructor(props) {
+    super(props);
+    window.addEventListener("storage", e => {
+      if (e.key === "jwtToken" && e.oldValue && !e.newValue) {
+        store.dispatch(logoutUser());
+      }
+    });
+  }
   render() {
     return (
       <Provider store={store}>
@@ -52,7 +60,11 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/forgotPassword" component={ForgotPassword} />
-            <Route exact path="/changePassword/:id" component={ChangePassword} />
+            <Route
+              exact
+              path="/changePassword/:id"
+              component={ChangePassword}
+            />
             <Switch>
               <PrivateRouteAdmin path="/dashboard" component={adminDashboard} />
             </Switch>
@@ -62,24 +74,30 @@ class App extends Component {
             <Switch>
               <NoUserPrivateRoute path="/dashboard" component={Landing} />
             </Switch>
-           <Switch>
-             <PrivateRoute path='/takequiz/:id' component={TakeQuiz} />
-           </Switch>
-           <Switch>
-             <NoUserPrivateRoute path='/takequiz/:id' component={Landing} />
-           </Switch>
-           <Switch>
-             <PrivateRoute path='/viewquiz/:id' component={ViewQuiz} />
-           </Switch>
-           <Switch>
-             <NoUserPrivateRoute path='/viewquiz/:id' component={Landing} />
-           </Switch>
-           <Switch>
-             <PrivateRouteAdmin path='/viewquizadmin/:id1/:id2' component={ViewQuizAdmin} />
-           </Switch>
-           <Switch>
-             <NoUserPrivateRoute path='/viewquizadmin/:id1/:id2' component={Landing} />
-           </Switch>
+            <Switch>
+              <PrivateRoute path="/takequiz/:id" component={TakeQuiz} />
+            </Switch>
+            <Switch>
+              <NoUserPrivateRoute path="/takequiz/:id" component={Landing} />
+            </Switch>
+            <Switch>
+              <PrivateRoute path="/viewquiz/:id" component={ViewQuiz} />
+            </Switch>
+            <Switch>
+              <NoUserPrivateRoute path="/viewquiz/:id" component={Landing} />
+            </Switch>
+            <Switch>
+              <PrivateRouteAdmin
+                path="/viewquizadmin/:id1/:id2"
+                component={ViewQuizAdmin}
+              />
+            </Switch>
+            <Switch>
+              <NoUserPrivateRoute
+                path="/viewquizadmin/:id1/:id2"
+                component={Landing}
+              />
+            </Switch>
           </div>
         </Router>
       </Provider>

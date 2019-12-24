@@ -94,11 +94,15 @@ function Table(props) {
               <td>{item.correct}</td>
               <td>{item.per + " %"}</td>
               <td>{item.perToPass + " %"}</td>
-              <td>{item.result==="Pass"?<span className="text-success">{item.result}</span>:<span className="text-danger">{item.result}</span>}</td>
               <td>
-                <button
-                  className="btn"
-                  onClick={() => onView(item._id)}>
+                {item.result === "Pass" ? (
+                  <span className="text-success">{item.result}</span>
+                ) : (
+                  <span className="text-danger">{item.result}</span>
+                )}
+              </td>
+              <td>
+                <button className="btn" onClick={() => onView(item._id)}>
                   <i className="material-icons">play_arrow</i>
                 </button>{" "}
               </td>
@@ -121,13 +125,11 @@ class SearchTable extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.quizs) {
-      console.log(nextProps.quizs);
       this.setState({ quizs: nextProps.quizs });
     }
   }
   render() {
     const { quizs, sortKey, isSortReverse } = this.state;
-    console.log(quizs);
     return (
       <div className="container">
         {quizs ? (
@@ -137,7 +139,7 @@ class SearchTable extends Component {
               onSort={this.onSort}
               sortKey={sortKey}
               isSortReverse={isSortReverse}
-              onView = {this.props.onView}
+              onView={this.props.onView}
             />
           </div>
         ) : (

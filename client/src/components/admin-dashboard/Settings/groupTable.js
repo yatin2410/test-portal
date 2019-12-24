@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 const SORTS = {
   NONE: list => list,
-  GROUP: list => sortBy(list, "group"),
+  GROUP: list => sortBy(list, "group")
 };
 
 function Sort(props) {
@@ -32,7 +32,9 @@ function Table(props) {
       <h5>
         Total : <span className="text-info">{reverseList.length}</span>
       </h5>
-      <table className="table table-bordered table-hover modifiedtable" style={{width:"60%"}}>
+      <table
+        className="table table-bordered table-hover modifiedtable"
+        style={{ width: "60%" }}>
         <thead>
           <tr>
             <th width="60%">
@@ -48,7 +50,12 @@ function Table(props) {
             <tr key={item.group}>
               <td>{item.group}</td>
               <td>
-                <button data-toggle="tooltip" title="This action will delete group and all the users associated with it." data-placement="right" className="btn modi-btn" onClick={() => onDismiss(item.group)}>
+                <button
+                  data-toggle="tooltip"
+                  title="This action will delete group and all the users associated with it."
+                  data-placement="right"
+                  className="btn modi-btn"
+                  onClick={() => onDismiss(item.group)}>
                   <i className="material-icons">delete</i>
                 </button>
               </td>
@@ -70,7 +77,7 @@ class GroupTable extends Component {
     };
     this.onSort = this.onSort.bind(this);
   }
-    componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({ groups: nextProps.groups });
   }
   onSort(sortKey) {
@@ -80,7 +87,6 @@ class GroupTable extends Component {
   }
   render() {
     const { groups, sortKey, isSortReverse } = this.state;
-    console.log(groups);
     return (
       <div className="container">
         <div className="row ml-5">

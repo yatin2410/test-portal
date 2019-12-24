@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import SearchTable from "./quiztable";
 import { connect } from "react-redux";
 import { fetchQuizs } from "../../../actions/fetchActions";
-import {putFlashMsg} from "../../../actions/putActions";
-import axios from 'axios';
+import { putFlashMsg } from "../../../actions/putActions";
+import axios from "axios";
 import PropTypes from "prop-types";
 import Loading from "../../layout/Loading";
 
@@ -24,24 +24,29 @@ class Quiz extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.quizs) {
       this.setState({ quizs: nextProps.quizs });
-      this.setState({isLoading: false});
+      this.setState({ isLoading: false });
     }
   }
   onDismiss(id) {
-    let confirm = window.confirm("ALERT!!. If you select okay then this action will delete quiz and all the data associated with it.");
-    if(confirm===false){
+    let confirm = window.confirm(
+      "ALERT!!. If you select okay then this action will delete quiz and all the data associated with it."
+    );
+    if (confirm === false) {
       return;
     }
 
     axios
-    .delete("/api/quiz/", { data: { _id: id } })
-    .then(res => {
-      this.props.fetchQuizs();
-      this.props.putFlashMsg({msg:"Quiz deleted successfully!",type:"alert-danger"});
-    })
-    .catch(err => {
-      console.log(err);
-    });    
+      .delete("/api/quiz/", { data: { _id: id } })
+      .then(res => {
+        this.props.fetchQuizs();
+        this.props.putFlashMsg({
+          msg: "Quiz deleted successfully!",
+          type: "alert-danger"
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
   onOpenQuestions(id) {
     this.props.history.push("/dashboard/showquestions/" + id);
@@ -71,15 +76,12 @@ class Quiz extends Component {
 }
 
 Quiz.propTypes = {
-  fetchQuizs :PropTypes.func.isRequired,
-  putFlashMsg: PropTypes.func.isRequired,
+  fetchQuizs: PropTypes.func.isRequired,
+  putFlashMsg: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  quizs: state.data.quizs,
+  quizs: state.data.quizs
 });
 
-export default connect(
-  mapStateToProps,
-  { fetchQuizs,putFlashMsg }
-)(Quiz);
+export default connect(mapStateToProps, { fetchQuizs, putFlashMsg })(Quiz);

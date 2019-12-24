@@ -5,44 +5,42 @@ import { connect } from "react-redux";
 import { forgotPassword } from "../../actions/authActions";
 import Navbar from "../layout/Navbar";
 
-
 class ForgotPassword extends Component {
-    constructor() {
-        super();
-        this.email = React.createRef();
-        this.state = {
-          email: "",
-          errors: {}
-        };
-        this.onFocus = this.onFocus.bind(this);
-        this.onBlur = this.OnBlur.bind(this);
-      }
-      componentWillReceiveProps(nextProps){
-          if(nextProps.errors){
-              console.log(nextProps.errors);
-              this.setState({errors:nextProps.errors.errors});
-          }
-      }
-      onChange = e => {
-        this.setState({ [e.target.id]: e.target.value });
-      };
-      onSubmit = e => {
-        e.preventDefault();    
-        const userData = {
-          email: this.state.email
-        };
-        this.props.forgotPassword(userData,this.props.history);
-      };
+  constructor() {
+    super();
+    this.email = React.createRef();
+    this.state = {
+      email: "",
+      errors: {}
+    };
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.OnBlur.bind(this);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors.errors });
+    }
+  }
+  onChange = e => {
+    this.setState({ [e.target.id]: e.target.value });
+  };
+  onSubmit = e => {
+    e.preventDefault();
+    const userData = {
+      email: this.state.email
+    };
+    this.props.forgotPassword(userData, this.props.history);
+  };
 
-      onFocus(ele) {
-        ele.current.className += " label-active";
-      }
-      OnBlur(ele) {
-        ele.current.className = "label-txt";
-      }
+  onFocus(ele) {
+    ele.current.className += " label-active";
+  }
+  OnBlur(ele) {
+    ele.current.className = "label-txt";
+  }
 
-    render() {
-       const { errors } = this.state;
+  render() {
+    const { errors } = this.state;
 
     return (
       <div>
@@ -50,7 +48,14 @@ class ForgotPassword extends Component {
         <div className="container">
           <div className="row  mt-4 justify-content-md-center">
             <div className="col-5">
-            <h6 ><Link to="/login" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Login Page </Link></h6>
+              <h6>
+                <Link to="/login" className="arrowFont">
+                  <i
+                    class="fas fa-arrow-left arrowFont"
+                    style={{ fontSize: "0.75em" }}></i>{" "}
+                  Back to Login Page{" "}
+                </Link>
+              </h6>
               <h4>
                 <b>Forgot Password</b>
               </h4>
@@ -84,9 +89,7 @@ class ForgotPassword extends Component {
             </div>
             <div className="row  mt-4-5 justify-content-md-center">
               <div className="col-md-auto">
-                <button
-                  className="btn btn-lg hoverable modi-btn"
-                  type="submit">
+                <button className="btn btn-lg hoverable modi-btn" type="submit">
                   Send Reset Link
                 </button>
               </div>
@@ -109,7 +112,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { forgotPassword }
-)(ForgotPassword);
+export default connect(mapStateToProps, { forgotPassword })(ForgotPassword);

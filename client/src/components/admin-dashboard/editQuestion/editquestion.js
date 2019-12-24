@@ -4,7 +4,7 @@ import { fetchQuestion } from "../../../actions/fetchActions";
 import { putQuestion } from "../../../actions/putActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function OptionEditor(props) {
   return (
@@ -61,7 +61,6 @@ class EditQuestion extends Component {
     this.setans = this.setans.bind(this);
   }
   setans(ans) {
-    console.log(ans);
     ans.forEach(item => {
       let str = "ao" + item;
       this.setState({ [str]: true });
@@ -89,7 +88,7 @@ class EditQuestion extends Component {
   }
   submitQuestion() {
     const data = {
-      _id : this.props.match.params.id,
+      _id: this.props.match.params.id,
       type: this.state.type,
       category: this.state.category,
       question: this.state.question,
@@ -98,7 +97,7 @@ class EditQuestion extends Component {
       o3: this.state.o3,
       o4: this.state.o4,
       ans: this.getans(this.state),
-      difficulty: this.state.difficulty,
+      difficulty: this.state.difficulty
     };
     this.props.putQuestion(data, this.props.history);
   }
@@ -143,7 +142,14 @@ class EditQuestion extends Component {
     const { errors } = this.state;
     return (
       <div className="container mt-3">
-      <h6 ><Link to="/dashboard/qbank" className="arrowFont"><i class="fas fa-arrow-left arrowFont" style={{fontSize:"0.75em"}}></i>  Back to Question Bank </Link></h6>
+        <h6>
+          <Link to="/dashboard/qbank" className="arrowFont">
+            <i
+              class="fas fa-arrow-left arrowFont"
+              style={{ fontSize: "0.75em" }}></i>{" "}
+            Back to Question Bank{" "}
+          </Link>
+        </h6>
         <div className="row justify-content-md-center mt-3">
           <div className="col-6">
             <label forhtml="questiontype">Question Type:</label>
@@ -239,7 +245,6 @@ const mapStateToProps = state => ({
   question: state.data.question
 });
 
-export default connect(
-  mapStateToProps,
-  { fetchQuestion, putQuestion }
-)(EditQuestion);
+export default connect(mapStateToProps, { fetchQuestion, putQuestion })(
+  EditQuestion
+);

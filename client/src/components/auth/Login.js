@@ -73,7 +73,10 @@ class Login extends Component {
                 <b>Login</b> below
               </h4>
               <p>
-                Don't have an account? <Link to="/register" className="arrowFont">Register</Link>
+                Don't have an account?{" "}
+                <Link to="/register" className="arrowFont">
+                  Register
+                </Link>
               </p>
             </div>
           </div>
@@ -130,9 +133,7 @@ class Login extends Component {
             </div>
             <div className="row  mt-4-5 justify-content-md-center">
               <div className="col-md-auto">
-                <button
-                  className="btn modi-btn btn-lg hoverable"
-                  type="submit">
+                <button className="btn modi-btn btn-lg hoverable" type="submit">
                   Login
                 </button>
               </div>
@@ -140,7 +141,9 @@ class Login extends Component {
           </form>
           <div className="row mt-4-5 mr-5 d-flex flex-row-reverse">
             <div className="col-5">
-            <Link to="/forgotPassword" className="questionFont">Forgot your password?</Link>
+              <Link to="/forgotPassword" className="questionFont">
+                Forgot your password?
+              </Link>
             </div>
           </div>
         </div>
@@ -160,7 +163,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { loginUser }
-)(Login);
+export default connect(mapStateToProps, { loginUser })(Login);

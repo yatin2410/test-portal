@@ -1,8 +1,7 @@
-
 import { ADD_GROUPS } from "../actions/types";
 
 const initialState = {
-    errors: {},
+  errors: {}
 };
 
 export default function(state = initialState, action) {
@@ -10,7 +9,7 @@ export default function(state = initialState, action) {
     case ADD_GROUPS:
       return {
         ...state,
-        errors : action.payload
+        errors: action.payload
       };
     default:
       return state;

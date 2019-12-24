@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {  withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerAdmin } from "../../../actions/authActions";
@@ -25,11 +25,10 @@ class RegisterAdmin extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      console.log(nextProps.errors);
       this.setState({
         errors: nextProps.errors
       });
-    } 
+    }
   }
 
   onChange = e => {
@@ -46,7 +45,7 @@ class RegisterAdmin extends Component {
       group: this.state.group,
       password: this.state.password
     };
-    this.props.registerAdmin(newUser, this.props.fetchUsers);    
+    this.props.registerAdmin(newUser, this.props.fetchUsers);
   };
 
   onFocus(ele) {
@@ -62,13 +61,13 @@ class RegisterAdmin extends Component {
     return (
       <div>
         <div className="container">
-        <div className="row ml-1" style={{paddingLeft:"30%"}}>
-              <h4>
-                Add Admin:
-              </h4>
+          <div className="row ml-1" style={{ paddingLeft: "30%" }}>
+            <h4>Add Admin:</h4>
           </div>
           <form noValidate onSubmit={this.onSubmit}>
-            <div className="row mt-3 justify-content-md-center"  style={{paddingLeft:"30%"}}>
+            <div
+              className="row mt-3 justify-content-md-center"
+              style={{ paddingLeft: "30%" }}>
               <div className="col">
                 <p className="label-txt" ref={this.Id}>
                   Id
@@ -90,7 +89,9 @@ class RegisterAdmin extends Component {
                 />
               </div>
             </div>
-            <div className="row mt-4-5 justify-content-md-center"  style={{paddingLeft:"30%"}}>
+            <div
+              className="row mt-4-5 justify-content-md-center"
+              style={{ paddingLeft: "30%" }}>
               <div className="col">
                 <p className="label-txt" ref={this.name}>
                   Name
@@ -112,7 +113,7 @@ class RegisterAdmin extends Component {
                 />
               </div>
             </div>
-            <div className="row  mt-4-5 "  style={{paddingLeft:"30%"}}>
+            <div className="row  mt-4-5 " style={{ paddingLeft: "30%" }}>
               <div className="col">
                 <p className="label-txt" ref={this.email}>
                   Email
@@ -134,7 +135,7 @@ class RegisterAdmin extends Component {
                 />
               </div>
             </div>
-            <div className="row  mt-4-5"  style={{paddingLeft:"30%"}}>
+            <div className="row  mt-4-5" style={{ paddingLeft: "30%" }}>
               <div className="col">
                 <p className="label-txt" ref={this.password}>
                   Password
@@ -156,13 +157,13 @@ class RegisterAdmin extends Component {
                 />
               </div>
             </div>
-            <div className="row  mt-4-5"  style={{paddingLeft:"30%"}}>
-                <button
-                  style={{height:"3em"}}
-                  className="btn modi-btn ml-3 hoverable"
-                  type="submit">
-                  Add Admin
-                </button>
+            <div className="row  mt-4-5" style={{ paddingLeft: "30%" }}>
+              <button
+                style={{ height: "3em" }}
+                className="btn modi-btn ml-3 hoverable"
+                type="submit">
+                Add Admin
+              </button>
             </div>
           </form>
         </div>
@@ -182,7 +183,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { registerAdmin }
-)(withRouter(RegisterAdmin));
+export default connect(mapStateToProps, { registerAdmin })(
+  withRouter(RegisterAdmin)
+);

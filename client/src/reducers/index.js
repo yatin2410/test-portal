@@ -9,5 +9,5 @@ export default combineReducers({
   errors: errorReducer,
   data: fetchReducer,
   putResponse: putReducer,
-  flashMsg : FlashReducer,
+  flashMsg: FlashReducer
 });

@@ -14,9 +14,7 @@ router.post("/",authAdmin,(req,res)=>{
     if(req.body.group === undefined){
         return res.status(400).send({group:"Group name is required."});
     }
-    console.log(req.body.group);
     Group.findOne({group : req.body.group}).then((grp)=>{
-        console.log(grp);
         if(grp || req.body.group==='Admin') {
             return res.status(400).json({group:"Group name is already in list"});
         }
@@ -30,7 +28,6 @@ router.post("/",authAdmin,(req,res)=>{
 });
 
 router.delete("/", authAdmin, (req, res) => {
-    console.log("in delete");
     User.deleteMany({group: req.body.group},err => {
         if(err) return res.status(400).json({error: "no users in this group"});
         Group.deleteOne({ group: req.body.group }, err => {

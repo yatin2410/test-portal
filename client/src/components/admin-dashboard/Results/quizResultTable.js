@@ -40,32 +40,32 @@ function Table(props) {
       <table className="table table-bordered table-hover modifiedtable">
         <thead>
           <tr>
-            <th style={{width:"24%"}}>
+            <th style={{ width: "24%" }}>
               <Sort sortKey={"NAME"} onSort={onSort} activeSortKey={sortKey}>
                 Name
               </Sort>{" "}
             </th>
-            <th style={{width:"10%"}}>
+            <th style={{ width: "10%" }}>
               <Sort sortKey={"TOTAL"} onSort={onSort} activeSortKey={sortKey}>
                 Total
               </Sort>{" "}
             </th>
-            <th style={{width:"10%"}}>
+            <th style={{ width: "10%" }}>
               <Sort sortKey={"PASSED"} onSort={onSort} activeSortKey={sortKey}>
                 Passed
               </Sort>{" "}
             </th>
-            <th style={{width:"10%"}}>
+            <th style={{ width: "10%" }}>
               <Sort sortKey={"FAILED"} onSort={onSort} activeSortKey={sortKey}>
                 Failed
               </Sort>{" "}
             </th>
-            <th style={{width:"18%"}}>
+            <th style={{ width: "18%" }}>
               <Sort sortKey={"PER"} onSort={onSort} activeSortKey={sortKey}>
                 <span style={{ fontSize: "0.85em" }}>Avg. Percentage</span>
               </Sort>{" "}
             </th>
-            <th style={{width:"18%"}}>
+            <th style={{ width: "18%" }}>
               <Sort
                 sortKey={"PERTOPASS"}
                 onSort={onSort}
@@ -73,7 +73,7 @@ function Table(props) {
                 <span style={{ fontSize: "0.85em" }}>Required</span>
               </Sort>{" "}
             </th>
-            <th style={{width:"10%"}}>View</th>
+            <th style={{ width: "10%" }}>Export</th>
           </tr>
         </thead>
         <tbody>
@@ -90,8 +90,9 @@ function Table(props) {
               <td>
                 <button
                   className="btn modi-btn"
-                  onClick={() => onView(item.qid)}>
-                  <i className="material-icons">assessment</i>
+                  onClick={() => onView(item.qid)}
+                  title="export result as excel sheet">
+                  <i className="material-icons">arrow_downward</i>
                 </button>{" "}
               </td>
             </tr>
@@ -124,7 +125,6 @@ class SearchTable extends Component {
   }
   render() {
     const { quizs, sortKey, isSortReverse } = this.state;
-    console.log(quizs);
     return (
       <div className="container">
         {quizs ? (

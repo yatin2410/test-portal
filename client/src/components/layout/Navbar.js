@@ -12,9 +12,15 @@ class Navbar extends Component {
               style={{
                 fontFamily: "monospace",
                 textDecoration: "none"
-              }}
-            >
-              <span style={{fontFamily:"oxygen",fontSize:"3em", color:"rgb(57, 70, 78)"}}>TEST-PORTAL</span>
+              }}>
+              <span
+                style={{
+                  fontFamily: "oxygen",
+                  fontSize: "3em",
+                  color: "rgb(57, 70, 78)"
+                }}>
+                TEST-PORTAL
+              </span>
             </Link>
           </div>
         </div>

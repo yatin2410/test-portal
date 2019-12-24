@@ -12,7 +12,7 @@ import {
   GET_RESULTS,
   GET_QUIZ_RESULTS,
   GET_ADMIN_STATES,
-  GET_QUIZ_USER_RESULTS,
+  GET_QUIZ_USER_RESULTS
 } from "../actions/types";
 
 const initialState = {
@@ -29,7 +29,7 @@ const initialState = {
   results: null,
   quizResults: null,
   adminStates: null,
-  quizUserResults: null,
+  quizUserResults: null
 };
 
 export default function(state = initialState, action) {
@@ -100,10 +100,10 @@ export default function(state = initialState, action) {
         adminStates: action.payload
       };
     case GET_QUIZ_USER_RESULTS:
-      return{
+      return {
         ...state,
         quizUserResults: action.payload
-      }
+      };
     default:
       return state;
   }

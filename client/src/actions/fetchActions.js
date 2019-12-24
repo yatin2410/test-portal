@@ -17,9 +17,9 @@ import {
   GET_QUIZ_USER_RESULTS
 } from "./types";
 
-export const fetchUsers = () => dispatch => {
+export const fetchUsers = (page, search) => dispatch => {
   axios
-    .get("/api/users/")
+    .get("/api/users/?page=" + page + "&search=" + search)
     .then(res => {
       dispatch({
         type: GET_USERS,
@@ -36,7 +36,6 @@ export const fetchGroups = () => dispatch => {
   axios
     .get("/api/groups/")
     .then(res => {
-      console.log(res);
       dispatch({
         type: GET_GROUPS,
         payload: res.data
@@ -47,9 +46,9 @@ export const fetchGroups = () => dispatch => {
     });
 };
 
-export const fetchQuestions = () => dispatch => {
+export const fetchQuestions = (page, search) => dispatch => {
   axios
-    .get("/api/questions/")
+    .get("/api/questions/?page=" + page + "&search=" + search)
     .then(res => {
       dispatch({
         type: GET_QUESTIONS,
@@ -81,7 +80,6 @@ export const fetchQuestion = id => dispatch => {
   axios
     .get("/api/questions/" + id)
     .then(res => {
-      console.log(res);
       dispatch({
         type: GET_QUESTION,
         payload: res.data
@@ -94,11 +92,9 @@ export const fetchQuestion = id => dispatch => {
 };
 
 export const getQuizQuestions = id => dispatch => {
-  console.log("/api/quiz/questions/" + id);
   axios
-    .get("/api/quiz/questions/" + id)
+    .get("/api/quiz/showquestions/" + id)
     .then(res => {
-      console.log(res.data);
       dispatch({
         type: GET_QUIZ_QUESTIONS,
         payload: res.data
@@ -114,7 +110,6 @@ export const fetchShowQuestions = id => dispatch => {
   axios
     .get("/api/quiz/showquestions/" + id)
     .then(res => {
-      console.log(res.data);
       dispatch({
         type: GET_SHOW_QUESTIONS,
         payload: res.data
@@ -130,7 +125,6 @@ export const fetchQuiz = id => dispatch => {
   axios
     .get("/api/quiz/" + id)
     .then(res => {
-      console.log(res.data);
       dispatch({
         type: GET_QUIZ,
         payload: res.data
@@ -157,9 +151,9 @@ export const fetchUserQuizs = group => dispatch => {
     });
 };
 
-export const SaveAndfetchUserQuizFull = (qid,uid) => dispatch => {
+export const SaveAndfetchUserQuizFull = (qid, uid) => dispatch => {
   axios
-    .get("/api/quiz/user/quiz/" + qid + '/' + uid)
+    .get("/api/quiz/user/quiz/" + qid + "/" + uid)
     .then(res => {
       dispatch({
         type: GET_QUIZ_FULL,
@@ -172,9 +166,9 @@ export const SaveAndfetchUserQuizFull = (qid,uid) => dispatch => {
     });
 };
 
-export const fetchUserQuizResult = (qid,uid,history) => dispatch => {
+export const fetchUserQuizResult = (qid, uid, history) => dispatch => {
   axios
-    .get("/api/quiz/user/result/" + qid+"/"+uid)
+    .get("/api/quiz/user/result/" + qid + "/" + uid)
     .then(res => {
       dispatch({
         type: GET_QUIZ_FULL,
@@ -185,11 +179,10 @@ export const fetchUserQuizResult = (qid,uid,history) => dispatch => {
       history.push("/dashboard/quiz");
       dispatch({
         type: FLASH_SUCCESS_MSG,
-        payload:{msg:"Quiz has not ended yet!",type:"alert-danger"},  
+        payload: { msg: "Quiz has not ended yet!", type: "alert-danger" }
       });
     });
 };
-
 
 export const fetchUser = id => dispatch => {
   axios
@@ -225,7 +218,6 @@ export const fetchQuizResults = () => dispatch => {
   axios
     .get("/api/quiz/results/all")
     .then(res => {
-      console.log(res);
       dispatch({
         type: GET_QUIZ_RESULTS,
         payload: res.data
@@ -237,9 +229,9 @@ export const fetchQuizResults = () => dispatch => {
     });
 };
 
-export const fetchQuizUserResults = (id) => dispatch => {
+export const fetchQuizUserResults = id => dispatch => {
   axios
-    .get("/api/quiz/results/"+id)
+    .get("/api/quiz/results/" + id)
     .then(res => {
       dispatch({
         type: GET_QUIZ_USER_RESULTS,
@@ -254,16 +246,15 @@ export const fetchQuizUserResults = (id) => dispatch => {
 
 export const fetchAdminStates = () => dispatch => {
   axios
-  .get("/api/quiz/admin/states")
-  .then(res => {
-    console.log(res);
-    dispatch({
-      type: GET_ADMIN_STATES,
-      payload: res.data
+    .get("/api/quiz/admin/states")
+    .then(res => {
+      dispatch({
+        type: GET_ADMIN_STATES,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log("error in fetching admin states");
+      console.log(err);
     });
-  })
-  .catch(err => {
-    console.log("error in fetching admin states");
-    console.log(err);
-  });
-}
+};

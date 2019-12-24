@@ -3,16 +3,20 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Question from "./Question";
 import Question2 from "./Question2";
-import { fetchUserQuizResult,fetchUser } from "../../../actions/fetchActions";
+import { fetchUserQuizResult, fetchUser } from "../../../actions/fetchActions";
 import classNames from "classnames";
 import Loading from "../../layout/Loading";
-import { stat } from "fs";
+import lodash from "lodash";
 
 function sideQuestion(props) {
   return (
     <div
-      class={
-        "question-item " + classNames({ selected: props.qid === props.aid })
+      className={
+        "question-item " +
+        classNames(
+          { selected: props.qid === props.aid },
+          { answered: !lodash.isEmpty(props.ans) }
+        )
       }
       onClick={() => props.onChange(props.index)}>
       <div class="inline-block float-left">
@@ -32,10 +36,11 @@ function sideQuestion(props) {
 class ViewQuizAdmin extends Component {
   constructor(props) {
     super(props);
+    this.ele = React.createRef();
     this.state = {
       quiz: {},
       activeIndex: 0,
-      user:null,
+      user: null,
       isLoading: true
     };
     this.onChange = this.onChange.bind(this);
@@ -51,13 +56,12 @@ class ViewQuizAdmin extends Component {
     this.props.fetchUser(this.props.match.params.id2);
   }
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (nextProps.quiz && nextProps.quiz.quizFull) {
       this.setState({ quiz: nextProps.quiz.quizFull });
       this.setState({ isLoading: false });
     }
-    if(nextProps.user && nextProps.user.name){
-      this.setState({user:nextProps.user});
+    if (nextProps.user && nextProps.user.name) {
+      this.setState({ user: nextProps.user });
     }
   }
   onChange(index) {
@@ -70,23 +74,24 @@ class ViewQuizAdmin extends Component {
       index + 1 !== this.state.quiz.questionsFull.length
     ) {
       this.setState({ activeIndex: index + 1 });
+      this.ele.current.scrollTop += 85;
     }
   }
   onPrev() {
     let index = this.state.activeIndex;
     if (index !== 0) {
       this.setState({ activeIndex: index - 1 });
+      this.ele.current.scrollTop -= 85;
     }
   }
   render() {
     const user = this.state.user;
     const { name, questionsFull, duration } = this.state.quiz;
-    console.log(this.state.quiz.questionsFull);
     return (
       <div>
         {this.state.isLoading ? (
-          <div style={{marginLeft:"10%"}}>
-          <Loading />
+          <div style={{ marginLeft: "10%" }}>
+            <Loading />
           </div>
         ) : (
           <div>
@@ -95,12 +100,14 @@ class ViewQuizAdmin extends Component {
                 <div className="header-name ellipsis"> {name} </div>
               </div>
               <div className="float-right box-padding-20">
-                <div className="user-name float-left mr-3">ID: {user?user.Id:null}</div>
+                <div className="user-name float-left mr-3">
+                  ID: {user ? user.Id : null}
+                </div>
               </div>
             </div>
             <div className="body">
               <div class="view-body">
-                <div class="left-pane">
+                <div class="left-pane" ref={this.ele}>
                   <div class="left-pane-header dark">
                     <div class="float-right">
                       Total Questions:{" "}
@@ -116,6 +123,7 @@ class ViewQuizAdmin extends Component {
                             index,
                             onChange: this.onChange,
                             question: item.question,
+                            ans: item.userAns,
                             qid: item._id,
                             aid: this.state.quiz.questionsFull[
                               this.state.activeIndex
@@ -157,14 +165,18 @@ class ViewQuizAdmin extends Component {
                         />
                       )}
                     </div>
-              </div>
-              <div className="bottom-line">
-                <button className="btn btn-round btn-lg" onClick={this.onPrev}>
-                  Prev
-                </button>
-                <button className="btn modi-btn btn-lg btn-round ml-3" onClick={this.onNext}>
-                  Next
-                </button>
+                  </div>
+                  <div className="bottom-line">
+                    <button
+                      className="btn btn-round btn-lg"
+                      onClick={this.onPrev}>
+                      Prev
+                    </button>
+                    <button
+                      className="btn modi-btn btn-lg btn-round ml-3"
+                      onClick={this.onNext}>
+                      Next
+                    </button>
                   </div>
                 </div>
               </div>
@@ -186,4 +198,6 @@ const mapStateToProps = state => ({
   user: state.data.user
 });
 
-export default connect(mapStateToProps, { fetchUserQuizResult, fetchUser })(ViewQuizAdmin);
+export default connect(mapStateToProps, { fetchUserQuizResult, fetchUser })(
+  ViewQuizAdmin
+);

@@ -2,7 +2,12 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING, FLASH_SUCCESS_MSG} from "./types";
+import {
+  GET_ERRORS,
+  SET_CURRENT_USER,
+  USER_LOADING,
+  FLASH_SUCCESS_MSG
+} from "./types";
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
@@ -21,15 +26,16 @@ export const registerUser = (userData, history) => dispatch => {
 export const registerAdmin = (userData, fun) => dispatch => {
   axios
     .post("/api/users/registeradmin", userData)
-    .then(res => {fun();
+    .then(res => {
+      fun();
       dispatch({
         type: GET_ERRORS,
         payload: {}
-      })
+      });
       dispatch({
         type: FLASH_SUCCESS_MSG,
-        payload:{msg:"Admin added successfully!",type:"alert-success"},
-      })
+        payload: { msg: "Admin added successfully!", type: "alert-success" }
+      });
     })
     .catch(err =>
       dispatch({
@@ -44,19 +50,15 @@ export const updateAdmin = (userData, fun) => dispatch => {
     .put("/api/users/register", userData)
     .then(res => {
       fun();
-      console.log(res);
     })
-    .catch(err =>
-      {
-        console.log(err);
-        dispatch({
+    .catch(err => {
+      console.log(err);
+      dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       });
-    }
-    );
+    });
 };
-
 
 // Login - get user token
 export const loginUser = userData => dispatch => {
@@ -108,29 +110,28 @@ export const logoutUser = () => dispatch => {
   dispatch(setCurrentUser({}));
 };
 
-export const forgotPassword = (userData,history) => dispatch => {
+export const forgotPassword = (userData, history) => dispatch => {
   axios
-  .post("/api/users/forgot",userData)
-  .then(res => history.push("/login"))
-  .catch(err =>{
-    console.log(err.response);
-    dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    })
-  }
-  );
+    .post("/api/users/forgot", userData)
+    .then(res => history.push("/login"))
+    .catch(err => {
+      console.log(err.response);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
 };
 
-export const changePassword = (userData,history) => dispatch => {
+export const changePassword = (userData, history) => dispatch => {
   axios
-  .post("/api/users/changePassword",userData)
-  .then(res => history.push("/login"))
-  .catch(err =>{
-    console.log(err.response);
-    dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    })
-  });
+    .post("/api/users/changePassword", userData)
+    .then(res => history.push("/login"))
+    .catch(err => {
+      console.log(err.response);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
 };
