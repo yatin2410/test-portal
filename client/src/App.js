@@ -104,8 +104,6 @@ class App extends Component {
                 component={Landing}
               />
             </Switch>
-            <Route path="/404" component={My404Component} />
-            <Redirect from="*" to="/404" />
           </div>
         </Router>
       </Provider>

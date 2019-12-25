@@ -123,26 +123,28 @@ export function Help2(props) {
 export function Help3(props) {
   return (
     <div className="container">
-      <h6>
-        <Link to="/dashboard/help" className="arrowFont">
-          <i
-            className="fas fa-arrow-left arrowFont"
-            style={{ fontSize: "0.75em" }}></i>{" "}
-          Back to Help Home{" "}
-        </Link>
-      </h6>
-      <div className="mt-4 ml-5"></div>
-      <div className="mt-5 ml-5">
-        <h3>How to change my password?</h3>
+      <div className="mt-4 ml-5">
+        <h6>
+          <Link to="/dashboard/help" className="arrowFont">
+            <i
+              className="fas fa-arrow-left arrowFont"
+              style={{ fontSize: "0.75em" }}></i>{" "}
+            Back to Help Home{" "}
+          </Link>
+        </h6>
+        <div className="mt-4 ml-5"></div>
+        <div className="mt-5 ml-5">
+          <h3>How to change my password?</h3>
+        </div>
+        <p className="mt-3 ml-5">
+          Go to My Account page from side bar. There you will see exact same
+          page as of the register page but your details will be filled already.
+          You can there change your password. Then, fill the confirm password
+          field with the new password and, click on Save button and your
+          password will be updated.
+        </p>
+        <h5 className="mt-3 ml-5">All the best for your Quizzes.</h5>
       </div>
-      <p className="mt-3 ml-5">
-        Go to My Account page from side bar. There you will see exact same page
-        as of the register page but your details will be filled already. You can
-        there change your password. Then, fill the confirm password field with
-        the new password and, click on Save button and your password will be
-        updated.
-      </p>
-      <h5 className="mt-3 ml-5">All the best for your Quizzes.</h5>
     </div>
   );
 }

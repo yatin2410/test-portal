@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import daLogo from "../../images/da-logo.png";
 import Navbar from "../layout/Navbar";
 
 class My404Component extends Component {

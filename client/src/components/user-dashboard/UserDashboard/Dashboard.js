@@ -17,6 +17,8 @@ import { Help3 } from "../Help/help";
 import { Help4 } from "../Help/help";
 import SuccessAlert from "../../layout/Flash";
 import InternetCheck from "../../layout/InternetCheck";
+import My404Inside from "../../layout/My404Inside";
+import Switch from "react-router-dom/Switch";
 class userDashboard extends Component {
   constructor(props) {
     super(props);
@@ -96,16 +98,19 @@ class userDashboard extends Component {
           <div className="main-container">
             <SuccessAlert />
             <InternetCheck />
-            <Route exact path="/dashboard" component={Home} />
-            <Route exact path="/dashboard/home" component={Home} />
-            <Route exact path="/dashboard/results" component={Results} />
-            <Route exact path="/dashboard/quiz" component={Quiz} />
-            <Route exact path="/dashboard/myaccount" component={Myaccount} />
-            <Route exact path="/dashboard/help" component={Help} />
-            <Route exact path="/dashboard/help1" component={Help1} />
-            <Route exact path="/dashboard/help2" component={Help2} />
-            <Route exact path="/dashboard/help3" component={Help3} />
-            <Route exact path="/dashboard/help4" component={Help4} />
+            <Switch>
+              <Route exact path="/dashboard" component={Home} />
+              <Route exact path="/dashboard/home" component={Home} />
+              <Route exact path="/dashboard/results" component={Results} />
+              <Route exact path="/dashboard/quiz" component={Quiz} />
+              <Route exact path="/dashboard/myaccount" component={Myaccount} />
+              <Route exact path="/dashboard/help" component={Help} />
+              <Route exact path="/dashboard/help1" component={Help1} />
+              <Route exact path="/dashboard/help2" component={Help2} />
+              <Route exact path="/dashboard/help3" component={Help3} />
+              <Route exact path="/dashboard/help4" component={Help4} />
+              <Route component={My404Inside} />
+            </Switch>
           </div>
         </div>
       </div>
