@@ -14,7 +14,8 @@ import {
   GET_QUIZ_RESULTS,
   FLASH_SUCCESS_MSG,
   GET_ADMIN_STATES,
-  GET_QUIZ_USER_RESULTS
+  GET_QUIZ_USER_RESULTS,
+  GET_SERVER_TIME
 } from "./types";
 
 export const fetchUsers = (page, search) => dispatch => {
@@ -255,6 +256,21 @@ export const fetchAdminStates = () => dispatch => {
     })
     .catch(err => {
       console.log("error in fetching admin states");
+      console.log(err);
+    });
+};
+
+export const fetchServerTime = () => dispatch => {
+  axios
+    .get("/api/groups/getTime")
+    .then(res => {
+      dispatch({
+        type: GET_SERVER_TIME,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log("error in fetching server time");
       console.log(err);
     });
 };

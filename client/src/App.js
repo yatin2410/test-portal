@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 
@@ -8,6 +13,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import Landing from "./components/layout/Landing";
+import My404Component from "./components/layout/My404Component";
 import Loading from "./components/layout/Loading";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -98,6 +104,8 @@ class App extends Component {
                 component={Landing}
               />
             </Switch>
+            <Route path="/404" component={My404Component} />
+            <Redirect from="*" to="/404" />
           </div>
         </Router>
       </Provider>

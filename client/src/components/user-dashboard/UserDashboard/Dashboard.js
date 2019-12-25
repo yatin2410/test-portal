@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { logoutUser } from "../../../actions/authActions";
+import { fetchServerTime } from "../../../actions/fetchActions";
 import Home from "../Home/home";
 import Myaccount from "../Myaccount/myaccount";
 import Quiz from "../Quiz/quiz";
@@ -30,6 +31,7 @@ class userDashboard extends Component {
   }
 
   componentDidMount() {
+    this.props.fetchServerTime();
     let path = this.props.location.pathname.substring(
       this.props.location.pathname.lastIndexOf("/") + 1
     );
@@ -42,7 +44,19 @@ class userDashboard extends Component {
       else this.sidebar.current.className = "";
     });
   }
-
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.time && nextProps.time.time) {
+      console.log(nextProps.time);
+      let serverTime = new Date(nextProps.time.time).getTime();
+      let clientTime = new Date().getTime();
+      console.log(serverTime);
+      console.log(clientTime);
+      if (Math.abs(serverTime - clientTime) >= 1000 * 60 * 5) {
+        alert("Please correct computer's Time");
+        this.props.logoutUser();
+      }
+    }
+  }
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
@@ -101,11 +115,15 @@ class userDashboard extends Component {
 
 userDashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired,
+  fetchServerTime: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  time: state.data.serverTime
 });
 
-export default connect(mapStateToProps, { logoutUser })(userDashboard);
+export default connect(mapStateToProps, { logoutUser, fetchServerTime })(
+  userDashboard
+);

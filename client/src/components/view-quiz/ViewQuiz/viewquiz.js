@@ -15,7 +15,7 @@ function sideQuestion(props) {
         "question-item " +
         classNames(
           { selected: props.qid === props.aid },
-          { answered: !lodash.isEmpty(props.ans) }
+          { answered: !lodash.isEmpty(props.ans) && props.qid !== props.aid }
         )
       }
       onClick={() => props.onChange(props.index)}>

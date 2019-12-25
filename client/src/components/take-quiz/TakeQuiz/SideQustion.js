@@ -9,7 +9,10 @@ export default function sideQuestion(props) {
         "question-item " +
         classNames(
           { selected: props.qid === props.aid },
-          { answered: !lodash.isEmpty(props.ans[props.index]) }
+          {
+            answered:
+              !lodash.isEmpty(props.ans[props.index]) && props.qid !== props.aid
+          }
         )
       }
       onClick={() => props.onChange(props.index)}>

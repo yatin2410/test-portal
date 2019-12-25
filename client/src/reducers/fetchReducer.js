@@ -12,7 +12,8 @@ import {
   GET_RESULTS,
   GET_QUIZ_RESULTS,
   GET_ADMIN_STATES,
-  GET_QUIZ_USER_RESULTS
+  GET_QUIZ_USER_RESULTS,
+  GET_SERVER_TIME
 } from "../actions/types";
 
 const initialState = {
@@ -29,7 +30,8 @@ const initialState = {
   results: null,
   quizResults: null,
   adminStates: null,
-  quizUserResults: null
+  quizUserResults: null,
+  serverTime: null
 };
 
 export default function(state = initialState, action) {
@@ -103,6 +105,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         quizUserResults: action.payload
+      };
+    case GET_SERVER_TIME:
+      return {
+        ...state,
+        serverTime: action.payload
       };
     default:
       return state;
