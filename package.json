@@ -36,7 +36,7 @@
     "react-popupbox": "^2.0.8",
     "react-spinners": "^0.6.1",
     "reactjs-popup": "^1.5.0",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.3"
